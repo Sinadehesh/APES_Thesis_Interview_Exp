@@ -1,3 +1,7 @@
+from pathlib import Path
+
+# Full HTML with image instead of emoji during condition 2
+html_content = """
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,7 +25,7 @@
 <body>
   <div id="startPage" class="container">
     <h1>Welcome to Your Dream Job Interview</h1>
-    <p>Record answers in 3 conditions (mirror, emoji, blank).<br>6 questions total, ~20 minutes.<br>After every 2 questions, complete a short questionnaire.<br>Click Start to begin.</p>
+    <p>Record answers in 3 conditions (mirror, image, blank).<br>6 questions total, ~20 minutes.<br>After every 2 questions, complete a short questionnaire.<br>Click Start to begin.</p>
     <button id="startInterviewBtn">Start Interview</button>
   </div>
 
@@ -50,34 +54,6 @@
     </div>
   </div>
 
-  <div id="surveyContainer" class="container hidden">
-    <h2>Short Questionnaire</h2>
-    <form id="surveyForm">
-      <div id="saasBlock" class="question-block"></div>
-      <div id="selfCritBlock" class="question-block hidden">
-        <label>You were too self-critical during this condition.</label>
-        <div class="radio-group">
-          <label><input type="radio" name="selfCritical" value="1">Not at all</label>
-          <label><input type="radio" name="selfCritical" value="2">Slightly</label>
-          <label><input type="radio" name="selfCritical" value="3">Moderately</label>
-          <label><input type="radio" name="selfCritical" value="4">Very</label>
-          <label><input type="radio" name="selfCritical" value="5">Extremely</label>
-        </div>
-      </div>
-      <div id="confidenceBlock" class="question-block hidden">
-        <label>You were confident in your last response.</label>
-        <div class="radio-group">
-          <label><input type="radio" name="confidence" value="1">Not at all</label>
-          <label><input type="radio" name="confidence" value="2">Slightly</label>
-          <label><input type="radio" name="confidence" value="3">Moderately</label>
-          <label><input type="radio" name="confidence" value="4">Very</label>
-          <label><input type="radio" name="confidence" value="5">Extremely</label>
-        </div>
-      </div>
-    </form>
-    <button id="nextSurveyBtn">Submit</button>
-  </div>
-
   <div id="endPage" class="container hidden">
     <h2>Thank You!</h2>
     <p>Thank you for taking part in the experiment. Science owes you one!</p>
@@ -93,38 +69,16 @@
         "Describe a time you overcame a challenge.",
         "Where do you see yourself in five years?"
       ];
-      const conditions = [1,1,2,2,3,3];
-      const saasItems = [
-        "I feel comfortable with the way I appear to others.",
-        "I feel nervous when having my picture taken.",
-        "I get tense when it is obvious people are looking at me.",
-        "I am concerned people would not like me because of the way I look.",
-        "I worry others talk about flaws in my appearance when I am not around.",
-        "I am concerned people will find me unappealing because of my appearance.",
-        "I am afraid people find me unattractive.",
-        "I worry my appearance will make life more difficult for me.",
-        "I am concerned I have missed out on opportunities because of my appearance.",
-        "I get nervous talking to people because of the way I look.",
-        "I feel anxious when others comment on my appearance.",
-        "I am afraid I would not meet others' standards of how I should look.",
-        "I worry people will judge my appearance negatively.",
-        "I am uncomfortable when I think others notice flaws in my appearance.",
-        "I worry a romantic partner will leave me because of my appearance.",
-        "I am concerned people think I am not good looking."
-      ];
+      const conditions = [1, 1, 2, 2, 3, 3];
 
       let currentIndex = 0;
       let redoCounts = Array(questions.length).fill(0);
       let mediaRecorder, recordedChunks = [];
       let liveStream;
-      let saasIndex = 0;
-      let answers = [], surveys = [];
 
-      // Elements
       const startPage = document.getElementById('startPage');
       const interviewPage = document.getElementById('interviewContainer');
       const previewPage = document.getElementById('previewPage');
-      const surveyPage = document.getElementById('surveyContainer');
       const endPage = document.getElementById('endPage');
       const viewContainer = document.getElementById('viewContainer');
       const questionDisplay = document.getElementById('questionDisplay');
@@ -138,12 +92,8 @@
       const previewVideo = document.getElementById('previewVideo');
       const previewRedoBtn = document.getElementById('previewRedoBtn');
       const previewNextBtn = document.getElementById('previewNextBtn');
-      const saasBlock = document.getElementById('saasBlock');
-      const selfCritBlock = document.getElementById('selfCritBlock');
-      const confidenceBlock = document.getElementById('confidenceBlock');
-      const nextSurveyBtn = document.getElementById('nextSurveyBtn');
+      const startInterviewBtn = document.getElementById('startInterviewBtn');
 
-      // Pre-fetch stream once
       navigator.mediaDevices.getUserMedia({video:true,audio:true})
         .then(stream => liveStream = stream)
         .catch(err => console.error('Stream error:', err));
@@ -155,93 +105,102 @@
       };
 
       function showQuestion() {
-        // hide other pages
-        previewPage.classList.add('hidden'); surveyPage.classList.add('hidden'); endPage.classList.add('hidden');
+        previewPage.classList.add('hidden'); endPage.classList.add('hidden');
         interviewPage.classList.remove('hidden');
-
-        // clear view
         viewContainer.innerHTML = '';
-        // set question
         questionDisplay.textContent = questions[currentIndex];
         redoDisplay.textContent = `Redo Count: ${redoCounts[currentIndex]}`;
-        // reset UI
-        startInstruction.style.display = 'block'; startRecBtn.style.display = 'inline-block'; recordIndicator.style.visibility = 'hidden'; timerDisplay.style.visibility = 'hidden'; finishBtn.textContent = 'Finish';
+        startInstruction.style.display = 'block';
+        startRecBtn.style.display = 'inline-block';
+        recordIndicator.style.visibility = 'hidden';
+        timerDisplay.style.visibility = 'hidden';
+        finishBtn.textContent = 'Finish';
 
-        // condition view
         if (conditions[currentIndex] === 1 && liveStream) {
-          const vid = document.createElement('video'); vid.srcObject = liveStream; vid.autoplay=true; vid.muted=true; vid.playsInline=true; vid.style.width='100%'; viewContainer.appendChild(vid);
+          const vid = document.createElement('video');
+          vid.srcObject = liveStream;
+          vid.autoplay = true;
+          vid.muted = true;
+          vid.playsInline = true;
+          vid.style.width = '100%';
+          viewContainer.appendChild(vid);
         } else if (conditions[currentIndex] === 2) {
-          const emo = document.createElement('div'); emo.textContent='😊'; emo.style.fontSize='80px'; emo.style.margin='20px'; viewContainer.appendChild(emo);
+          const img = document.createElement('img');
+          img.src = 'input.jpg';
+          img.alt = 'Condition Image';
+          img.style.width = '200px';
+          img.style.margin = '20px';
+          viewContainer.appendChild(img);
         }
       }
 
       startRecBtn.onclick = () => {
-        startInstruction.style.display='none'; startRecBtn.style.display='none'; recordedChunks=[];
-        mediaRecorder = new MediaRecorder(liveStream); mediaRecorder.ondataavailable = e => { if(e.data.size) recordedChunks.push(e.data); };
+        startInstruction.style.display = 'none';
+        startRecBtn.style.display = 'none';
+        recordedChunks = [];
+        mediaRecorder = new MediaRecorder(liveStream);
+        mediaRecorder.ondataavailable = e => { if (e.data.size) recordedChunks.push(e.data); };
         mediaRecorder.onstop = () => {
-          const blob = new Blob(recordedChunks,{type:'video/webm'}); const url=URL.createObjectURL(blob);
-          previewVideo.src=url; interviewPage.classList.add('hidden'); previewPage.classList.remove('hidden');
+          const blob = new Blob(recordedChunks, { type: 'video/webm' });
+          const url = URL.createObjectURL(blob);
+          previewVideo.src = url;
+          interviewPage.classList.add('hidden');
+          previewPage.classList.remove('hidden');
         };
-        mediaRecorder.start(); startTimer(); recordIndicator.style.visibility='visible';
+        mediaRecorder.start();
+        startTimer();
+        recordIndicator.style.visibility = 'visible';
       };
 
-      redoBtn.onclick = () => { if(mediaRecorder&&mediaRecorder.state==='recording') mediaRecorder.stop(); clearInterval(timerDisplay._interval); redoCounts[currentIndex]++; showQuestion(); };
+      redoBtn.onclick = () => {
+        if (mediaRecorder && mediaRecorder.state === 'recording') mediaRecorder.stop();
+        clearInterval(timerDisplay._interval);
+        redoCounts[currentIndex]++;
+        showQuestion();
+      };
 
-      finishBtn.onclick = () => { if(mediaRecorder&&mediaRecorder.state==='recording') mediaRecorder.stop(); };
+      finishBtn.onclick = () => {
+        if (mediaRecorder && mediaRecorder.state === 'recording') mediaRecorder.stop();
+      };
 
-      previewRedoBtn.onclick = () => { previewPage.classList.add('hidden'); showQuestion(); };
+      previewRedoBtn.onclick = () => {
+        previewPage.classList.add('hidden');
+        showQuestion();
+      };
 
       previewNextBtn.onclick = () => {
-        previewVideo.pause(); previewVideo.currentTime=0;
-        if(mediaRecorder&&mediaRecorder.state==='recording') mediaRecorder.stop(); clearInterval(timerDisplay._interval);
-        // after finishing 2 questions show survey
-        const segmentEnd = (currentIndex+1)%2===0;
-        if(segmentEnd) {
-          previewPage.classList.add('hidden'); surveyPage.classList.remove('hidden'); setupSurvey();
+        previewVideo.pause();
+        previewVideo.currentTime = 0;
+        clearInterval(timerDisplay._interval);
+        currentIndex++;
+        if (currentIndex < questions.length) {
+          showQuestion();
         } else {
-          currentIndex++; showQuestion();
-        }
-      };
-
-      function setupSurvey() {
-        saasIndex=0; surveys.push({}); selfCritBlock.classList.add('hidden'); confidenceBlock.classList.add('hidden'); showSurveyItem();
-      }
-
-      function showSurveyItem() {
-        if(saasIndex<saasItems.length) {
-          saasBlock.innerHTML = `<label>${saasIndex+1}. ${saasItems[saasIndex]}</label>` +
-            `<div class="radio-group">` + ['Not at all','Slightly','Moderately','Very','Extremely'].map((o,i)=>
-             `<label><input type="radio" name="saas" value="${i+1}">${o}</label>`).join('') + `</div>`;
-        } else {
-          saasBlock.innerHTML=''; selfCritBlock.classList.remove('hidden'); confidenceBlock.classList.remove('hidden');
-        }
-      }
-
-      nextSurveyBtn.onclick = () => {
-        if(saasIndex<saasItems.length) {
-          const v = document.querySelector('input[name="saas"]:checked')?.value; if(v) { surveys[surveys.length-1][`saas_${saasIndex+1}`]=v; saasIndex++; showSurveyItem(); }
-        } else {
-          surveys[surveys.length-1].selfCrit = document.querySelector('input[name="selfCritical"]:checked').value;
-          surveys[surveys.length-1].confidence = document.querySelector('input[name="confidence"]:checked').value;
-          // … right after you set selfCrit and confidence …
-fetch("https://script.google.com/macros/s/AKfycby-IcRJu4T9Nnr_OqpSM0IiQO01ikSsB6eIkf3TXqdkJ045Bpi-GnjF_R9D4rA8ghKz/exec", {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ answers, surveys })
-})
-  .then(res => res.text())
-  .then(txt => console.log('Sheet says:', txt))
-  .catch(err => console.error('Submit error:', err));
-          surveyPage.classList.add('hidden');
-          currentIndex++; if(currentIndex<questions.length) showQuestion(); else { endPage.classList.remove('hidden'); }
+          endPage.classList.remove('hidden');
         }
       };
 
       function startTimer() {
-        let t=30; timerDisplay.textContent=t; timerDisplay.style.visibility='visible';
-        timerDisplay._interval = setInterval(()=>{ t--; timerDisplay.textContent=t; if(t<=0){ clearInterval(timerDisplay._interval); mediaRecorder.stop(); } },1000);
+        let t = 30;
+        timerDisplay.textContent = t;
+        timerDisplay.style.visibility = 'visible';
+        timerDisplay._interval = setInterval(() => {
+          t--;
+          timerDisplay.textContent = t;
+          if (t <= 0) {
+            clearInterval(timerDisplay._interval);
+            mediaRecorder.stop();
+          }
+        }, 1000);
       }
     };
   </script>
 </body>
 </html>
+"""
+
+# Save the file
+output_path = Path("/mnt/data/interview_with_image.html")
+output_path.write_text(html_content)
+
+output_path.name
