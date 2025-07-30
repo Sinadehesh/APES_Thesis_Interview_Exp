@@ -84,245 +84,216 @@
   </div>
 
   <script>
-    window.onload = () => {
-      const questions = [
-        "Tell me about yourself.",
-        "What are your strengths?",
-        "What are your weaknesses?",
-        "Why do you want this job?",
-        "Describe a time you overcame a challenge.",
-        "Where do you see yourself in five years?"
-      ];
-      const conditions = [1,1,2,2,3,3];
-      const questionVideos = [
-        null,
-        null,
-        "0729 (2)-1.mp4",
-        "0729 (2)-2.mp4",
-        null,
-        null
-      ];
-      const saasItems = [
-        "I feel comfortable with the way I appear to others.",
-        "I feel nervous when having my picture taken.",
-        "I get tense when it is obvious people are looking at me.",
-        "I am concerned people would not like me because of the way I look.",
-        "I worry others talk about flaws in my appearance when I am not around.",
-        "I am concerned people will find me unappealing because of my appearance.",
-        "I am afraid people find me unattractive.",
-        "I worry my appearance will make life more difficult for me.",
-        "I am concerned I have missed out on opportunities because of my appearance.",
-        "I get nervous talking to people because of the way I look.",
-        "I feel anxious when others comment on my appearance.",
-        "I am afraid I would not meet others' standards of how I should look.",
-        "I worry people will judge my appearance negatively.",
-        "I am uncomfortable when I think others notice flaws in my appearance.",
-        "I worry a romantic partner will leave me because of my appearance.",
-        "I am concerned people think I am not good looking."
-      ];
+  window.onload = () => {
+    const questions = [
+      "Tell me about yourself.",
+      "What are your strengths?",
+      "What are your weaknesses?",
+      "Why do you want this job?",
+      "Describe a time you overcame a challenge.",
+      "Where do you see yourself in five years?"
+    ];
+    // 1=mirror, 2=video, 3=blank
+    const conditions = [1,1,2,2,2,2];
+    const questionVideos = [
+      null,
+      null,
+      "0729-1.mp4",
+      "0729-2.mp4",
+      "0729-3.mp4",
+      "0729-4.mp4"
+    ];
+    const saasItems = [ /* your 16 SAAS items */ ];
 
-      let currentIndex = 0;
-      let redoCounts = Array(questions.length).fill(0);
-      let mediaRecorder, recordedChunks = [];
-      let liveStream;
-      let saasIndex = 0;
-      let answers = [], surveys = [];
+    let currentIndex = 0;
+    let redoCounts = Array(questions.length).fill(0);
+    let mediaRecorder, recordedChunks = [];
+    let liveStream;
+    let saasIndex = 0;
+    let surveys = [];
 
-      // Elements
-      const startPage = document.getElementById('startPage');
-      const interviewPage = document.getElementById('interviewContainer');
-      const previewPage = document.getElementById('previewPage');
-      const surveyPage = document.getElementById('surveyContainer');
-      const endPage = document.getElementById('endPage');
-      const viewContainer = document.getElementById('viewContainer');
-      const questionDisplay = document.getElementById('questionDisplay');
-      const startInstruction = document.getElementById('startInstruction');
-      const startRecBtn = document.getElementById('startRecordingBtn');
-      const recordIndicator = document.getElementById('recordIndicator');
-      const timerDisplay = document.getElementById('timerDisplay');
-      const redoDisplay = document.getElementById('redoDisplay');
-      const redoBtn = document.getElementById('redoBtn');
-      const finishBtn = document.getElementById('finishBtn');
-      const previewVideo = document.getElementById('previewVideo');
-      const previewRedoBtn = document.getElementById('previewRedoBtn');
-      const previewNextBtn = document.getElementById('previewNextBtn');
-      const saasBlock = document.getElementById('saasBlock');
-      const selfCritBlock = document.getElementById('selfCritBlock');
-      const confidenceBlock = document.getElementById('confidenceBlock');
-      const nextSurveyBtn = document.getElementById('nextSurveyBtn');
+    // elements
+    const startPage = document.getElementById('startPage'),
+          interviewPage = document.getElementById('interviewContainer'),
+          previewPage = document.getElementById('previewPage'),
+          surveyPage = document.getElementById('surveyContainer'),
+          endPage = document.getElementById('endPage'),
+          questionDisplay = document.getElementById('questionDisplay'),
+          viewContainer = document.getElementById('viewContainer'),
+          startInstruction = document.getElementById('startInstruction'),
+          startRecBtn = document.getElementById('startRecordingBtn'),
+          recordIndicator = document.getElementById('recordIndicator'),
+          timerDisplay = document.getElementById('timerDisplay'),
+          redoDisplay = document.getElementById('redoDisplay'),
+          redoBtn = document.getElementById('redoBtn'),
+          finishBtn = document.getElementById('finishBtn'),
+          previewVideo = document.getElementById('previewVideo'),
+          previewRedoBtn = document.getElementById('previewRedoBtn'),
+          previewNextBtn = document.getElementById('previewNextBtn'),
+          saasBlock = document.getElementById('saasBlock'),
+          selfCritBlock = document.getElementById('selfCritBlock'),
+          confidenceBlock = document.getElementById('confidenceBlock'),
+          nextSurveyBtn = document.getElementById('nextSurveyBtn');
 
-      navigator.mediaDevices.getUserMedia({video:true,audio:true})
-        .then(stream => liveStream = stream)
-        .catch(err => console.error('Stream error:', err));
+    navigator.mediaDevices.getUserMedia({video:true,audio:true})
+      .then(stream => liveStream = stream)
+      .catch(console.error);
 
-      startInterviewBtn.onclick = () => {
-        startPage.classList.add('hidden');
-        interviewPage.classList.remove('hidden');
-        showQuestion();
+    document.getElementById('startInterviewBtn').onclick = () => {
+      startPage.classList.add('hidden');
+      interviewPage.classList.remove('hidden');
+      showQuestion();
+    };
+
+    function showQuestion() {
+      // hide others
+      previewPage.classList.add('hidden');
+      surveyPage.classList.add('hidden');
+      endPage.classList.add('hidden');
+      interviewPage.classList.remove('hidden');
+
+      // clear view
+      viewContainer.innerHTML = '';
+      // question text only if not video condition
+      questionDisplay.textContent = conditions[currentIndex] === 2 ? '' : questions[currentIndex];
+      redoDisplay.textContent = `Redo Count: ${redoCounts[currentIndex]}`;
+      startInstruction.style.display = 'block';
+      startRecBtn.style.display = 'inline-block';
+      recordIndicator.style.visibility = 'hidden';
+      timerDisplay.style.visibility = 'hidden';
+      finishBtn.textContent = 'Finish';
+
+      if (conditions[currentIndex] === 1 && liveStream) {
+        const mirrorVid = document.createElement('video');
+        mirrorVid.srcObject = liveStream;
+        mirrorVid.autoplay = mirrorVid.muted = mirrorVid.playsInline = true;
+        mirrorVid.style.width = '100%';
+        viewContainer.appendChild(mirrorVid);
+      }
+      else if (conditions[currentIndex] === 2) {
+        const promptVid = document.createElement('video');
+        promptVid.src = encodeURI(questionVideos[currentIndex]);
+        promptVid.controls = promptVid.autoplay = true;
+        promptVid.style.width = '100%';
+        viewContainer.appendChild(promptVid);
+      }
+      // blank (3) shows nothing extra
+    }
+
+    startRecBtn.onclick = () => {
+      startInstruction.style.display = 'none';
+      startRecBtn.style.display = 'none';
+      recordedChunks = [];
+      mediaRecorder = new MediaRecorder(liveStream);
+      mediaRecorder.ondataavailable = e => e.data.size && recordedChunks.push(e.data);
+      mediaRecorder.onstop = () => {
+        const blob = new Blob(recordedChunks, {type:'video/webm'});
+        previewVideo.src = URL.createObjectURL(blob);
+        interviewPage.classList.add('hidden');
+        previewPage.classList.remove('hidden');
       };
+      mediaRecorder.start();
+      startTimer();
+      recordIndicator.style.visibility = 'visible';
 
-      function showQuestion() {
-        previewPage.classList.add('hidden');
-        surveyPage.classList.add('hidden');
-        endPage.classList.add('hidden');
-        interviewPage.classList.remove('hidden');
-
+      // swap to static image if recording during a video condition
+      if (conditions[currentIndex] === 2) {
         viewContainer.innerHTML = '';
-        questionDisplay.textContent = questions[currentIndex];
-        redoDisplay.textContent = `Redo Count: ${redoCounts[currentIndex]}`;
-        startInstruction.style.display = 'block';
-        startRecBtn.style.display = 'inline-block';
-        recordIndicator.style.visibility = 'hidden';
-        timerDisplay.style.visibility = 'hidden';
-        finishBtn.textContent = 'Finish';
-
-        if (conditions[currentIndex] === 1 && liveStream) {
-          const vid = document.createElement('video');
-          vid.srcObject = liveStream;
-          vid.autoplay = true;
-          vid.muted = true;
-          vid.playsInline = true;
-          vid.style.width = '100%';
-          viewContainer.appendChild(vid);
-        }
-        else if (conditions[currentIndex] === 2 && questionVideos[currentIndex]) {
-          const vid = document.createElement('video');
-          vid.src = questionVideos[currentIndex];
-          vid.controls = true;
-          vid.autoplay = true;
-          vid.style.width = '100%';
-          viewContainer.appendChild(vid);
-        }
-      }
-
-      startRecBtn.onclick = () => {
-        startInstruction.style.display='none';
-        startRecBtn.style.display='none';
-        recordedChunks=[];
-
-        mediaRecorder = new MediaRecorder(liveStream);
-        mediaRecorder.ondataavailable = e => { if(e.data.size) recordedChunks.push(e.data); };
-        mediaRecorder.onstop = () => {
-          const blob = new Blob(recordedChunks,{type:'video/webm'});
-          const url = URL.createObjectURL(blob);
-          previewVideo.src = url;
-          interviewPage.classList.add('hidden');
-          previewPage.classList.remove('hidden');
-        };
-
-        mediaRecorder.start();
-        startTimer();
-        recordIndicator.style.visibility='visible';
-
-        // if video-question, show static image during recording
-        if (conditions[currentIndex] === 2 && questionVideos[currentIndex]) {
-          viewContainer.innerHTML = '';
-          const img = document.createElement('img');
-          img.src = 'input.jpg';
-          img.alt = 'Recording Image';
-          img.style.width = '100%';
-          img.style.margin = '20px 0';
-          viewContainer.appendChild(img);
-        }
-      };
-
-      redoBtn.onclick = () => {
-        if(mediaRecorder && mediaRecorder.state==='recording') mediaRecorder.stop();
-        clearInterval(timerDisplay._interval);
-        redoCounts[currentIndex]++;
-        showQuestion();
-      };
-
-      finishBtn.onclick = () => {
-        if(mediaRecorder && mediaRecorder.state==='recording') mediaRecorder.stop();
-      };
-
-      previewRedoBtn.onclick = () => {
-        previewPage.classList.add('hidden');
-        showQuestion();
-      };
-
-      previewNextBtn.onclick = () => {
-        previewVideo.pause();
-        previewVideo.currentTime = 0;
-        if(mediaRecorder && mediaRecorder.state==='recording') mediaRecorder.stop();
-        clearInterval(timerDisplay._interval);
-
-        const segmentEnd = (currentIndex+1)%2===0;
-        if(segmentEnd) {
-          previewPage.classList.add('hidden');
-          surveyPage.classList.remove('hidden');
-          setupSurvey();
-        } else {
-          currentIndex++;
-          showQuestion();
-        }
-      };
-
-      function setupSurvey() {
-        saasIndex = 0;
-        surveys.push({});
-        selfCritBlock.classList.add('hidden');
-        confidenceBlock.classList.add('hidden');
-        showSurveyItem();
-      }
-
-      function showSurveyItem() {
-        if(saasIndex < saasItems.length) {
-          saasBlock.innerHTML = `<label>${saasIndex+1}. ${saasItems[saasIndex]}</label>` +
-            `<div class="radio-group">` +
-            ['Not at all','Slightly','Moderately','Very','Extremely']
-              .map((o,i)=>`<label><input type="radio" name="saas" value="${i+1}">${o}</label>`).join('') +
-            `</div>`;
-        } else {
-          saasBlock.innerHTML = '';
-          selfCritBlock.classList.remove('hidden');
-          confidenceBlock.classList.remove('hidden');
-        }
-      }
-
-      nextSurveyBtn.onclick = () => {
-        if(saasIndex < saasItems.length) {
-          const v = document.querySelector('input[name="saas"]:checked')?.value;
-          if(v) {
-            surveys[surveys.length-1][`saas_${saasIndex+1}`] = v;
-            saasIndex++;
-            showSurveyItem();
-          }
-        } else {
-          surveys[surveys.length-1].selfCrit = document.querySelector('input[name="selfCritical"]:checked').value;
-          surveys[surveys.length-1].confidence = document.querySelector('input[name="confidence"]:checked').value;
-          // submit to sheet
-          fetch("https://script.google.com/macros/s/AKfycby-IcRJu4T9Nnr_OqpSM0IiQO01ikSsB6eIkf3TXqdkJ045Bpi-GnjF_R9D4rA8ghKz/exec", {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ answers, surveys })
-          }).then(res => res.text()).then(txt => console.log('Sheet says:', txt)).catch(err => console.error(err));
-
-          surveyPage.classList.add('hidden');
-          currentIndex++;
-          if(currentIndex < questions.length) {
-            showQuestion();
-          } else {
-            endPage.classList.remove('hidden');
-          }
-        }
-      };
-
-      function startTimer() {
-        let t = 30;
-        timerDisplay.textContent = t;
-        timerDisplay.style.visibility = 'visible';
-        timerDisplay._interval = setInterval(() => {
-          t--;
-          timerDisplay.textContent = t;
-          if(t <= 0) {
-            clearInterval(timerDisplay._interval);
-            mediaRecorder.stop();
-          }
-        }, 1000);
+        const img = document.createElement('img');
+        img.src = 'input.jpg';
+        img.style.width = '100%';
+        img.style.margin = '20px 0';
+        viewContainer.appendChild(img);
       }
     };
+
+    redoBtn.onclick = () => {
+      if (mediaRecorder && mediaRecorder.state==='recording') mediaRecorder.stop();
+      clearInterval(timerDisplay._interval);
+      redoCounts[currentIndex]++;
+      showQuestion();
+    };
+
+    finishBtn.onclick = () => mediaRecorder && mediaRecorder.state==='recording' && mediaRecorder.stop();
+
+    previewRedoBtn.onclick = () => {
+      previewPage.classList.add('hidden');
+      showQuestion();
+    };
+
+    previewNextBtn.onclick = () => {
+      previewVideo.pause();
+      previewVideo.currentTime = 0;
+      mediaRecorder && mediaRecorder.state==='recording' && mediaRecorder.stop();
+      clearInterval(timerDisplay._interval);
+
+      const segmentEnd = (currentIndex+1) % 2 === 0;
+      if (segmentEnd) {
+        previewPage.classList.add('hidden');
+        surveyPage.classList.remove('hidden');
+        setupSurvey();
+      } else {
+        currentIndex++;
+        showQuestion();
+      }
+    };
+
+    function setupSurvey() {
+      saasIndex = 0;
+      surveys.push({});
+      selfCritBlock.classList.add('hidden');
+      confidenceBlock.classList.add('hidden');
+      showSurveyItem();
+    }
+
+    function showSurveyItem() {
+      if (saasIndex < saasItems.length) {
+        saasBlock.innerHTML = `<label>${saasIndex+1}. ${saasItems[saasIndex]}</label>` +
+          `<div class="radio-group">${['Not at all','Slightly','Moderately','Very','Extremely']
+            .map((o,i)=>`<label><input type="radio" name="saas" value="${i+1}">${o}</label>`).join('')}</div>`;
+      } else {
+        saasBlock.innerHTML = '';
+        selfCritBlock.classList.remove('hidden');
+        confidenceBlock.classList.remove('hidden');
+      }
+    }
+
+    nextSurveyBtn.onclick = () => {
+      if (saasIndex < saasItems.length) {
+        const v = document.querySelector('input[name="saas"]:checked')?.value;
+        if (v) {
+          surveys[surveys.length-1][`saas_${saasIndex+1}`] = v;
+          saasIndex++;
+          showSurveyItem();
+        }
+      } else {
+        surveys[surveys.length-1].selfCrit = document.querySelector('input[name="selfCritical"]:checked').value;
+        surveys[surveys.length-1].confidence = document.querySelector('input[name="confidence"]:checked').value;
+        // submit
+        fetch("https://script.google.com/macros/s/AKfycby-IcRJu4T9Nnr_OqpSM0IiQO01ikSsB6eIkf3TXqdkJ045Bpi-GnjF_R9D4rA8ghKz/exec", {
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({ surveys })
+        });
+        surveyPage.classList.add('hidden');
+        currentIndex++;
+        if (currentIndex < questions.length) showQuestion();
+        else endPage.classList.remove('hidden');
+      }
+    };
+
+    function startTimer() {
+      let t = 30;
+      timerDisplay.textContent = t;
+      timerDisplay.style.visibility = 'visible';
+      timerDisplay._interval = setInterval(() => {
+        t--; timerDisplay.textContent = t;
+        if (t <= 0) {
+          clearInterval(timerDisplay._interval);
+          mediaRecorder.stop();
+        }
+      }, 1000);
+    }
+  };
   </script>
 </body>
 </html>
