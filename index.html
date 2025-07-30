@@ -40,12 +40,12 @@
     const videoContainer = document.getElementById('videoContainer');
 
     const questions = [
-      { type: 'text', content: "Tell me about yourself." },
-      { type: 'text', content: "What are your strengths?" },
-      { type: 'video', content: "0729 (2)-1.mp4" },
-      { type: 'video', content: "0729 (2)-2.mp4" },
-      { type: 'video', content: "0729 (2)-3.mp4" },
-      { type: 'video', content: "0729 (2)-4.mp4" }
+      { condition: 1, text: "Tell me about yourself." },
+      { condition: 1, text: "What are your strengths?" },
+      { condition: 2, video: "0729 (2)-1.mp4" },
+      { condition: 2, video: "0729 (2)-2.mp4" },
+      { condition: 2, video: "0729 (2)-3.mp4" },
+      { condition: 2, video: "0729 (2)-4.mp4" }
     ];
 
     let current = 0;
@@ -59,14 +59,14 @@
       const q = questions[current];
       videoContainer.innerHTML = '';
 
-      if (q.type === 'text') {
+      if (q.condition === 1) {
         const p = document.createElement('p');
-        p.textContent = q.content;
+        p.textContent = q.text;
         p.className = 'question-text';
         videoContainer.appendChild(p);
-      } else if (q.type === 'video') {
+      } else if (q.condition === 2) {
         const vid = document.createElement('video');
-        vid.src = q.content;
+        vid.src = q.video;
         vid.controls = true;
         vid.autoplay = true;
         videoContainer.appendChild(vid);
