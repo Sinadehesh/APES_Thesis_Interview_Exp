@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Interview Video + Text Questions</title>
+  <title>Interview – Text & Video Conditions</title>
   <style>
     body {
       font-family: sans-serif;
@@ -38,30 +38,33 @@
   </div>
   <script>
     const videoContainer = document.getElementById('videoContainer');
+
     const questions = [
       { type: 'text', content: "Tell me about yourself." },
       { type: 'text', content: "What are your strengths?" },
-      { type: 'video', content: "0729 (2)-1.mp4", text: "What are your weaknesses?" },
-      { type: 'video', content: "0729 (2)-2.mp4", text: "Why do you want this job?" },
-      { type: 'video', content: "0729 (2)-3.mp4", text: "Describe a time you overcame a challenge." },
-      { type: 'video', content: "0729 (2)-4.mp4", text: "Where do you see yourself in five years?" }
+      { type: 'video', content: "0729 (2)-1.mp4" },
+      { type: 'video', content: "0729 (2)-2.mp4" },
+      { type: 'video', content: "0729 (2)-3.mp4" },
+      { type: 'video', content: "0729 (2)-4.mp4" }
     ];
 
     let current = 0;
+
     function nextQuestion() {
       if (current >= questions.length) {
         videoContainer.innerHTML = "<h2>Thank you for completing the interview!</h2>";
         return;
       }
+
       const q = questions[current];
       videoContainer.innerHTML = '';
 
-      const p = document.createElement('p');
-      p.textContent = q.text || q.content;
-      p.className = 'question-text';
-      videoContainer.appendChild(p);
-
-      if (q.type === 'video') {
+      if (q.type === 'text') {
+        const p = document.createElement('p');
+        p.textContent = q.content;
+        p.className = 'question-text';
+        videoContainer.appendChild(p);
+      } else if (q.type === 'video') {
         const vid = document.createElement('video');
         vid.src = q.content;
         vid.controls = true;
