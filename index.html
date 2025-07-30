@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Interview – Text & Video Conditions</title>
+  <title>Interview – Mixed Questions</title>
   <style>
     body {
       font-family: sans-serif;
@@ -36,16 +36,17 @@
     <div id="videoContainer"></div>
     <button onclick="nextQuestion()">Next</button>
   </div>
+
   <script>
     const videoContainer = document.getElementById('videoContainer');
 
     const questions = [
-      { condition: 1, text: "Tell me about yourself." },
-      { condition: 1, text: "What are your strengths?" },
-      { condition: 2, video: "0729 (2)-1.mp4" },
-      { condition: 2, video: "0729 (2)-2.mp4" },
-      { condition: 2, video: "0729 (2)-3.mp4" },
-      { condition: 2, video: "0729 (2)-4.mp4" }
+      { type: "text", text: "Tell me about yourself." },
+      { type: "text", text: "What are your strengths?" },
+      { type: "video", file: "0729-1.mp4" },
+      { type: "video", file: "0729-2.mp4" },
+      { type: "video", file: "0729-3.mp4" },
+      { type: "video", file: "0729-4.mp4" }
     ];
 
     let current = 0;
@@ -57,19 +58,19 @@
       }
 
       const q = questions[current];
-      videoContainer.innerHTML = '';
+      videoContainer.innerHTML = "";
 
-      if (q.condition === 1) {
-        const p = document.createElement('p');
+      if (q.type === "text") {
+        const p = document.createElement("p");
         p.textContent = q.text;
-        p.className = 'question-text';
+        p.className = "question-text";
         videoContainer.appendChild(p);
-      } else if (q.condition === 2) {
-        const vid = document.createElement('video');
-        vid.src = q.video;
-        vid.controls = true;
-        vid.autoplay = true;
-        videoContainer.appendChild(vid);
+      } else if (q.type === "video") {
+        const video = document.createElement("video");
+        video.src = q.file;
+        video.controls = true;
+        video.autoplay = true;
+        videoContainer.appendChild(video);
       }
 
       current++;
