@@ -1,22 +1,31 @@
+# Generate updated HTML with:
+# - All original layout and sections preserved
+# - Video questions shown instead of text for condition 2
+# - Webcam and image shown during recording for condition 2
+# - Other questions use text only
+
+html_path = Path("/mnt/data/final_interview_with_video_and_image_condition.html")
+
+full_html = """
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Interview – Mixed Questions</title>
+  <title>Interview – Full Interactive</title>
   <style>
     body {
       font-family: sans-serif;
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin-top: 50px;
+      margin-top: 20px;
     }
     .container {
       width: 80%;
       max-width: 700px;
       text-align: center;
     }
-    video {
+    video, img {
       width: 100%;
       margin-top: 20px;
     }
@@ -28,17 +37,41 @@
       font-size: 1.2em;
       margin-top: 20px;
     }
+    #recordIndicator {
+      width: 20px;
+      height: 20px;
+      background: red;
+      border-radius: 50%;
+      visibility: hidden;
+      display: inline-block;
+      margin-left: 10px;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Interview Demo</h1>
-    <div id="videoContainer"></div>
+    <div id="contentContainer"></div>
+    <div id="recordingControls" style="display:none;">
+      <button id="startRecordingBtn">Start Recording</button>
+      <button id="stopRecordingBtn" style="display:none;">Finish</button>
+      <div id="recordIndicator"></div>
+      <video id="selfPreview" autoplay muted playsinline style="display:none;"></video>
+      <img id="staticImage" src="input.jpg" alt="Condition Image" style="display:none; margin-top: 10px;" />
+    </div>
+    <video id="playback" controls style="display:none;"></video>
     <button onclick="nextQuestion()">Next</button>
   </div>
 
   <script>
-    const videoContainer = document.getElementById('videoContainer');
+    const contentContainer = document.getElementById('contentContainer');
+    const recordingControls = document.getElementById('recordingControls');
+    const startBtn = document.getElementById('startRecordingBtn');
+    const stopBtn = document.getElementById('stopRecordingBtn');
+    const selfPreview = document.getElementById('selfPreview');
+    const staticImage = document.getElementById('staticImage');
+    const recordIndicator = document.getElementById('recordIndicator');
+    const playback = document.getElementById('playback');
 
     const questions = [
       { type: "text", text: "Tell me about yourself." },
@@ -50,28 +83,70 @@
     ];
 
     let current = 0;
+    let mediaRecorder, recordedChunks = [], liveStream;
+
+    navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream => {
+      liveStream = stream;
+      selfPreview.srcObject = stream;
+    });
+
+    startBtn.onclick = () => {
+      recordedChunks = [];
+      mediaRecorder = new MediaRecorder(liveStream);
+      mediaRecorder.ondataavailable = e => {
+        if (e.data.size) recordedChunks.push(e.data);
+      };
+      mediaRecorder.onstop = () => {
+        const blob = new Blob(recordedChunks, { type: "video/webm" });
+        playback.src = URL.createObjectURL(blob);
+        playback.style.display = "block";
+      };
+      mediaRecorder.start();
+      startBtn.style.display = "none";
+      stopBtn.style.display = "inline-block";
+      recordIndicator.style.visibility = "visible";
+    };
+
+    stopBtn.onclick = () => {
+      mediaRecorder.stop();
+      stopBtn.style.display = "none";
+      recordIndicator.style.visibility = "hidden";
+    };
 
     function nextQuestion() {
+      playback.style.display = "none";
+      recordingControls.style.display = "none";
+      selfPreview.style.display = "none";
+      staticImage.style.display = "none";
+
       if (current >= questions.length) {
-        videoContainer.innerHTML = "<h2>Thank you for completing the interview!</h2>";
+        contentContainer.innerHTML = "<h2>Thank you for completing the interview!</h2>";
         return;
       }
 
       const q = questions[current];
-      videoContainer.innerHTML = "";
+      contentContainer.innerHTML = '';
 
       if (q.type === "text") {
         const p = document.createElement("p");
         p.textContent = q.text;
         p.className = "question-text";
-        videoContainer.appendChild(p);
+        contentContainer.appendChild(p);
+        recordingControls.style.display = "block";
+        selfPreview.style.display = "block";
       } else if (q.type === "video") {
-        const video = document.createElement("video");
-        video.src = q.file;
-        video.controls = true;
-        video.autoplay = true;
-        videoContainer.appendChild(video);
+        const vid = document.createElement("video");
+        vid.src = q.file;
+        vid.controls = true;
+        vid.autoplay = true;
+        contentContainer.appendChild(vid);
+        recordingControls.style.display = "block";
+        staticImage.style.display = "block";
       }
+
+      startBtn.style.display = "inline-block";
+      stopBtn.style.display = "none";
+      recordIndicator.style.visibility = "hidden";
 
       current++;
     }
@@ -80,3 +155,8 @@
   </script>
 </body>
 </html>
+"""
+
+# Save the file
+html_path.write_text(full_html)
+html_path.name
