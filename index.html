@@ -1,68 +1,56 @@
-Here’s the complete **`index.html`** with everything in place:
-
-* **Intro Step 1:** Ask for name & desired job.
-* **Intro Step 2:** Personalized “Imagine…” page, now including:
-
-  > *“After every two questions, you’ll be prompted to answer two quick questions about how you felt.”*
-* **Interview Flow:** Mirror (Q1–2), Video (Q3–4), Blank (Q5–6).
-* **Recording UI:** Swaps video → `input.jpg` on record start.
-* **After each 2 questions:** Only the two “How did you feel?” questions (self-criticism & confidence).
-
-Just replace your existing `index.html`, upload your four videos (`0729-1.mp4`…`0729-4.mp4`) and `input.jpg`, and GitHub Pages will serve it.
-
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Interview Demo with Preview & Surveys</title>
+  <title>Interview Demo</title>
   <style>
-    body { display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; font-family: 'Segoe UI', Tahoma, Verdana, sans-serif; background: linear-gradient(135deg, #ece9e6, #ffffff); }
-    .container { width: 600px; max-width: 90vw; padding: 30px; background: #fff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; margin-bottom: 20px; }
+    body { display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; font-family: 'Segoe UI', Tahoma, Verdana, sans-serif; background: #f0f2f5; }
+    .container { width: 600px; max-width: 90vw; padding: 30px; background: #fff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; }
     .hidden { display: none; }
-    input { width: 100%; padding: 10px; margin: 10px 0; font-size: 1em; }
-    button { font-size: 1.1em; padding: 12px 24px; margin: 10px 5px; border: none; border-radius: 6px; cursor: pointer; transition: background 0.3s; }
-    button:hover { background-color: #e6e6e6; }
-    #startIntroBtn, #startInterviewBtn, #startRecordingBtn, #redoBtn, #finishBtn, #previewRedoBtn, #previewNextBtn, #nextSurveyBtn { background: #1976d2; color: #fff; }
-    #startRecordingBtn { background: red; }
-    .status-row { display: flex; justify-content: center; align-items: center; gap: 20px; margin: 15px 0; }
-    .preview-video { margin-top: 20px; max-width: 100%; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-    .question-block, .radio-group { text-align: left; margin: 10px 0; }
-    .radio-group label { margin-right: 10px; }
+    input, button { width: 100%; padding: 12px; margin: 10px 0; font-size: 1em; }
+    button { border: none; border-radius: 6px; cursor: pointer; background: #1976d2; color: #fff; }
+    button:hover { background-color: #145a9e; }
+    #startRecordingBtn { background: #d32f2f; }
+    #startRecordingBtn:hover { background: #9a2424; }
+    .status-row { display: flex; justify-content: space-between; align-items: center; margin: 20px 0; }
+    .status-row > span { font-weight: bold; }
+    .video-prompt, #viewContainer img { width: 100%; border-radius: 6px; }
+    .preview-video { width: 100%; border-radius: 6px; }
+    .radio-group label { display: block; text-align: left; margin: 8px 0; }
   </style>
 </head>
 <body>
-  <!-- STEP 1: Name & Desired Job -->
+  <!-- STEP 1: Name & Job -->
   <div id="startPage" class="container">
     <h1>Welcome!</h1>
-    <p>Before we begin, please tell us:</p>
+    <p>Please enter your name and the job you’re interviewing for:</p>
     <input type="text" id="participantName" placeholder="Your name" />
-    <input type="text" id="participantJob" placeholder="Job you’re interviewing for" />
+    <input type="text" id="participantJob" placeholder="Desired job" />
     <button id="startIntroBtn">Next</button>
   </div>
 
-  <!-- STEP 2: Immersive Explanation -->
+  <!-- STEP 2: Personalized Intro -->
   <div id="introPage" class="container hidden">
     <h2>Hi <span id="displayName"></span>!</h2>
     <p>Imagine you’re interviewing for the role of <strong><span id="displayJob"></span></strong>.</p>
-    <p>This is a job you really want, so treat this interview as something you truly care about.</p>
-    <p>After every two questions, you’ll be prompted to answer two quick questions about how you felt.</p>
+    <p>This is a job you really want—treat this interview as something you truly care about.</p>
+    <p>After Question 2 and Question 4, you’ll answer two quick questions about how you felt.</p>
     <button id="startInterviewBtn">Start Interview</button>
   </div>
 
-  <!-- INTERVIEW FLOW -->
+  <!-- INTERVIEW QUESTIONS -->
   <div id="interviewContainer" class="container hidden">
     <p id="questionDisplay"></p>
     <div id="viewContainer"></div>
     <p id="startInstruction">Click <strong>Start Recording</strong> when ready. You have 30s.</p>
     <button id="startRecordingBtn">Start Recording</button>
     <div class="status-row">
-      <span id="redoDisplay"></span>
+      <span id="redoDisplay">Redo: 0</span>
       <div id="recordIndicator" style="width:20px;height:20px;background:red;border-radius:50%;visibility:hidden;"></div>
-      <div id="timerDisplay" style="color:red;font-weight:bold;font-size:1.5em;visibility:hidden;">30</div>
+      <span id="timerDisplay" style="color:red;visibility:hidden;">30</span>
     </div>
-    <div style="display:flex;justify-content:space-between;">
-      <button id="redoBtn" style="flex:1; margin-right:10px;">Redo</button>
+    <div style="display:flex; gap:10px;">
+      <button id="redoBtn" style="flex:1;">Redo</button>
       <button id="finishBtn" style="flex:1;">Finish</button>
     </div>
   </div>
@@ -71,72 +59,74 @@ Just replace your existing `index.html`, upload your four videos (`0729-1.mp4`�
   <div id="previewPage" class="container hidden">
     <h2>Your Recording Preview</h2>
     <video id="previewVideo" class="preview-video" controls></video>
-    <div style="display:flex;justify-content:space-between;">
-      <button id="previewRedoBtn" style="flex:1; margin-right:10px;">Redo</button>
-      <button id="previewNextBtn" style="flex:1;">Next Question</button>
+    <div style="display:flex; gap:10px;">
+      <button id="previewRedoBtn" style="flex:1;">Redo</button>
+      <button id="previewNextBtn" style="flex:1;">Next</button>
     </div>
   </div>
 
-  <!-- SHORT QUESTIONNAIRE -->
+  <!-- SHORT SURVEY (2 QUESTIONS) -->
   <div id="surveyContainer" class="container hidden">
-    <h2>How did you feel?</h2>
-    <form id="surveyForm">
-      <div class="question-block">
-        <label>You were too self-critical during this condition.</label>
-        <div class="radio-group">
-          <label><input type="radio" name="selfCritical" value="1">Not at all</label>
-          <label><input type="radio" name="selfCritical" value="2">Slightly</label>
-          <label><input type="radio" name="selfCritical" value="3">Moderately</label>
-          <label><input type="radio" name="selfCritical" value="4">Very</label>
-          <label><input type="radio" name="selfCritical" value="5">Extremely</label>
-        </div>
+    <h2>Quick Check-In</h2>
+    <div class="question-block">
+      <label>You were too self-critical during this segment:</label>
+      <div class="radio-group">
+        <label><input type="radio" name="selfCritical" value="1">Not at all</label>
+        <label><input type="radio" name="selfCritical" value="2">Slightly</label>
+        <label><input type="radio" name="selfCritical" value="3">Moderately</label>
+        <label><input type="radio" name="selfCritical" value="4">Very</label>
+        <label><input type="radio" name="selfCritical" value="5">Extremely</label>
       </div>
-      <div class="question-block">
-        <label>You were confident in your last response.</label>
-        <div class="radio-group">
-          <label><input type="radio" name="confidence" value="1">Not at all</label>
-          <label><input type="radio" name="confidence" value="2">Slightly</label>
-          <label><input type="radio" name="confidence" value="3">Moderately</label>
-          <label><input type="radio" name="confidence" value="4">Very</label>
-          <label><input type="radio" name="confidence" value="5">Extremely</label>
-        </div>
+    </div>
+    <div class="question-block">
+      <label>You felt confident in this segment:</label>
+      <div class="radio-group">
+        <label><input type="radio" name="confidence" value="1">Not at all</label>
+        <label><input type="radio" name="confidence" value="2">Slightly</label>
+        <label><input type="radio" name="confidence" value="3">Moderately</label>
+        <label><input type="radio" name="confidence" value="4">Very</label>
+        <label><input type="radio" name="confidence" value="5">Extremely</label>
       </div>
-    </form>
+    </div>
     <button id="nextSurveyBtn">Submit</button>
   </div>
 
-  <!-- END PAGE -->
+  <!-- END -->
   <div id="endPage" class="container hidden">
     <h2>Thank You!</h2>
-    <p>Thank you for taking part in the experiment. Science owes you one!</p>
+    <p>You’ve completed the interview. We appreciate your time!</p>
   </div>
 
   <script>
     window.onload = () => {
-      // Intro step logic
-      const startIntroBtn = document.getElementById('startIntroBtn'),
-            startPage     = document.getElementById('startPage'),
-            introPage     = document.getElementById('introPage'),
-            displayName   = document.getElementById('displayName'),
-            displayJob    = document.getElementById('displayJob');
+      // Elements
+      const startPage     = document.getElementById('startPage');
+      const introPage     = document.getElementById('introPage');
+      const interviewPage = document.getElementById('interviewContainer');
+      const previewPage   = document.getElementById('previewPage');
+      const surveyPage    = document.getElementById('surveyContainer');
+      const endPage       = document.getElementById('endPage');
+      const displayName   = document.getElementById('displayName');
+      const displayJob    = document.getElementById('displayJob');
+      const questionDisplay = document.getElementById('questionDisplay');
+      const viewContainer = document.getElementById('viewContainer');
+      const startInstruction = document.getElementById('startInstruction');
+      const redoDisplay   = document.getElementById('redoDisplay');
+      const recordIndicator = document.getElementById('recordIndicator');
+      const timerDisplay  = document.getElementById('timerDisplay');
+      const previewVideo  = document.getElementById('previewVideo');
 
-      startIntroBtn.onclick = () => {
-        const name = document.getElementById('participantName').value.trim();
-        const job  = document.getElementById('participantJob').value.trim();
-        if (!name || !job) return alert('Please enter both your name and the job title.');
-        displayName.textContent = name;
-        displayJob.textContent  = job;
-        startPage.classList.add('hidden');
-        introPage.classList.remove('hidden');
-      };
+      // Buttons/Inputs
+      const startIntroBtn    = document.getElementById('startIntroBtn');
+      const startInterviewBtn= document.getElementById('startInterviewBtn');
+      const startRecBtn      = document.getElementById('startRecordingBtn');
+      const redoBtn          = document.getElementById('redoBtn');
+      const finishBtn        = document.getElementById('finishBtn');
+      const previewRedoBtn   = document.getElementById('previewRedoBtn');
+      const previewNextBtn   = document.getElementById('previewNextBtn');
+      const nextSurveyBtn    = document.getElementById('nextSurveyBtn');
 
-      document.getElementById('startInterviewBtn').onclick = () => {
-        introPage.classList.add('hidden');
-        document.getElementById('interviewContainer').classList.remove('hidden');
-        showQuestion();
-      };
-
-      // Interview core logic
+      // Data
       const questions = [
         "Tell me about yourself.",
         "What are your strengths?",
@@ -145,74 +135,83 @@ Just replace your existing `index.html`, upload your four videos (`0729-1.mp4`�
         "Describe a time you overcame a challenge.",
         "Where do you see yourself in five years?"
       ];
-      const conditions = [1,1,2,2,3,3]; // 1=mirror, 2=video, 3=blank
+      const conditions = [1,1,2,2,3,3]; // 1: mirror, 2: video, 3: blank
       const questionVideos = [null,null,"0729-1.mp4","0729-2.mp4",null,null];
 
-      let currentIndex = 0,
-          redoCounts   = Array(questions.length).fill(0),
-          mediaRecorder, recordedChunks = [],
-          liveStream;
+      let currentIndex = 0;
+      let redoCounts = Array(questions.length).fill(0);
+      let mediaRecorder, recordedChunks = [];
+      let liveStream;
 
-      const interviewPage   = document.getElementById('interviewContainer'),
-            previewPage     = document.getElementById('previewPage'),
-            surveyPage      = document.getElementById('surveyContainer'),
-            endPage         = document.getElementById('endPage'),
-            questionDisplay = document.getElementById('questionDisplay'),
-            viewContainer   = document.getElementById('viewContainer'),
-            startInstruction= document.getElementById('startInstruction'),
-            startRecBtn     = document.getElementById('startRecordingBtn'),
-            recordIndicator = document.getElementById('recordIndicator'),
-            timerDisplay    = document.getElementById('timerDisplay'),
-            redoDisplay     = document.getElementById('redoDisplay'),
-            redoBtn         = document.getElementById('redoBtn'),
-            finishBtn       = document.getElementById('finishBtn'),
-            previewVideo    = document.getElementById('previewVideo'),
-            previewRedoBtn  = document.getElementById('previewRedoBtn'),
-            previewNextBtn  = document.getElementById('previewNextBtn'),
-            nextSurveyBtn   = document.getElementById('nextSurveyBtn');
+      // 1) Intro: Name & Job
+      startIntroBtn.onclick = () => {
+        const name = document.getElementById('participantName').value.trim();
+        const job  = document.getElementById('participantJob').value.trim();
+        if (!name || !job) {
+          return alert('Please enter both your name and the job title.');
+        }
+        displayName.textContent = name;
+        displayJob.textContent  = job;
+        startPage.classList.add('hidden');
+        introPage.classList.remove('hidden');
+      };
 
+      // 2) Start Interview
+      startInterviewBtn.onclick = () => {
+        introPage.classList.add('hidden');
+        interviewPage.classList.remove('hidden');
+        showQuestion();
+      };
+
+      // Get media
       navigator.mediaDevices.getUserMedia({video:true,audio:true})
-        .then(s => liveStream = s).catch(console.error);
+        .then(s => liveStream = s)
+        .catch(console.error);
 
-      function showQuestion(){
+      function showQuestion() {
+        // Hide all pages except interview
         previewPage.classList.add('hidden');
         surveyPage.classList.add('hidden');
         endPage.classList.add('hidden');
         interviewPage.classList.remove('hidden');
 
+        // Clear previous
         viewContainer.innerHTML = '';
-        questionDisplay.textContent = (conditions[currentIndex] === 2) ? '' : questions[currentIndex];
-        redoDisplay.textContent    = `Redo Count: ${redoCounts[currentIndex]}`;
+        questionDisplay.textContent = (conditions[currentIndex]===2) ? '' : questions[currentIndex];
+        redoDisplay.textContent = `Redo: ${redoCounts[currentIndex]}`;
         startInstruction.style.display = 'block';
-        startRecBtn.style.display      = 'inline-block';
+        startRecBtn.style.display     = 'inline-block';
         recordIndicator.style.visibility = 'hidden';
         timerDisplay.style.visibility    = 'hidden';
-        finishBtn.textContent = 'Finish';
 
+        // Mirror condition
         if (conditions[currentIndex] === 1 && liveStream) {
           const vid = document.createElement('video');
           vid.srcObject = liveStream;
           vid.autoplay = vid.muted = vid.playsInline = true;
-          vid.style.width = '100%';
+          vid.className = 'video-prompt';
           viewContainer.appendChild(vid);
         }
-        else if (conditions[currentIndex] === 2 && questionVideos[currentIndex]) {
+        // Video prompt condition
+        else if (conditions[currentIndex] === 2) {
           const vid = document.createElement('video');
           vid.src = encodeURI(questionVideos[currentIndex]);
           vid.controls = vid.autoplay = true;
-          vid.style.width = '100%';
+          vid.className = 'video-prompt';
           viewContainer.appendChild(vid);
         }
+        // Blank (3) => no prompt
       }
 
+      // Recording logic
       startRecBtn.onclick = () => {
         startInstruction.style.display = 'none';
-        startRecBtn.style.display     = 'none';
+        startRecBtn.style.display      = 'none';
         recordedChunks = [];
         mediaRecorder = new MediaRecorder(liveStream);
-        mediaRecorder.ondataavailable = e => e.data.size && recordedChunks.push(e.data);
+        mediaRecorder.ondataavailable = e => { if (e.data.size) recordedChunks.push(e.data); };
         mediaRecorder.onstop = () => {
-          const blob = new Blob(recordedChunks,{type:'video/webm'});
+          const blob = new Blob(recordedChunks, {type:'video/webm'});
           previewVideo.src = URL.createObjectURL(blob);
           interviewPage.classList.add('hidden');
           previewPage.classList.remove('hidden');
@@ -221,12 +220,12 @@ Just replace your existing `index.html`, upload your four videos (`0729-1.mp4`�
         startTimer();
         recordIndicator.style.visibility = 'visible';
 
+        // Swap in picture for video condition during recording
         if (conditions[currentIndex] === 2) {
           viewContainer.innerHTML = '';
           const img = document.createElement('img');
-          img.src    = 'input.jpg';
-          img.style.width  = '100%';
-          img.style.margin = '20px 0';
+          img.src = 'input.jpg';
+          img.alt = '';
           viewContainer.appendChild(img);
         }
       };
@@ -237,14 +236,22 @@ Just replace your existing `index.html`, upload your four videos (`0729-1.mp4`�
         redoCounts[currentIndex]++;
         showQuestion();
       };
-      finishBtn.onclick = () => mediaRecorder && mediaRecorder.state==='recording' && mediaRecorder.stop();
-      previewRedoBtn.onclick = () => { previewPage.classList.add('hidden'); showQuestion(); };
+      finishBtn.onclick = () => {
+        if (mediaRecorder && mediaRecorder.state==='recording') mediaRecorder.stop();
+      };
+
+      previewRedoBtn.onclick = () => {
+        previewPage.classList.add('hidden');
+        showQuestion();
+      };
+
       previewNextBtn.onclick = () => {
         previewVideo.pause();
         previewVideo.currentTime = 0;
-        mediaRecorder && mediaRecorder.state==='recording' && mediaRecorder.stop();
+        if (mediaRecorder && mediaRecorder.state==='recording') mediaRecorder.stop();
         clearInterval(timerDisplay._interval);
 
+        // After Q2 and Q4, show the 2-question survey
         if ((currentIndex+1) % 2 === 0) {
           previewPage.classList.add('hidden');
           surveyPage.classList.remove('hidden');
@@ -254,17 +261,25 @@ Just replace your existing `index.html`, upload your four videos (`0729-1.mp4`�
         }
       };
 
+      // Survey submit
       nextSurveyBtn.onclick = () => {
-        const selfCrit = document.querySelector('input[name="selfCritical"]:checked')?.value;
-        const conf     = document.querySelector('input[name="confidence"]:checked')?.value;
-        if (!selfCrit || !conf) return alert('Please answer both questions.');
-        // you can send/store selfCrit & conf here
+        const selfCrit  = document.querySelector('input[name="selfCritical"]:checked')?.value;
+        const confidence= document.querySelector('input[name="confidence"]:checked')?.value;
+        if (!selfCrit || !confidence) {
+          return alert('Please answer both questions.');
+        }
+        // TODO: store selfCrit & confidence
+
         surveyPage.classList.add('hidden');
         currentIndex++;
-        if (currentIndex < questions.length) showQuestion();
-        else endPage.classList.remove('hidden');
+        if (currentIndex < questions.length) {
+          showQuestion();
+        } else {
+          endPage.classList.remove('hidden');
+        }
       };
 
+      // Timer
       function startTimer() {
         let t = 30;
         timerDisplay.textContent = t;
@@ -282,4 +297,3 @@ Just replace your existing `index.html`, upload your four videos (`0729-1.mp4`�
   </script>
 </body>
 </html>
-```
