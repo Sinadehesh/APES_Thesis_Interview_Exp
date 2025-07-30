@@ -7,11 +7,11 @@
     body { display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; font-family: 'Segoe UI', Tahoma, Verdana, sans-serif; background: linear-gradient(135deg, #ece9e6, #ffffff); }
     .container { width: 600px; max-width: 90vw; padding: 30px; background: #fff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; margin-bottom: 20px; }
     .hidden { display: none; }
+    input { width: 100%; padding: 10px; margin: 10px 0; font-size: 1em; }
     button { font-size: 1.1em; padding: 12px 24px; margin: 10px 5px; border: none; border-radius: 6px; cursor: pointer; transition: background 0.3s; }
     button:hover { background-color: #e6e6e6; }
-    #startInterviewBtn { background: #1976d2; color: #fff; }
-    #startRecordingBtn { background: red; color: #fff; }
-    #redoBtn, #finishBtn, #previewRedoBtn, #previewNextBtn, #nextSurveyBtn { background: #1976d2; color: #fff; }
+    #startIntroBtn, #startInterviewBtn, #startRecordingBtn, #redoBtn, #finishBtn, #previewRedoBtn, #previewNextBtn, #nextSurveyBtn { background: #1976d2; color: #fff; }
+    #startRecordingBtn { background: red; }
     .status-row { display: flex; justify-content: center; align-items: center; gap: 20px; margin: 15px 0; }
     .preview-video { margin-top: 20px; max-width: 100%; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
     .question-block, .radio-group { text-align: left; margin: 10px 0; }
@@ -19,12 +19,25 @@
   </style>
 </head>
 <body>
+  <!-- STEP 1: Name & Desired Job -->
   <div id="startPage" class="container">
-    <h1>Welcome to Your Dream Job Interview</h1>
-    <p>Record answers in 3 conditions (mirror, video, blank).<br>6 questions total, ~20 minutes.<br>After every 2 questions, complete a short questionnaire.<br>Click Start to begin.</p>
+    <h1>Welcome!</h1>
+    <p>Before we begin, please tell us:</p>
+    <input type="text" id="participantName" placeholder="Your name" />
+    <input type="text" id="participantJob" placeholder="Job you’re interviewing for" />
+    <button id="startIntroBtn">Next</button>
+  </div>
+
+  <!-- STEP 2: Immersive Explanation -->
+  <div id="introPage" class="container hidden">
+    <h2>Hi <span id="displayName"></span>!</h2>
+    <p>Imagine you’re interviewing for the role of <strong><span id="displayJob"></span></strong>.</p>
+    <p>This is a job you really want, so treat this interview as something you truly care about.</p>
+    <p>After every two questions, you’ll be prompted to answer two quick questions about how you felt.</p>
     <button id="startInterviewBtn">Start Interview</button>
   </div>
 
+  <!-- INTERVIEW FLOW -->
   <div id="interviewContainer" class="container hidden">
     <p id="questionDisplay"></p>
     <div id="viewContainer"></div>
@@ -41,6 +54,7 @@
     </div>
   </div>
 
+  <!-- PREVIEW -->
   <div id="previewPage" class="container hidden">
     <h2>Your Recording Preview</h2>
     <video id="previewVideo" class="preview-video" controls></video>
@@ -50,11 +64,11 @@
     </div>
   </div>
 
+  <!-- SHORT QUESTIONNAIRE -->
   <div id="surveyContainer" class="container hidden">
-    <h2>Short Questionnaire</h2>
+    <h2>How did you feel?</h2>
     <form id="surveyForm">
-      <div id="saasBlock" class="question-block"></div>
-      <div id="selfCritBlock" class="question-block hidden">
+      <div class="question-block">
         <label>You were too self-critical during this condition.</label>
         <div class="radio-group">
           <label><input type="radio" name="selfCritical" value="1">Not at all</label>
@@ -64,7 +78,7 @@
           <label><input type="radio" name="selfCritical" value="5">Extremely</label>
         </div>
       </div>
-      <div id="confidenceBlock" class="question-block hidden">
+      <div class="question-block">
         <label>You were confident in your last response.</label>
         <div class="radio-group">
           <label><input type="radio" name="confidence" value="1">Not at all</label>
@@ -78,6 +92,7 @@
     <button id="nextSurveyBtn">Submit</button>
   </div>
 
+  <!-- END PAGE -->
   <div id="endPage" class="container hidden">
     <h2>Thank You!</h2>
     <p>Thank you for taking part in the experiment. Science owes you one!</p>
@@ -85,6 +100,30 @@
 
   <script>
     window.onload = () => {
+      // Intro step logic
+      const startIntroBtn = document.getElementById('startIntroBtn'),
+            startPage     = document.getElementById('startPage'),
+            introPage     = document.getElementById('introPage'),
+            displayName   = document.getElementById('displayName'),
+            displayJob    = document.getElementById('displayJob');
+
+      startIntroBtn.onclick = () => {
+        const name = document.getElementById('participantName').value.trim();
+        const job  = document.getElementById('participantJob').value.trim();
+        if (!name || !job) return alert('Please enter both your name and the job title.');
+        displayName.textContent = name;
+        displayJob.textContent  = job;
+        startPage.classList.add('hidden');
+        introPage.classList.remove('hidden');
+      };
+
+      document.getElementById('startInterviewBtn').onclick = () => {
+        introPage.classList.add('hidden');
+        document.getElementById('interviewContainer').classList.remove('hidden');
+        showQuestion();
+      };
+
+      // Interview core logic
       const questions = [
         "Tell me about yourself.",
         "What are your strengths?",
@@ -93,138 +132,87 @@
         "Describe a time you overcame a challenge.",
         "Where do you see yourself in five years?"
       ];
-      // 1 = mirror, 2 = video, 3 = blank
-      const conditions = [1, 1, 2, 2, 3, 3];
-      const questionVideos = [
-        null,
-        null,
-        "0729-1.mp4",
-        "0729-2.mp4",
-        null,
-        null
-      ];
-      const saasItems = [
-        "I feel comfortable with the way I appear to others.",
-        "I feel nervous when having my picture taken.",
-        "I get tense when it is obvious people are looking at me.",
-        "I am concerned people would not like me because of the way I look.",
-        "I worry others talk about flaws in my appearance when I am not around.",
-        "I am concerned people will find me unappealing because of my appearance.",
-        "I am afraid people find me unattractive.",
-        "I worry my appearance will make life more difficult for me.",
-        "I am concerned I have missed out on opportunities because of my appearance.",
-        "I get nervous talking to people because of the way I look.",
-        "I feel anxious when others comment on my appearance.",
-        "I am afraid I would not meet others' standards of how I should look.",
-        "I worry people will judge my appearance negatively.",
-        "I am uncomfortable when I think others notice flaws in my appearance.",
-        "I worry a romantic partner will leave me because of my appearance.",
-        "I am concerned people think I am not good looking."
-      ];
+      const conditions = [1,1,2,2,3,3]; // 1=mirror, 2=video, 3=blank
+      const questionVideos = [null,null,"0729-1.mp4","0729-2.mp4",null,null];
 
-      let currentIndex = 0;
-      let redoCounts = Array(questions.length).fill(0);
-      let mediaRecorder, recordedChunks = [];
-      let liveStream;
-      let saasIndex = 0;
-      let surveys = [];
+      let currentIndex = 0,
+          redoCounts   = Array(questions.length).fill(0),
+          mediaRecorder, recordedChunks = [],
+          liveStream;
 
-      const startPage = document.getElementById('startPage');
-      const interviewPage = document.getElementById('interviewContainer');
-      const previewPage = document.getElementById('previewPage');
-      const surveyPage = document.getElementById('surveyContainer');
-      const endPage = document.getElementById('endPage');
-      const questionDisplay = document.getElementById('questionDisplay');
-      const viewContainer = document.getElementById('viewContainer');
-      const startInstruction = document.getElementById('startInstruction');
-      const startRecBtn = document.getElementById('startRecordingBtn');
-      const recordIndicator = document.getElementById('recordIndicator');
-      const timerDisplay = document.getElementById('timerDisplay');
-      const redoDisplay = document.getElementById('redoDisplay');
-      const redoBtn = document.getElementById('redoBtn');
-      const finishBtn = document.getElementById('finishBtn');
-      const previewVideo = document.getElementById('previewVideo');
-      const previewRedoBtn = document.getElementById('previewRedoBtn');
-      const previewNextBtn = document.getElementById('previewNextBtn');
-      const saasBlock = document.getElementById('saasBlock');
-      const selfCritBlock = document.getElementById('selfCritBlock');
-      const confidenceBlock = document.getElementById('confidenceBlock');
-      const nextSurveyBtn = document.getElementById('nextSurveyBtn');
+      const interviewPage   = document.getElementById('interviewContainer'),
+            previewPage     = document.getElementById('previewPage'),
+            surveyPage      = document.getElementById('surveyContainer'),
+            endPage         = document.getElementById('endPage'),
+            questionDisplay = document.getElementById('questionDisplay'),
+            viewContainer   = document.getElementById('viewContainer'),
+            startInstruction= document.getElementById('startInstruction'),
+            startRecBtn     = document.getElementById('startRecordingBtn'),
+            recordIndicator = document.getElementById('recordIndicator'),
+            timerDisplay    = document.getElementById('timerDisplay'),
+            redoDisplay     = document.getElementById('redoDisplay'),
+            redoBtn         = document.getElementById('redoBtn'),
+            finishBtn       = document.getElementById('finishBtn'),
+            previewVideo    = document.getElementById('previewVideo'),
+            previewRedoBtn  = document.getElementById('previewRedoBtn'),
+            previewNextBtn  = document.getElementById('previewNextBtn'),
+            nextSurveyBtn   = document.getElementById('nextSurveyBtn');
 
       navigator.mediaDevices.getUserMedia({video:true,audio:true})
-        .then(stream => liveStream = stream)
-        .catch(console.error);
+        .then(s => liveStream = s).catch(console.error);
 
-      document.getElementById('startInterviewBtn').onclick = () => {
-        startPage.classList.add('hidden');
-        interviewPage.classList.remove('hidden');
-        showQuestion();
-      };
-
-      function showQuestion() {
-        // hide other pages
+      function showQuestion(){
         previewPage.classList.add('hidden');
         surveyPage.classList.add('hidden');
         endPage.classList.add('hidden');
         interviewPage.classList.remove('hidden');
 
-        // clear view
         viewContainer.innerHTML = '';
-        // only show text when NOT a video condition
-        questionDisplay.textContent = (conditions[currentIndex] !== 2)
-          ? questions[currentIndex]
-          : '';
-
-        redoDisplay.textContent = `Redo Count: ${redoCounts[currentIndex]}`;
+        questionDisplay.textContent = (conditions[currentIndex] === 2) ? '' : questions[currentIndex];
+        redoDisplay.textContent    = `Redo Count: ${redoCounts[currentIndex]}`;
         startInstruction.style.display = 'block';
-        startRecBtn.style.display = 'inline-block';
+        startRecBtn.style.display      = 'inline-block';
         recordIndicator.style.visibility = 'hidden';
-        timerDisplay.style.visibility = 'hidden';
+        timerDisplay.style.visibility    = 'hidden';
         finishBtn.textContent = 'Finish';
 
         if (conditions[currentIndex] === 1 && liveStream) {
-          // mirror view
-          const mirrorVid = document.createElement('video');
-          mirrorVid.srcObject = liveStream;
-          mirrorVid.autoplay = mirrorVid.muted = mirrorVid.playsInline = true;
-          mirrorVid.style.width = '100%';
-          viewContainer.appendChild(mirrorVid);
+          const vid = document.createElement('video');
+          vid.srcObject = liveStream;
+          vid.autoplay = vid.muted = vid.playsInline = true;
+          vid.style.width = '100%';
+          viewContainer.appendChild(vid);
         }
         else if (conditions[currentIndex] === 2 && questionVideos[currentIndex]) {
-          // prompt video
-          const promptVid = document.createElement('video');
-          promptVid.src = encodeURI(questionVideos[currentIndex]);
-          promptVid.controls = promptVid.autoplay = true;
-          promptVid.style.width = '100%';
-          viewContainer.appendChild(promptVid);
+          const vid = document.createElement('video');
+          vid.src = encodeURI(questionVideos[currentIndex]);
+          vid.controls = vid.autoplay = true;
+          vid.style.width = '100%';
+          viewContainer.appendChild(vid);
         }
-        // blank (3) does nothing
       }
 
       startRecBtn.onclick = () => {
         startInstruction.style.display = 'none';
-        startRecBtn.style.display = 'none';
+        startRecBtn.style.display     = 'none';
         recordedChunks = [];
-
         mediaRecorder = new MediaRecorder(liveStream);
-        mediaRecorder.ondataavailable = e => { if(e.data.size) recordedChunks.push(e.data); };
+        mediaRecorder.ondataavailable = e => e.data.size && recordedChunks.push(e.data);
         mediaRecorder.onstop = () => {
           const blob = new Blob(recordedChunks,{type:'video/webm'});
           previewVideo.src = URL.createObjectURL(blob);
           interviewPage.classList.add('hidden');
           previewPage.classList.remove('hidden');
         };
-
         mediaRecorder.start();
         startTimer();
         recordIndicator.style.visibility = 'visible';
 
-        // during recording of video questions, show the picture
         if (conditions[currentIndex] === 2) {
           viewContainer.innerHTML = '';
           const img = document.createElement('img');
-          img.src = 'input.jpg';
-          img.style.width = '100%';
+          img.src    = 'input.jpg';
+          img.style.width  = '100%';
           img.style.margin = '20px 0';
           viewContainer.appendChild(img);
         }
@@ -236,73 +224,32 @@
         redoCounts[currentIndex]++;
         showQuestion();
       };
-
-      finishBtn.onclick = () => {
-        if (mediaRecorder && mediaRecorder.state==='recording') mediaRecorder.stop();
-      };
-
-      previewRedoBtn.onclick = () => {
-        previewPage.classList.add('hidden');
-        showQuestion();
-      };
-
+      finishBtn.onclick = () => mediaRecorder && mediaRecorder.state==='recording' && mediaRecorder.stop();
+      previewRedoBtn.onclick = () => { previewPage.classList.add('hidden'); showQuestion(); };
       previewNextBtn.onclick = () => {
         previewVideo.pause();
         previewVideo.currentTime = 0;
-        if (mediaRecorder && mediaRecorder.state==='recording') mediaRecorder.stop();
+        mediaRecorder && mediaRecorder.state==='recording' && mediaRecorder.stop();
         clearInterval(timerDisplay._interval);
 
-        const segmentEnd = (currentIndex + 1) % 2 === 0;
-        if (segmentEnd) {
+        if ((currentIndex+1) % 2 === 0) {
           previewPage.classList.add('hidden');
           surveyPage.classList.remove('hidden');
-          setupSurvey();
         } else {
           currentIndex++;
           showQuestion();
         }
       };
 
-      function setupSurvey() {
-        saasIndex = 0;
-        surveys.push({});
-        selfCritBlock.classList.add('hidden');
-        confidenceBlock.classList.add('hidden');
-        showSurveyItem();
-      }
-
-      function showSurveyItem() {
-        if (saasIndex < saasItems.length) {
-          saasBlock.innerHTML = `<label>${saasIndex+1}. ${saasItems[saasIndex]}</label>` +
-            `<div class="radio-group">${['Not at all','Slightly','Moderately','Very','Extremely']
-              .map((o,i)=>`<label><input type="radio" name="saas" value="${i+1}">${o}</label>`).join('')}</div>`;
-        } else {
-          saasBlock.innerHTML = '';
-          selfCritBlock.classList.remove('hidden');
-          confidenceBlock.classList.remove('hidden');
-        }
-      }
-
       nextSurveyBtn.onclick = () => {
-        if (saasIndex < saasItems.length) {
-          const v = document.querySelector('input[name="saas"]:checked')?.value;
-          if (v) {
-            surveys[surveys.length-1][`saas_${saasIndex+1}`] = v;
-            saasIndex++;
-            showSurveyItem();
-          }
-        } else {
-          surveys[surveys.length-1].selfCrit = document.querySelector('input[name="selfCritical"]:checked').value;
-          surveys[surveys.length-1].confidence = document.querySelector('input[name="confidence"]:checked').value;
-          fetch("https://script.google.com/macros/s/AKfycby-IcRJu4T9Nnr_OqpSM0IiQO01ikSsB6eIkf3TXqdkJ045Bpi-GnjF_R9D4rA8ghKz/exec", {
-            method:'POST', headers:{'Content-Type':'application/json'},
-            body:JSON.stringify({ surveys })
-          });
-          surveyPage.classList.add('hidden');
-          currentIndex++;
-          if (currentIndex < questions.length) showQuestion();
-          else endPage.classList.remove('hidden');
-        }
+        const selfCrit = document.querySelector('input[name="selfCritical"]:checked')?.value;
+        const conf     = document.querySelector('input[name="confidence"]:checked')?.value;
+        if (!selfCrit || !conf) return alert('Please answer both questions.');
+        // you can send/store selfCrit & conf here
+        surveyPage.classList.add('hidden');
+        currentIndex++;
+        if (currentIndex < questions.length) showQuestion();
+        else endPage.classList.remove('hidden');
       };
 
       function startTimer() {
@@ -310,7 +257,8 @@
         timerDisplay.textContent = t;
         timerDisplay.style.visibility = 'visible';
         timerDisplay._interval = setInterval(() => {
-          t--; timerDisplay.textContent = t;
+          t--;
+          timerDisplay.textContent = t;
           if (t <= 0) {
             clearInterval(timerDisplay._interval);
             mediaRecorder.stop();
