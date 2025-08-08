@@ -34,7 +34,7 @@
     <h2>Hi <span id="displayName"></span>!</h2>
     <p>Imagine you’re interviewing for the role of <strong><span id="displayJob"></span></strong>.</p>
     <p>This is a job you really want! So, do your best for this interview. The salary is high and the company is amazing. You can even work remotely!</p>
-    <p>After each batch of questions, you’ll answer two quick questions about how you felt.</p>
+    <p>After each batch of questions, you’ll answer a few quick questions about how you felt.</p>
     <button id="startInterviewBtn">Start Interview</button>
   </div>
 
@@ -65,7 +65,7 @@
     </div>
   </div>
 
-  <!-- SHORT SURVEY (2 QUESTIONS) -->
+  <!-- SHORT SURVEY (3 QUESTIONS) -->
   <div id="surveyContainer" class="container hidden">
     <h2>Quick Check-In</h2>
     <form id="surveyForm"></form>
@@ -80,17 +80,23 @@
 
   <script>
     window.onload = () => {
-      // --- Post-Condition Questions Array ---
+      // --- Post-Condition Questions Array (Your 3 Questions) ---
       const postConditionQuestions = [
         {
-          id: "selfCrit",
-          text: "You were too self-critical during this segment.",
-          scale: ["Not at all", "Slightly", "Moderately", "Very", "Extremely"]
+          id: "q1",
+          text: "I felt anxious during this interview.",
+          scale: ["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"]
         },
         {
-          id: "confidence",
-          text: "You felt confident in this segment.",
-          scale: ["Not at all", "Slightly", "Moderately", "Very", "Extremely"]
+          id: "q2",
+          text: "I was able to express myself clearly.",
+          reverse: true,
+          scale: ["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"]
+        },
+        {
+          id: "q3",
+          text: "This format made it hard to show my abilities.",
+          scale: ["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"]
         }
       ];
 
@@ -161,7 +167,7 @@
         .then(s => liveStream = s)
         .catch(console.error);
 
-      // --- Show Question / Prompt ---
+      // --- Show Question Prompt ---
       function showQuestion() {
         previewPage.classList.add('hidden');
         surveyPage.classList.add('hidden');
@@ -182,132 +188,17 @@
           vid.autoplay = vid.muted = vid.playsInline = true;
           vid.className = 'video-prompt';
           viewContainer.appendChild(vid);
-        }
-        else if (conditions[currentIndex] === 2) {
+
+        } else if (conditions[currentIndex] === 2) {
           const vid = document.createElement('video');
           vid.src = encodeURI(questionVideos[currentIndex]);
           vid.controls = vid.autoplay = true;
           vid.className = 'video-prompt';
           viewContainer.appendChild(vid);
         }
-        // condition 3 blank: nothing
       }
 
       // --- Recording Logic ---
       startRecBtn.onclick = () => {
         startInstruction.style.display = 'none';
         startRecBtn.style.display      = 'none';
-        recordedChunks = [];
-        mediaRecorder = new MediaRecorder(liveStream);
-        mediaRecorder.ondataavailable = e => e.data.size && recordedChunks.push(e.data);
-        mediaRecorder.onstop = () => {
-          const blob = new Blob(recordedChunks, {type:'video/webm'});
-          previewVideo.src = URL.createObjectURL(blob);
-          interviewPage.classList.add('hidden');
-          previewPage.classList.remove('hidden');
-        };
-        mediaRecorder.start();
-        startTimer();
-        recordIndicator.style.visibility = 'visible';
-
-        if (conditions[currentIndex] === 2) {
-          viewContainer.innerHTML = '';
-          const img = document.createElement('img');
-          img.src = 'input.jpg';
-          img.alt = '';
-          viewContainer.appendChild(img);
-        }
-      };
-
-      redoBtn.onclick = () => {
-        if (mediaRecorder && mediaRecorder.state==='recording') mediaRecorder.stop();
-        clearInterval(timerDisplay._interval);
-        redoCounts[currentIndex]++;
-        showQuestion();
-      };
-      finishBtn.onclick = () => mediaRecorder && mediaRecorder.state==='recording' && mediaRecorder.stop();
-      previewRedoBtn.onclick = () => { previewPage.classList.add('hidden'); showQuestion(); };
-
-      // --- Next / Survey Trigger ---
-      previewNextBtn.onclick = () => {
-        previewVideo.pause();
-        previewVideo.currentTime = 0;
-        if (mediaRecorder && mediaRecorder.state==='recording') mediaRecorder.stop();
-        clearInterval(timerDisplay._interval);
-
-        if ((currentIndex + 1) % 2 === 0) {
-          renderSurvey();
-          previewPage.classList.add('hidden');
-          surveyPage.classList.remove('hidden');
-        } else {
-          currentIndex++;
-          showQuestion();
-        }
-      };
-
-      // --- Render Survey Questions ---
-      function renderSurvey() {
-        surveyForm.innerHTML = '';
-        postConditionQuestions.forEach(q => {
-          const block = document.createElement('div');
-          block.className = 'question-block';
-
-          const label = document.createElement('label');
-          label.textContent = q.text;
-          block.appendChild(label);
-
-          const group = document.createElement('div');
-          group.className = 'radio-group';
-          q.scale.forEach((opt,i) => {
-            const wrap = document.createElement('label');
-            const inp  = document.createElement('input');
-            inp.type  = 'radio';
-            inp.name  = q.id;
-            inp.value = String(i+1);
-            wrap.appendChild(inp);
-            wrap.append(` ${opt}`);
-            group.appendChild(wrap);
-          });
-          block.appendChild(group);
-          surveyForm.appendChild(block);
-        });
-      }
-
-      // --- Survey Submit ---
-      nextSurveyBtn.onclick = () => {
-        const responses = {};
-        let allAnswered = true;
-        postConditionQuestions.forEach(q => {
-          const val = document.querySelector(`input[name="${q.id}"]:checked`)?.value;
-          if (!val) allAnswered = false;
-          responses[q.id] = val;
-        });
-        if (!allAnswered) return alert('Please answer both questions.');
-
-        surveyPage.classList.add('hidden');
-        currentIndex++;
-        if (currentIndex < questions.length) {
-          showQuestion();
-        } else {
-          endPage.classList.remove('hidden');
-        }
-      };
-
-      // --- Timer ---
-      function startTimer() {
-        let t = 30;
-        timerDisplay.textContent = t;
-        timerDisplay.style.visibility = 'visible';
-        timerDisplay._interval = setInterval(() => {
-          t--;
-          timerDisplay.textContent = t;
-          if (t <= 0) {
-            clearInterval(timerDisplay._interval);
-            mediaRecorder.stop();
-          }
-        }, 1000);
-      }
-    };
-  </script>
-</body>
-</html>
