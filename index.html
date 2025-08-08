@@ -70,6 +70,7 @@
   <!-- SHORT SURVEY (ONE QUESTION AT A TIME) -->
   <div id="surveyContainer" class="container hidden">
     <h2>Quick Check-In</h2>
+    <p id="surveyRoundIndicator"></p>
     <div id="currentQuestionContainer">
       <h3 id="currentQuestionText"></h3>
       <div id="currentQuestionOptions" class="radio-group"></div>
@@ -125,7 +126,8 @@
             previewVideo     = document.getElementById('previewVideo'),
             currentQuestionText = document.getElementById('currentQuestionText'),
             currentQuestionOptions = document.getElementById('currentQuestionOptions'),
-            questionProgress = document.getElementById('questionProgress');
+            questionProgress = document.getElementById('questionProgress'),
+            surveyRoundIndicator = document.getElementById('surveyRoundIndicator');
 
       const startIntroBtn    = document.getElementById('startIntroBtn'),
             startInterviewBtn= document.getElementById('startInterviewBtn'),
@@ -152,7 +154,8 @@
           mediaRecorder, recordedChunks = [],
           liveStream, recordingTimer,
           currentSurveyIndex = 0,
-          surveyResponses = {};
+          surveyResponses = {},
+          surveyRound = 1;
 
       // --- STEP 1: Name & Job ---
       startIntroBtn.onclick = () => {
@@ -183,6 +186,12 @@
       // --- Show Question Prompt ---
       function showQuestion() {
         if (currentIndex >= questions.length) {
+          showEndPage();
+          return;
+        }
+
+        // Check if we should show survey after every 2 questions (conditions)
+        if (currentIndex > 0 && currentIndex % 2 === 0) {
           showSurvey();
           return;
         }
@@ -294,14 +303,16 @@
         surveyPage.classList.remove('hidden');
         
         currentSurveyIndex = 0;
-        surveyResponses = {};
+        surveyRoundIndicator.textContent = `After questions ${currentIndex-1} and ${currentIndex} (Round ${surveyRound})`;
         showCurrentSurveyQuestion();
       }
 
       // --- Show Current Survey Question ---
       function showCurrentSurveyQuestion() {
         if (currentSurveyIndex >= postConditionQuestions.length) {
-          showEndPage();
+          // Survey completed for this round, continue with interview
+          surveyRound++;
+          showQuestion();
           return;
         }
 
@@ -322,7 +333,12 @@
           const radio = label.querySelector('input');
           radio.addEventListener('change', () => {
             if (radio.checked) {
-              surveyResponses[question.id] = parseInt(radio.value);
+              // Store response with round identifier
+              const responseKey = `${question.id}_round${surveyRound}`;
+              if (!surveyResponses[responseKey]) {
+                surveyResponses[responseKey] = {};
+              }
+              surveyResponses[responseKey] = parseInt(radio.value);
               
               // Small delay for visual feedback, then auto-advance
               setTimeout(() => {
