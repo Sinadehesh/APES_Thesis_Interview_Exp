@@ -16,7 +16,9 @@
     .status-row > span { font-weight: bold; }
     .video-prompt, #viewContainer img { width: 100%; border-radius: 6px; }
     .preview-video { width: 100%; border-radius: 6px; }
-    .radio-group label { display: block; text-align: left; margin: 8px 0; }
+    .radio-group { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; margin: 20px 0; }
+    .radio-group label { display: flex; align-items: center; gap: 8px; cursor: pointer; white-space: nowrap; }
+    .radio-group input[type="radio"] { margin: 0; }
   </style>
 </head>
 <body>
@@ -65,11 +67,16 @@
     </div>
   </div>
 
-  <!-- SHORT SURVEY (3 QUESTIONS) -->
+  <!-- SHORT SURVEY (ONE QUESTION AT A TIME) -->
   <div id="surveyContainer" class="container hidden">
     <h2>Quick Check-In</h2>
-    <form id="surveyForm"></form>
-    <button id="nextSurveyBtn">Submit</button>
+    <div id="currentQuestionContainer">
+      <h3 id="currentQuestionText"></h3>
+      <div id="currentQuestionOptions" class="radio-group"></div>
+    </div>
+    <div style="margin-top: 20px;">
+      <span id="questionProgress"></span>
+    </div>
   </div>
 
   <!-- END -->
@@ -116,7 +123,9 @@
             recordIndicator  = document.getElementById('recordIndicator'),
             timerDisplay     = document.getElementById('timerDisplay'),
             previewVideo     = document.getElementById('previewVideo'),
-            surveyForm       = document.getElementById('surveyForm');
+            currentQuestionText = document.getElementById('currentQuestionText'),
+            currentQuestionOptions = document.getElementById('currentQuestionOptions'),
+            questionProgress = document.getElementById('questionProgress');
 
       const startIntroBtn    = document.getElementById('startIntroBtn'),
             startInterviewBtn= document.getElementById('startInterviewBtn'),
@@ -124,8 +133,7 @@
             redoBtn          = document.getElementById('redoBtn'),
             finishBtn        = document.getElementById('finishBtn'),
             previewRedoBtn   = document.getElementById('previewRedoBtn'),
-            previewNextBtn   = document.getElementById('previewNextBtn'),
-            nextSurveyBtn    = document.getElementById('nextSurveyBtn');
+            previewNextBtn   = document.getElementById('previewNextBtn');
 
       // --- Interview Data ---
       const questions = [
@@ -142,7 +150,9 @@
       let currentIndex = 0,
           redoCounts   = Array(questions.length).fill(0),
           mediaRecorder, recordedChunks = [],
-          liveStream, recordingTimer;
+          liveStream, recordingTimer,
+          currentSurveyIndex = 0,
+          surveyResponses = {};
 
       // --- STEP 1: Name & Job ---
       startIntroBtn.onclick = () => {
@@ -277,55 +287,62 @@
       finishBtn.onclick = nextQuestion;
       previewNextBtn.onclick = nextQuestion;
 
-      // --- Show Survey ---
+      // --- Show Survey (One Question at a Time) ---
       function showSurvey() {
         interviewPage.classList.add('hidden');
         previewPage.classList.add('hidden');
         surveyPage.classList.remove('hidden');
-
-        surveyForm.innerHTML = '';
-        postConditionQuestions.forEach(q => {
-          const fieldset = document.createElement('fieldset');
-          fieldset.innerHTML = `<legend>${q.text}</legend>`;
-          
-          q.scale.forEach((option, i) => {
-            const label = document.createElement('label');
-            label.innerHTML = `
-              <input type="radio" name="${q.id}" value="${i+1}" required>
-              ${option}
-            `;
-            fieldset.appendChild(label);
-          });
-          
-          surveyForm.appendChild(fieldset);
-        });
+        
+        currentSurveyIndex = 0;
+        surveyResponses = {};
+        showCurrentSurveyQuestion();
       }
 
-      // --- Submit Survey ---
-      nextSurveyBtn.onclick = (e) => {
-        e.preventDefault();
-        const formData = new FormData(surveyForm);
-        const responses = {};
-        
-        postConditionQuestions.forEach(q => {
-          const value = formData.get(q.id);
-          if (!value) {
-            alert('Please answer all questions.');
-            return;
-          }
-          responses[q.id] = parseInt(value);
-        });
-
-        if (Object.keys(responses).length === postConditionQuestions.length) {
-          console.log('Survey responses:', responses);
+      // --- Show Current Survey Question ---
+      function showCurrentSurveyQuestion() {
+        if (currentSurveyIndex >= postConditionQuestions.length) {
           showEndPage();
+          return;
         }
-      };
+
+        const question = postConditionQuestions[currentSurveyIndex];
+        currentQuestionText.textContent = question.text;
+        questionProgress.textContent = `Question ${currentSurveyIndex + 1} of ${postConditionQuestions.length}`;
+        
+        currentQuestionOptions.innerHTML = '';
+        
+        question.scale.forEach((option, i) => {
+          const label = document.createElement('label');
+          label.innerHTML = `
+            <input type="radio" name="current_question" value="${i+1}">
+            <span>${option}</span>
+          `;
+          
+          // Add click handler for automatic progression
+          const radio = label.querySelector('input');
+          radio.addEventListener('change', () => {
+            if (radio.checked) {
+              surveyResponses[question.id] = parseInt(radio.value);
+              
+              // Small delay for visual feedback, then auto-advance
+              setTimeout(() => {
+                currentSurveyIndex++;
+                showCurrentSurveyQuestion();
+              }, 300);
+            }
+          });
+          
+          currentQuestionOptions.appendChild(label);
+        });
+      }
 
       // --- Show End Page ---
       function showEndPage() {
         surveyPage.classList.add('hidden');
         endPage.classList.remove('hidden');
+        
+        // Log all collected responses
+        console.log('Survey responses:', surveyResponses);
       }
 
       // --- Cleanup on page unload ---
