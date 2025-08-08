@@ -79,72 +79,49 @@
   </div>
 
   <script>
-    window.onload = () => {
-      // --- Post-Condition Questions Array (Your 3 Questions) ---
+    document.addEventListener('DOMContentLoaded', () => {
+      // Post-Condition Questions (your three)
       const postConditionQuestions = [
-        {
-          id: "q1",
-          text: "I felt anxious during this interview.",
-          scale: ["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"]
-        },
-        {
-          id: "q2",
-          text: "I was able to express myself clearly.",
-          reverse: true,
-          scale: ["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"]
-        },
-        {
-          id: "q3",
-          text: "This format made it hard to show my abilities.",
-          scale: ["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"]
-        }
+        { id: "q1", text: "I felt anxious during this interview.", scale: ["Strongly disagree","Disagree","Neutral","Agree","Strongly agree"] },
+        { id: "q2", text: "I was able to express myself clearly.", reverse: true, scale: ["Strongly disagree","Disagree","Neutral","Agree","Strongly agree"] },
+        { id: "q3", text: "This format made it hard to show my abilities.", scale: ["Strongly disagree","Disagree","Neutral","Agree","Strongly agree"] }
       ];
 
-      // --- Elements ---
-      const startPage        = document.getElementById('startPage'),
-            introPage        = document.getElementById('introPage'),
-            interviewPage    = document.getElementById('interviewContainer'),
-            previewPage      = document.getElementById('previewPage'),
-            surveyPage       = document.getElementById('surveyContainer'),
-            endPage          = document.getElementById('endPage'),
-            displayName      = document.getElementById('displayName'),
-            displayJob       = document.getElementById('displayJob'),
-            questionDisplay  = document.getElementById('questionDisplay'),
-            viewContainer    = document.getElementById('viewContainer'),
-            startInstruction = document.getElementById('startInstruction'),
-            redoDisplay      = document.getElementById('redoDisplay'),
-            recordIndicator  = document.getElementById('recordIndicator'),
-            timerDisplay     = document.getElementById('timerDisplay'),
-            previewVideo     = document.getElementById('previewVideo'),
-            surveyForm       = document.getElementById('surveyForm');
+      // Element refs
+      const startPage        = document.getElementById('startPage');
+      const introPage        = document.getElementById('introPage');
+      const interviewPage    = document.getElementById('interviewContainer');
+      const previewPage      = document.getElementById('previewPage');
+      const surveyPage       = document.getElementById('surveyContainer');
+      const endPage          = document.getElementById('endPage');
+      const displayName      = document.getElementById('displayName');
+      const displayJob       = document.getElementById('displayJob');
+      const questionDisplay  = document.getElementById('questionDisplay');
+      const viewContainer    = document.getElementById('viewContainer');
+      const startInstruction = document.getElementById('startInstruction');
+      const redoDisplay      = document.getElementById('redoDisplay');
+      const recordIndicator  = document.getElementById('recordIndicator');
+      const timerDisplay     = document.getElementById('timerDisplay');
+      const previewVideo     = document.getElementById('previewVideo');
+      const surveyForm       = document.getElementById('surveyForm');
 
-      const startIntroBtn    = document.getElementById('startIntroBtn'),
-            startInterviewBtn= document.getElementById('startInterviewBtn'),
-            startRecBtn      = document.getElementById('startRecordingBtn'),
-            redoBtn          = document.getElementById('redoBtn'),
-            finishBtn        = document.getElementById('finishBtn'),
-            previewRedoBtn   = document.getElementById('previewRedoBtn'),
-            previewNextBtn   = document.getElementById('previewNextBtn'),
-            nextSurveyBtn    = document.getElementById('nextSurveyBtn');
+      const startIntroBtn     = document.getElementById('startIntroBtn');
+      const startInterviewBtn = document.getElementById('startInterviewBtn');
+      const startRecBtn       = document.getElementById('startRecordingBtn');
+      const redoBtn           = document.getElementById('redoBtn');
+      const finishBtn         = document.getElementById('finishBtn');
+      const previewRedoBtn    = document.getElementById('previewRedoBtn');
+      const previewNextBtn    = document.getElementById('previewNextBtn');
+      const nextSurveyBtn     = document.getElementById('nextSurveyBtn');
 
-      // --- Interview Data ---
-      const questions = [
-        "Tell me about yourself.",
-        "What are your strengths?",
-        "What are your weaknesses?",
-        "Why do you want this job?",
-        "Describe a time you overcame a challenge.",
-        "Where do you see yourself in five years?"
-      ];
-      const conditions = [1,1,2,2,3,3]; // 1: mirror, 2: video, 3: blank
-      const questionVideos = [null, null, "0729-1.mp4", "0729-2.mp4", null, null];
+      // Interview Data
+      const questions      = ["Tell me about yourself.","What are your strengths?","What are your weaknesses?","Why do you want this job?","Describe a time you overcame a challenge.","Where do you see yourself in five years?"];
+      const conditions     = [1,1,2,2,3,3]; // mirror, video, blank
+      const questionVideos = [null,null,"0729-1.mp4","0729-2.mp4",null,null];
 
-      let currentIndex = 0,
-          redoCounts   = Array(questions.length).fill(0),
-          mediaRecorder, recordedChunks = [],
-          liveStream;
+      let currentIndex = 0, redoCounts = Array(questions.length).fill(0), mediaRecorder, recordedChunks = [], liveStream;
 
-      // --- STEP 1: Name & Job ---
+      // STEP 1: Name & Job
       startIntroBtn.onclick = () => {
         const name = document.getElementById('participantName').value.trim();
         const job  = document.getElementById('participantJob').value.trim();
@@ -155,19 +132,18 @@
         introPage.classList.remove('hidden');
       };
 
-      // --- STEP 2: Start Interview ---
+      // STEP 2: Start Interview
       startInterviewBtn.onclick = () => {
         introPage.classList.add('hidden');
         interviewPage.classList.remove('hidden');
         showQuestion();
       };
 
-      // --- Get Media Stream ---
-      navigator.mediaDevices.getUserMedia({ video:true, audio:true })
-        .then(s => liveStream = s)
-        .catch(console.error);
+      // Get Media
+      navigator.mediaDevices.getUserMedia({video:true,audio:true})
+        .then(s => liveStream = s).catch(console.error);
 
-      // --- Show Question Prompt ---
+      // Show Question
       function showQuestion() {
         previewPage.classList.add('hidden');
         surveyPage.classList.add('hidden');
@@ -182,14 +158,14 @@
         recordIndicator.style.visibility = 'hidden';
         timerDisplay.style.visibility    = 'hidden';
 
-        if (conditions[currentIndex] === 1 && liveStream) {
+        if (conditions[currentIndex]===1 && liveStream) {
           const vid = document.createElement('video');
           vid.srcObject = liveStream;
           vid.autoplay = vid.muted = vid.playsInline = true;
           vid.className = 'video-prompt';
           viewContainer.appendChild(vid);
-
-        } else if (conditions[currentIndex] === 2) {
+        }
+        else if (conditions[currentIndex]===2) {
           const vid = document.createElement('video');
           vid.src = encodeURI(questionVideos[currentIndex]);
           vid.controls = vid.autoplay = true;
@@ -198,7 +174,99 @@
         }
       }
 
-      // --- Recording Logic ---
+      // Recording Logic
       startRecBtn.onclick = () => {
         startInstruction.style.display = 'none';
         startRecBtn.style.display      = 'none';
+        recordedChunks = [];
+        mediaRecorder = new MediaRecorder(liveStream);
+        mediaRecorder.ondataavailable = e => e.data.size && recordedChunks.push(e.data);
+        mediaRecorder.onstop = () => {
+          const blob = new Blob(recordedChunks,{type:'video/webm'});
+          previewVideo.src = URL.createObjectURL(blob);
+          interviewPage.classList.add('hidden');
+          previewPage.classList.remove('hidden');
+        };
+        mediaRecorder.start();
+        startTimer();
+        recordIndicator.style.visibility = 'visible';
+
+        if (conditions[currentIndex]===2) {
+          viewContainer.innerHTML = '';
+          const img = document.createElement('img');
+          img.src = 'input.jpg';
+          viewContainer.appendChild(img);
+        }
+      };
+
+      redoBtn.onclick = () => {
+        if (mediaRecorder && mediaRecorder.state==='recording') mediaRecorder.stop();
+        clearInterval(timerDisplay._interval);
+        redoCounts[currentIndex]++;
+        showQuestion();
+      };
+      finishBtn.onclick = () => mediaRecorder && mediaRecorder.state==='recording' && mediaRecorder.stop();
+      previewRedoBtn.onclick = () => { previewPage.classList.add('hidden'); showQuestion(); };
+
+      // Next → Survey
+      previewNextBtn.onclick = () => {
+        previewVideo.pause(); previewVideo.currentTime = 0;
+        if (mediaRecorder && mediaRecorder.state==='recording') mediaRecorder.stop();
+        clearInterval(timerDisplay._interval);
+
+        if ((currentIndex+1)%2===0) {
+          renderSurvey();
+          previewPage.classList.add('hidden');
+          surveyPage.classList.remove('hidden');
+        } else {
+          currentIndex++;
+          showQuestion();
+        }
+      };
+
+      // Render Survey
+      function renderSurvey() {
+        surveyForm.innerHTML = '';
+        postConditionQuestions.forEach(q => {
+          const block = document.createElement('div'); block.className='question-block';
+          const label = document.createElement('label'); label.textContent=q.text; block.appendChild(label);
+          const group = document.createElement('div'); group.className='radio-group';
+          q.scale.forEach((opt,i) => {
+            const wrap = document.createElement('label');
+            const inp  = document.createElement('input'); inp.type='radio'; inp.name=q.id; inp.value=String(i+1);
+            wrap.appendChild(inp); wrap.append(` ${opt}`);
+            group.appendChild(wrap);
+          });
+          block.appendChild(group);
+          surveyForm.appendChild(block);
+        });
+      }
+
+      // Survey Submit
+      nextSurveyBtn.onclick = () => {
+        const responses = {};
+        let valid=true;
+        postConditionQuestions.forEach(q=>{
+          const val=document.querySelector(`input[name="${q.id}"]:checked`)?.value;
+          if(!val) valid=false;
+          responses[q.id]=val;
+        });
+        if(!valid) return alert('Please answer all questions.');
+        surveyPage.classList.add('hidden');
+        currentIndex++;
+        if(currentIndex<questions.length) showQuestion();
+        else endPage.classList.remove('hidden');
+      };
+
+      // Timer
+      function startTimer(){
+        let t=30; timerDisplay.textContent=t; timerDisplay.style.visibility='visible';
+        timerDisplay._interval=setInterval(()=>{
+          t--; timerDisplay.textContent=t;
+          if(t<=0){ clearInterval(timerDisplay._interval); mediaRecorder.stop(); }
+        },1000);
+      }
+    });
+  </script>
+</body>
+</html>
