@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>Interview Demo</title>
   <style>
-    body { display: flex; justify-content: center; align-items: center; min-height: 100vh; margin:0; font-family: 'Segoe UI', Tahoma, sans-serif; background:#f0f2f5; }
+    body { display:flex; justify-content:center; align-items:center; min-height:100vh; margin:0; font-family:'Segoe UI', Tahoma, sans-serif; background:#f0f2f5; }
     .container { width:600px; max-width:90vw; padding:30px; background:#fff; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.1); text-align:center; }
     .hidden { display:none; }
     input, button { width:100%; padding:12px; margin:10px 0; font-size:1em; }
@@ -82,7 +82,12 @@
 
   <script>
   document.addEventListener('DOMContentLoaded', () => {
-    // Post-condition questions
+    // Helper first (so it's available immediately)
+    const $ = (id) => document.getElementById(id);
+    const show = (el) => el.classList.remove('hidden');
+    const hide = (el) => el.classList.add('hidden');
+
+    // Post-condition questions (3)
     const postQs = [
       { id:"q1", text:"I felt anxious during this interview.", scale:["Strongly disagree","Disagree","Neutral","Agree","Strongly agree"] },
       { id:"q2", text:"I was able to express myself clearly.", reverse:true, scale:["Strongly disagree","Disagree","Neutral","Agree","Strongly agree"] },
@@ -90,36 +95,25 @@
     ];
 
     // DOM refs
-    const startPage        = $('#startPage'),
-          introPage        = $('#introPage'),
-          interviewPage    = $('#interviewPage'),
-          previewPage      = $('#previewPage'),
-          surveyPage       = $('#surveyPage'),
-          endPage          = $('#endPage'),
-          displayName      = $('#displayName'),
-          displayJob       = $('#displayJob'),
-          qText            = $('#questionText'),
-          viewContainer    = $('#viewContainer'),
-          recordInst       = $('#recordInstruction'),
-          redoCountSp     = $('#redoCount'),
-          recIndicator     = $('#recordIndicator'),
-          timerSp          = $('#timerDisplay'),
-          previewVideo     = $('#previewVideo'),
-          surveyRound      = $('#surveyRound'),
-          surveyQuestion   = $('#surveyQuestion'),
-          surveyOptions    = $('#surveyOptions'),
-          surveyProgress   = $('#surveyProgress');
+    const startPage = $('startPage'), introPage = $('introPage'),
+          interviewPage = $('interviewPage'), previewPage = $('previewPage'),
+          surveyPage = $('surveyPage'), endPage = $('endPage');
 
-    const startIntroBtn    = $('#startIntroBtn'),
-          startInterviewBtn= $('#startInterviewBtn'),
-          startRecBtn      = $('#startRecordingBtn'),
-          redoBtn          = $('#redoBtn'),
-          finishBtn        = $('#finishBtn'),
-          previewRedoBtn   = $('#previewRedoBtn'),
-          previewNextBtn   = $('#previewNextBtn'),
-          surveySubmitBtn  = $('#surveySubmitBtn');
+    const displayName = $('displayName'), displayJob = $('displayJob'),
+          qText = $('questionText'), viewContainer = $('viewContainer'),
+          recordInst = $('recordInstruction'), redoCountSp = $('redoCount'),
+          recIndicator = $('recordIndicator'), timerSp = $('timerDisplay'),
+          previewVideo = $('previewVideo');
 
-    // interview data
+    const surveyRound = $('surveyRound'), surveyQuestion = $('surveyQuestion'),
+          surveyOptions = $('surveyOptions'), surveyProgress = $('surveyProgress');
+
+    const startIntroBtn = $('startIntroBtn'), startInterviewBtn = $('startInterviewBtn'),
+          startRecBtn = $('startRecordingBtn'), redoBtn = $('redoBtn'),
+          finishBtn = $('finishBtn'), previewRedoBtn = $('previewRedoBtn'),
+          previewNextBtn = $('previewNextBtn'), surveySubmitBtn = $('surveySubmitBtn');
+
+    // Interview data
     const Qs = [
       "Tell me about yourself.",
       "What are your strengths?",
@@ -128,153 +122,188 @@
       "Describe a time you overcame a challenge.",
       "Where do you see yourself in five years?"
     ];
-    const conds = [1,1,2,2,3,3];
+    const conds = [1,1,2,2,3,3];                 // 1=mirror, 2=avatar(video→picture), 3=blank
     const vidFiles = [null,null,"0729-1.mp4","0729-2.mp4",null,null];
 
-    let idx=0, redoCounts=Array(Qs.length).fill(0), mediaRec, 
-        recChunks=[], stream, surveyIdx=0, responses={};
+    let idx = 0;
+    let redoCounts = Array(Qs.length).fill(0);
+    let stream = null;
+    let mediaRec = null;
+    let recChunks = [];
+    let surveyIdx = 0;
+    let responses = {};
 
-    // util to get by id
-    function $(id){ return document.getElementById(id); }
-
-    // Show/Hide helpers
-    function show(el){ el.classList.remove('hidden'); }
-    function hide(el){ el.classList.add('hidden'); }
-
-    // STEP1
-    startIntroBtn.onclick = ()=>{
-      const name = $('#participantName').value.trim();
-      const job  = $('#participantJob').value.trim();
-      if(!name||!job) return alert("Enter both name & job.");
+    // STEP 1
+    startIntroBtn.onclick = () => {
+      const name = $('participantName').value.trim();
+      const job  = $('participantJob').value.trim();
+      if (!name || !job) return alert("Enter both name & job.");
       displayName.textContent = name;
       displayJob.textContent  = job;
-      hide(startPage);
-      show(introPage);
+      hide(startPage); show(introPage);
     };
 
-    // STEP2
-    startInterviewBtn.onclick = ()=>{
-      hide(introPage);
-      show(interviewPage);
-      showQuestion();
-    };
+    // STEP 2
+    startInterviewBtn.onclick = () => { hide(introPage); show(interviewPage); showQuestion(); };
 
-    // get media
-    navigator.mediaDevices.getUserMedia({video:true,audio:true})
-      .then(s=>stream=s).catch(e=>alert("Allow camera."));
+    // Get camera/mic
+    navigator.mediaDevices.getUserMedia({ video:true, audio:true })
+      .then(s => { stream = s; })
+      .catch(() => alert("Camera/microphone access is required."));
 
-    // show question
-    function showQuestion(){
-      // after Q2,Q4 -> survey
-      if(idx>0 && idx%2===0){ return showSurvey(); }
-      // end?
-      if(idx>=Qs.length){ hide(interviewPage); show(endPage); return; }
+    // Core flow
+    function showQuestion() {
+      // After Q2, Q4 → survey
+      if (idx > 0 && idx % 2 === 0) { showSurvey(); return; }
+
+      // Done?
+      if (idx >= Qs.length) { hide(interviewPage); show(endPage); return; }
 
       hide(previewPage); hide(surveyPage); show(interviewPage);
-      qText.textContent = Qs[idx];
+
+      // Hide text in condition 2 (avatar). Otherwise show the text.
+      qText.textContent = (conds[idx] === 2) ? "" : Qs[idx];
+
       redoCountSp.textContent = `Redo: ${redoCounts[idx]}`;
       viewContainer.innerHTML = '';
-      recordInst.style.display='block';
-      startRecBtn.style.display='block';
-      recIndicator.style.visibility='hidden';
-      timerSp.style.visibility='hidden';
+      recordInst.style.display = 'block';
+      startRecBtn.style.display = 'block';
+      recIndicator.style.visibility = 'hidden';
+      timerSp.style.visibility = 'hidden';
 
-      if(conds[idx]===1 && stream){
-        const v=document.createElement('video');
-        v.srcObject=stream; v.autoplay=v.muted=v.playsInline=true; v.className='video-prompt';
+      if (conds[idx] === 1 && stream) {
+        const v = document.createElement('video');
+        v.srcObject = stream;
+        v.autoplay = v.muted = v.playsInline = true;
+        v.className = 'video-prompt';
+        viewContainer.appendChild(v);
+      } else if (conds[idx] === 2) {
+        const v = document.createElement('video');
+        v.src = vidFiles[idx];
+        v.controls = v.autoplay = true;
+        v.playsInline = true;
+        v.className = 'video-prompt';
         viewContainer.appendChild(v);
       }
-      else if(conds[idx]===2){
-        const v=document.createElement('video');
-        v.src=vidFiles[idx]; v.controls=v.autoplay=true; v.className='video-prompt';
-        viewContainer.appendChild(v);
-      }
-      // cond 3: text only
+      // cond 3: text-only, nothing to add
     }
 
-    // record
-    startRecBtn.onclick = ()=>{
-      recChunks=[]; mediaRec=new MediaRecorder(stream);
-      mediaRec.ondataavailable=e=>e.data.size&&recChunks.push(e.data);
-      mediaRec.onstop=()=>{
-        const blob=new Blob(recChunks,{type:'video/webm'});
-        previewVideo.src=URL.createObjectURL(blob);
+    // Recording
+    startRecBtn.onclick = () => {
+      if (!stream) { alert('No camera stream. Reload and allow access.'); return; }
+
+      recChunks = [];
+      mediaRec = new MediaRecorder(stream);
+      mediaRec.ondataavailable = e => { if (e.data && e.data.size) recChunks.push(e.data); };
+      mediaRec.onstop = () => {
+        const blob = new Blob(recChunks, { type: 'video/webm' });
+        previewVideo.src = URL.createObjectURL(blob);
         hide(interviewPage); show(previewPage);
       };
       mediaRec.start();
-      recordInst.style.display='none';
-      startRecBtn.style.display='none';
-      recIndicator.style.visibility='visible';
-      timerSp.style.visibility='visible';
-      if(conds[idx]===2){
-        viewContainer.innerHTML='';
-        const img=document.createElement('img');
-        img.src='input.jpg'; img.className='video-prompt';
+
+      recordInst.style.display = 'none';
+      startRecBtn.style.display = 'none';
+      recIndicator.style.visibility = 'visible';
+      timerSp.style.visibility = 'visible';
+
+      // In avatar condition, switch to picture during recording
+      if (conds[idx] === 2) {
+        viewContainer.innerHTML = '';
+        const img = document.createElement('img');
+        img.src = 'input.jpg';
+        img.alt = '';
+        img.className = 'video-prompt';
         viewContainer.appendChild(img);
       }
+
       startTimer();
     };
 
-    // timer
-    function startTimer(){
-      let t=30; timerSp.textContent=t;
-      timerSp._timer=setInterval(()=>{
-        t--; timerSp.textContent=t;
-        if(t<=0){ clearInterval(timerSp._timer); mediaRec.stop(); }
-      },1000);
+    // Timer
+    function startTimer() {
+      let t = 30;
+      timerSp.textContent = t;
+      if (timerSp._timer) clearInterval(timerSp._timer);
+      timerSp._timer = setInterval(() => {
+        t--; timerSp.textContent = t;
+        if (t <= 0) {
+          clearInterval(timerSp._timer);
+          if (mediaRec && mediaRec.state !== 'inactive') mediaRec.stop();
+        }
+      }, 1000);
     }
 
-    // redo
-    function doRedo(){
-      if(mediaRec && mediaRec.state==='recording') mediaRec.stop();
-      clearInterval(timerSp._timer);
+    // Redo
+    function doRedo() {
+      if (mediaRec && mediaRec.state === 'recording') mediaRec.stop();
+      if (timerSp._timer) clearInterval(timerSp._timer);
       redoCounts[idx]++;
       showQuestion();
     }
-    redoBtn.onclick=doRedo;
-    previewRedoBtn.onclick=doRedo;
+    redoBtn.onclick = doRedo;
+    previewRedoBtn.onclick = doRedo;
 
-    // finish stops recording
-    finishBtn.onclick=()=>mediaRec&&mediaRec.state==='recording'&&mediaRec.stop();
+    // Finish (stop recording)
+    finishBtn.onclick = () => {
+      if (mediaRec && mediaRec.state === 'recording') mediaRec.stop();
+    };
 
-    // preview next
-    previewNextBtn.onclick=()=>{
-      previewVideo.pause(); previewVideo.currentTime=0;
-      if(mediaRec&&mediaRec.state==='recording') mediaRec.stop();
-      clearInterval(timerSp._timer);
-      idx++;
+    // Preview → Next
+    previewNextBtn.onclick = () => {
+      previewVideo.pause(); previewVideo.currentTime = 0;
+      if (mediaRec && mediaRec.state === 'recording') mediaRec.stop();
+      if (timerSp._timer) clearInterval(timerSp._timer);
+      idx++;               // move to next question index
       showQuestion();
     };
 
-    // SURVEY
-    function showSurvey(){
+    // Survey
+    function showSurvey() {
       hide(interviewPage); hide(previewPage); show(surveyPage);
-      surveyIdx=0;
-      const condName = conds[idx-1]===1?'Mirror':conds[idx-1]===2?'Avatar':'Text-only';
-      surveyRound.textContent = `After ${condName} segment`;
+      surveyIdx = 0;
+
+      const lastCond = conds[idx - 1];
+      const name = lastCond === 1 ? 'Mirror' : lastCond === 2 ? 'Avatar' : 'Text-only';
+      surveyRound.textContent = `After ${name} segment`;
+
       renderSurvey();
     }
 
-    function renderSurvey(){
-      const q=postQs[surveyIdx];
-      surveyQuestion.textContent=q.text;
-      surveyOptions.innerHTML='';
-      q.scale.forEach((opt,i)=>{
-        const lbl=document.createElement('label');
-        lbl.innerHTML=`<input type="radio" name="surveyOpt" value="${i+1}"> ${opt}`;
+    function renderSurvey() {
+      const q = postQs[surveyIdx];
+      surveyQuestion.textContent = q.text;
+      surveyOptions.innerHTML = '';
+      q.scale.forEach((opt, i) => {
+        const lbl = document.createElement('label');
+        lbl.innerHTML = `<input type="radio" name="surveyOpt" value="${i+1}"> ${opt}`;
         surveyOptions.appendChild(lbl);
       });
-      surveyProgress.textContent=`${surveyIdx+1} of ${postQs.length}`;
+      surveyProgress.textContent = `${surveyIdx + 1} of ${postQs.length}`;
     }
 
-    surveySubmitBtn.onclick=()=>{
+    surveySubmitBtn.onclick = () => {
       const sel = document.querySelector('input[name="surveyOpt"]:checked');
-      if(!sel) return alert("Choose an option");
-      responses[postQs[surveyIdx].id + `_cond${Math.ceil(idx/2)}`] = sel.value;
+      if (!sel) return alert('Choose an option.');
+      responses[ postQs[surveyIdx].id + `_cond${Math.ceil(idx/2)}` ] = sel.value;
+
       surveyIdx++;
-      if(surveyIdx<postQs.length) renderSurvey();
-      else { hide(surveyPage); showQuestion(); }
+      if (surveyIdx < postQs.length) {
+        renderSurvey();
+      } else {
+        // IMPORTANT: advance to next question block after finishing the survey
+        idx++;                         // <— this fixes the loop back
+        hide(surveyPage);
+        showQuestion();
+      }
     };
+
+    // Cleanup on unload
+    window.addEventListener('beforeunload', () => {
+      if (stream) stream.getTracks().forEach(t => t.stop());
+      if (timerSp._timer) clearInterval(timerSp._timer);
+      // console.log('Survey responses:', responses);
+    });
   });
   </script>
 </body>
