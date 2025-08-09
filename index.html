@@ -115,12 +115,12 @@
 
     // Interview data
     const Qs = [
-      "Tell me about yourself.",            // idx 0  (cond 1)
-      "What are your strengths?",           // idx 1  (cond 1)
-      "— video prompt —",                   // idx 2  (cond 2) 0729-1.mp4
-      "— video prompt —",                   // idx 3  (cond 2) 0729-2.mp4
-      "Describe a time you overcame a challenge.", // idx 4 (cond 3)
-      "Where do you see yourself in five years?"   // idx 5 (cond 3)
+      "Tell me about yourself.",                    // idx 0 (cond 1)
+      "What are your strengths?",                   // idx 1 (cond 1)
+      "— video prompt —",                           // idx 2 (cond 2) 0729-1.mp4
+      "— video prompt —",                           // idx 3 (cond 2) 0729-2.mp4
+      "Describe a time you overcame a challenge.",  // idx 4 (cond 3)
+      "Where do you see yourself in five years?"    // idx 5 (cond 3)
     ];
     const conds    = [1,1,2,2,3,3];                 // 1=mirror, 2=avatar(video→picture), 3=blank/text
     const vidFiles = [null,null,"0729-1.mp4","0729-2.mp4",null,null];
@@ -148,16 +148,13 @@
       .then(s => { stream = s; })
       .catch(() => alert("Camera/microphone access is required."));
 
-    // Show a question (or survey/end)
+    // Show a question or end
     function showQuestion() {
-      // After Q2 and Q4 (idx=2 and idx=4 BEFORE showing), show survey instead
-      if (idx > 0 && idx % 2 === 0) { showSurvey(); return; }
-
       if (idx >= Qs.length) { hide(interviewPage); show(endPage); return; }
 
       hide(previewPage); hide(surveyPage); show(interviewPage);
 
-      // Hide text during avatar/video condition (video itself is the question)
+      // Hide text during avatar/video condition (video is the question)
       qText.textContent = (conds[idx] === 2) ? "" : Qs[idx];
 
       redoCountSp.textContent = `Redo: ${redoCounts[idx]}`;
@@ -245,21 +242,26 @@
     // Finish stops recording
     finishBtn.onclick = () => { if (mediaRec && mediaRec.state === 'recording') mediaRec.stop(); };
 
-    // After preview → Next question
+    // After preview → Next
     previewNextBtn.onclick = () => {
       previewVideo.pause(); previewVideo.currentTime = 0;
       if (mediaRec && mediaRec.state === 'recording') mediaRec.stop();
       if (timerSp._timer) clearInterval(timerSp._timer);
-      idx++;               // advance to next question
-      showQuestion();
+      idx++;  // advance to next question index
+
+      // 🚦 Show survey ONLY after Q2 and Q4 (idx === 2 or 4). No survey-loop.
+      if (idx === 2 || idx === 4) {
+        showSurvey();
+      } else {
+        showQuestion();
+      }
     };
 
-    // Survey (after every 2 questions)
+    // Survey (triggered only from previewNextBtn for idx 2 and 4)
     function showSurvey() {
       hide(interviewPage); hide(previewPage); show(surveyPage);
       surveyIdx = 0;
 
-      // Label which segment just finished
       const lastCond = conds[idx - 1];
       const name = lastCond === 1 ? 'Mirror' : lastCond === 2 ? 'Avatar' : 'Text-only';
       surveyRound.textContent = `After ${name} segment`;
@@ -279,19 +281,20 @@
       surveyProgress.textContent = `${surveyIdx + 1} of ${postQs.length}`;
     }
 
-    // Submit one survey item (advance one-by-one)
+    // Submit one survey item → advance or return to next question
     surveySubmitBtn.onclick = () => {
       const sel = document.querySelector('input[name="surveyOpt"]:checked');
       if (!sel) return alert('Choose an option.');
-      responses[ postQs[surveyIdx].id + `_cond${Math.ceil(idx/2)}` ] = sel.value;
+      // You can store per-condition if needed:
+      // responses[ postQs[surveyIdx].id + `_cond${Math.ceil(idx/2)}` ] = sel.value;
 
       surveyIdx++;
       if (surveyIdx < postQs.length) {
         renderSurvey();
       } else {
-        // ✨ Do NOT increment idx here — we want to resume with the very next question.
+        // Do NOT change idx here; it already points at the next question (Q3 or Q5)
         hide(surveyPage);
-        showQuestion();  // if we just finished Q2, idx is 2 → shows Q3 (first video)
+        showQuestion();
       }
     };
 
