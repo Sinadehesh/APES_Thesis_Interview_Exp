@@ -82,8 +82,8 @@
 
   <script>
   document.addEventListener('DOMContentLoaded', () => {
-    // Helper first (so it's available immediately)
-    const $ = (id) => document.getElementById(id);
+    // ✅ Helper that accepts "#id" OR "id"
+    const $ = (s) => document.getElementById(s.startsWith('#') ? s.slice(1) : s);
     const show = (el) => el.classList.remove('hidden');
     const hide = (el) => el.classList.add('hidden');
 
@@ -94,24 +94,24 @@
       { id:"q3", text:"This format made it hard to show my abilities.", scale:["Strongly disagree","Disagree","Neutral","Agree","Strongly agree"] }
     ];
 
-    // DOM refs
-    const startPage = $('startPage'), introPage = $('introPage'),
-          interviewPage = $('interviewPage'), previewPage = $('previewPage'),
-          surveyPage = $('surveyPage'), endPage = $('endPage');
+    // DOM refs (you used "#id" style—now handled by the helper)
+    const startPage = $('#startPage'), introPage = $('#introPage'),
+          interviewPage = $('#interviewPage'), previewPage = $('#previewPage'),
+          surveyPage = $('#surveyPage'), endPage = $('#endPage');
 
-    const displayName = $('displayName'), displayJob = $('displayJob'),
-          qText = $('questionText'), viewContainer = $('viewContainer'),
-          recordInst = $('recordInstruction'), redoCountSp = $('redoCount'),
-          recIndicator = $('recordIndicator'), timerSp = $('timerDisplay'),
-          previewVideo = $('previewVideo');
+    const displayName = $('#displayName'), displayJob = $('#displayJob'),
+          qText = $('#questionText'), viewContainer = $('#viewContainer'),
+          recordInst = $('#recordInstruction'), redoCountSp = $('#redoCount'),
+          recIndicator = $('#recordIndicator'), timerSp = $('#timerDisplay'),
+          previewVideo = $('#previewVideo');
 
-    const surveyRound = $('surveyRound'), surveyQuestion = $('surveyQuestion'),
-          surveyOptions = $('surveyOptions'), surveyProgress = $('surveyProgress');
+    const surveyRound = $('#surveyRound'), surveyQuestion = $('#surveyQuestion'),
+          surveyOptions = $('#surveyOptions'), surveyProgress = $('#surveyProgress');
 
-    const startIntroBtn = $('startIntroBtn'), startInterviewBtn = $('startInterviewBtn'),
-          startRecBtn = $('startRecordingBtn'), redoBtn = $('redoBtn'),
-          finishBtn = $('finishBtn'), previewRedoBtn = $('previewRedoBtn'),
-          previewNextBtn = $('previewNextBtn'), surveySubmitBtn = $('surveySubmitBtn');
+    const startIntroBtn = $('#startIntroBtn'), startInterviewBtn = $('#startInterviewBtn'),
+          startRecBtn = $('#startRecordingBtn'), redoBtn = $('#redoBtn'),
+          finishBtn = $('#finishBtn'), previewRedoBtn = $('#previewRedoBtn'),
+          previewNextBtn = $('#previewNextBtn'), surveySubmitBtn = $('#surveySubmitBtn');
 
     // Interview data
     const Qs = [
@@ -122,16 +122,12 @@
       "Describe a time you overcame a challenge.",
       "Where do you see yourself in five years?"
     ];
-    const conds = [1,1,2,2,3,3];                 // 1=mirror, 2=avatar(video→picture), 3=blank
+    const conds = [1,1,2,2,3,3]; // 1=mirror, 2=avatar(video→picture), 3=blank
     const vidFiles = [null,null,"0729-1.mp4","0729-2.mp4",null,null];
 
-    let idx = 0;
-    let redoCounts = Array(Qs.length).fill(0);
-    let stream = null;
-    let mediaRec = null;
-    let recChunks = [];
-    let surveyIdx = 0;
-    let responses = {};
+    let idx = 0, redoCounts = Array(Qs.length).fill(0);
+    let stream = null, mediaRec = null, recChunks = [];
+    let surveyIdx = 0, responses = {};
 
     // STEP 1
     startIntroBtn.onclick = () => {
@@ -146,22 +142,19 @@
     // STEP 2
     startInterviewBtn.onclick = () => { hide(introPage); show(interviewPage); showQuestion(); };
 
-    // Get camera/mic
+    // Camera/mic
     navigator.mediaDevices.getUserMedia({ video:true, audio:true })
       .then(s => { stream = s; })
       .catch(() => alert("Camera/microphone access is required."));
 
-    // Core flow
+    // Show question
     function showQuestion() {
-      // After Q2, Q4 → survey
-      if (idx > 0 && idx % 2 === 0) { showSurvey(); return; }
-
-      // Done?
-      if (idx >= Qs.length) { hide(interviewPage); show(endPage); return; }
+      if (idx > 0 && idx % 2 === 0) { showSurvey(); return; }  // after Q2,Q4
+      if (idx >= Qs.length) { hide(interviewPage); show(endPage); return; } // done
 
       hide(previewPage); hide(surveyPage); show(interviewPage);
 
-      // Hide text in condition 2 (avatar). Otherwise show the text.
+      // Hide text in avatar condition
       qText.textContent = (conds[idx] === 2) ? "" : Qs[idx];
 
       redoCountSp.textContent = `Redo: ${redoCounts[idx]}`;
@@ -173,25 +166,20 @@
 
       if (conds[idx] === 1 && stream) {
         const v = document.createElement('video');
-        v.srcObject = stream;
-        v.autoplay = v.muted = v.playsInline = true;
+        v.srcObject = stream; v.autoplay = v.muted = v.playsInline = true;
         v.className = 'video-prompt';
         viewContainer.appendChild(v);
       } else if (conds[idx] === 2) {
         const v = document.createElement('video');
-        v.src = vidFiles[idx];
-        v.controls = v.autoplay = true;
-        v.playsInline = true;
+        v.src = vidFiles[idx]; v.controls = v.autoplay = true; v.playsInline = true;
         v.className = 'video-prompt';
         viewContainer.appendChild(v);
       }
-      // cond 3: text-only, nothing to add
     }
 
     // Recording
     startRecBtn.onclick = () => {
-      if (!stream) { alert('No camera stream. Reload and allow access.'); return; }
-
+      if (!stream) return alert('No camera stream. Reload and allow access.');
       recChunks = [];
       mediaRec = new MediaRecorder(stream);
       mediaRec.ondataavailable = e => { if (e.data && e.data.size) recChunks.push(e.data); };
@@ -207,20 +195,15 @@
       recIndicator.style.visibility = 'visible';
       timerSp.style.visibility = 'visible';
 
-      // In avatar condition, switch to picture during recording
-      if (conds[idx] === 2) {
+      if (conds[idx] === 2) { // swap to picture during recording
         viewContainer.innerHTML = '';
         const img = document.createElement('img');
-        img.src = 'input.jpg';
-        img.alt = '';
-        img.className = 'video-prompt';
+        img.src = 'input.jpg'; img.alt = ''; img.className = 'video-prompt';
         viewContainer.appendChild(img);
       }
-
       startTimer();
     };
 
-    // Timer
     function startTimer() {
       let t = 30;
       timerSp.textContent = t;
@@ -234,7 +217,6 @@
       }, 1000);
     }
 
-    // Redo
     function doRedo() {
       if (mediaRec && mediaRec.state === 'recording') mediaRec.stop();
       if (timerSp._timer) clearInterval(timerSp._timer);
@@ -244,17 +226,13 @@
     redoBtn.onclick = doRedo;
     previewRedoBtn.onclick = doRedo;
 
-    // Finish (stop recording)
-    finishBtn.onclick = () => {
-      if (mediaRec && mediaRec.state === 'recording') mediaRec.stop();
-    };
+    finishBtn.onclick = () => { if (mediaRec && mediaRec.state === 'recording') mediaRec.stop(); };
 
-    // Preview → Next
     previewNextBtn.onclick = () => {
       previewVideo.pause(); previewVideo.currentTime = 0;
       if (mediaRec && mediaRec.state === 'recording') mediaRec.stop();
       if (timerSp._timer) clearInterval(timerSp._timer);
-      idx++;               // move to next question index
+      idx++;  // next question
       showQuestion();
     };
 
@@ -262,11 +240,9 @@
     function showSurvey() {
       hide(interviewPage); hide(previewPage); show(surveyPage);
       surveyIdx = 0;
-
       const lastCond = conds[idx - 1];
       const name = lastCond === 1 ? 'Mirror' : lastCond === 2 ? 'Avatar' : 'Text-only';
       surveyRound.textContent = `After ${name} segment`;
-
       renderSurvey();
     }
 
@@ -291,18 +267,16 @@
       if (surveyIdx < postQs.length) {
         renderSurvey();
       } else {
-        // IMPORTANT: advance to next question block after finishing the survey
-        idx++;                         // <— this fixes the loop back
+        idx++; // advance to next block after finishing survey
         hide(surveyPage);
         showQuestion();
       }
     };
 
-    // Cleanup on unload
+    // Cleanup
     window.addEventListener('beforeunload', () => {
       if (stream) stream.getTracks().forEach(t => t.stop());
       if (timerSp._timer) clearInterval(timerSp._timer);
-      // console.log('Survey responses:', responses);
     });
   });
   </script>
