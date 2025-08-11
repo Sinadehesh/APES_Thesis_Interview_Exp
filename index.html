@@ -33,7 +33,7 @@
   <div id="introPage" class="container hidden">
     <h2>Hi <span id="displayName"></span>!</h2>
     <p>Imagine you’re interviewing for <strong><span id="displayJob"></span></strong>. It’s a job you really want—do your best!</p>
-    <p>After every two questions, you’ll answer a quick check-in.</p>
+    <p>Please record yourself while answering the quesitons. If you were not satisfied with your answer you can redo. </p>
     <button id="startInterviewBtn">Start Interview</button>
   </div>
 
@@ -91,7 +91,7 @@
     const postQs = [
       { id:"q1", text:"I felt anxious during this interview.", scale:["Strongly disagree","Disagree","Neutral","Agree","Strongly agree"] },
       { id:"q2", text:"I was able to express myself clearly.", reverse:true, scale:["Strongly disagree","Disagree","Neutral","Agree","Strongly agree"] },
-      { id:"q3", text:"This format made it hard to show my abilities.", scale:["Strongly disagree","Disagree","Neutral","Agree","Strongly agree"] }
+      { id:"q3", text:"I was able to show my abilities easily.", scale:["Strongly disagree","Disagree","Neutral","Agree","Strongly agree"] }
     ];
 
     // DOM refs
