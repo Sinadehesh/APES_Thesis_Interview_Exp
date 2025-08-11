@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Interview Demo</title>
+  <title>Interview Experience</title>
   <style>
     body { display:flex; justify-content:center; align-items:center; min-height:100vh; margin:0; font-family:'Segoe UI', Tahoma, sans-serif; background:#f0f2f5; }
     .container { width:600px; max-width:90vw; padding:30px; background:#fff; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.1); text-align:center; }
@@ -23,7 +23,7 @@
   <!-- STEP 1: Name & Job -->
   <div id="startPage" class="container">
     <h1>Welcome!</h1>
-    <p>Enter your name and the job you’re interviewing for:</p>
+    <p>Enter your name, then enter the job tiltle you hope to get:</p>
     <input type="text" id="participantName" placeholder="Your name" />
     <input type="text" id="participantJob" placeholder="Desired job" />
     <button id="startIntroBtn">Next</button>
@@ -32,8 +32,9 @@
   <!-- STEP 2: Intro -->
   <div id="introPage" class="container hidden">
     <h2>Hi <span id="displayName"></span>!</h2>
-    <p>Imagine you’re interviewing for <strong><span id="displayJob"></span></strong>. It’s a job you really want—do your best!</p>
-    <p>Please record yourself while answering the quesitons. If you were not satisfied with your answer you can redo. </p>
+    <p>You're about to participate in a research study designed to enhance and improve online interview experiences. You'll complete 3 different interview formats for a <strong><span id="displayJob"></span></strong>. position, each with a unique setup.
+After each interview format, we'll ask how you felt during that experience. Your feedback will help us understand which interview styles work best for candidates like you.</p>
+    <p>Please record yourself while answering the quesitons. If you're not satisfied with an answer, simply hit "Redo" to try again. Your will be the ONLY person who sees the videos. Do your best! </p>
     <button id="startInterviewBtn">Start Interview</button>
   </div>
 
