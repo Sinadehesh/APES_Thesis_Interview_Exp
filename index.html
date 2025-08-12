@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Interview Experience</title>
+  <title>Interview Demo (No Surveys)</title>
   <style>
     body { display:flex; justify-content:center; align-items:center; min-height:100vh; margin:0; font-family:'Segoe UI', Tahoma, sans-serif; background:#f0f2f5; }
     .container { width:600px; max-width:90vw; padding:30px; background:#fff; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.1); text-align:center; }
@@ -15,15 +15,13 @@
     .status-row { display:flex; justify-content:space-between; align-items:center; margin:20px 0; }
     .status-row span { font-weight:bold; }
     .video-prompt, #viewContainer img, .preview-video { width:100%; border-radius:6px; }
-    .radio-group { display:flex; flex-direction:column; align-items:flex-start; margin:20px 0; }
-    .radio-group label { margin:5px 0; cursor:pointer; }
   </style>
 </head>
 <body>
   <!-- STEP 1: Name & Job -->
   <div id="startPage" class="container">
     <h1>Welcome!</h1>
-    <p>Enter your name, then enter the job tiltle you hope to get:</p>
+    <p>Enter your name, then the job title you hope to get:</p>
     <input type="text" id="participantName" placeholder="Your name" />
     <input type="text" id="participantJob" placeholder="Desired job" />
     <button id="startIntroBtn">Next</button>
@@ -32,9 +30,7 @@
   <!-- STEP 2: Intro -->
   <div id="introPage" class="container hidden">
     <h2>Hi <span id="displayName"></span>!</h2>
-    <p>You're about to participate in a research study designed to enhance and improve online interview experiences. You'll complete 3 different interview formats for a <strong><span id="displayJob"></span></strong>. position, each with a unique setup.
-After each interview format, we'll ask how you felt during that experience. Your feedback will help us understand which interview styles work best for candidates like you.</p>
-    <p>Please record yourself while answering the quesitons. If you're not satisfied with an answer, simply hit "Redo" to try again. Your will be the ONLY person who sees the videos. Do your best! </p>
+    <p>You’ll complete 3 interview formats for a <strong><span id="displayJob"></span></strong> role. Record your answers; if you’re not satisfied, hit “Redo.” Only you will see the videos.</p>
     <button id="startInterviewBtn">Start Interview</button>
   </div>
 
@@ -65,16 +61,6 @@ After each interview format, we'll ask how you felt during that experience. Your
     </div>
   </div>
 
-  <!-- SURVEY -->
-  <div id="surveyPage" class="container hidden">
-    <h2>Quick Check-In</h2>
-    <p id="surveyRound"></p>
-    <h3 id="surveyQuestion"></h3>
-    <div id="surveyOptions" class="radio-group"></div>
-    <button id="surveySubmitBtn">Submit</button>
-    <p><small id="surveyProgress"></small></p>
-  </div>
-
   <!-- END -->
   <div id="endPage" class="container hidden">
     <h2>Thank You!</h2>
@@ -83,22 +69,14 @@ After each interview format, we'll ask how you felt during that experience. Your
 
   <script>
   document.addEventListener('DOMContentLoaded', () => {
-    // Helper (accepts "id" or "#id")
     const $ = s => document.getElementById(s.startsWith('#') ? s.slice(1) : s);
     const show = el => el.classList.remove('hidden');
     const hide = el => el.classList.add('hidden');
 
-    // Post-condition survey (3 questions)
-    const postQs = [
-      { id:"q1", text:"I felt anxious during this interview.", scale:["Strongly disagree","Disagree","Neutral","Agree","Strongly agree"] },
-      { id:"q2", text:"I was able to express myself clearly.", reverse:true, scale:["Strongly disagree","Disagree","Neutral","Agree","Strongly agree"] },
-      { id:"q3", text:"I was able to show my abilities easily.", scale:["Strongly disagree","Disagree","Neutral","Agree","Strongly agree"] }
-    ];
-
     // DOM refs
     const startPage = $('#startPage'), introPage = $('#introPage'),
           interviewPage = $('#interviewPage'), previewPage = $('#previewPage'),
-          surveyPage = $('#surveyPage'), endPage = $('#endPage');
+          endPage = $('#endPage');
 
     const displayName = $('#displayName'), displayJob = $('#displayJob'),
           qText = $('#questionText'), viewContainer = $('#viewContainer'),
@@ -106,30 +84,26 @@ After each interview format, we'll ask how you felt during that experience. Your
           recIndicator = $('#recordIndicator'), timerSp = $('#timerDisplay'),
           previewVideo = $('#previewVideo');
 
-    const surveyRound = $('#surveyRound'), surveyQuestion = $('#surveyQuestion'),
-          surveyOptions = $('#surveyOptions'), surveyProgress = $('#surveyProgress');
-
     const startIntroBtn = $('#startIntroBtn'), startInterviewBtn = $('#startInterviewBtn'),
           startRecBtn = $('#startRecordingBtn'), redoBtn = $('#redoBtn'),
           finishBtn = $('#finishBtn'), previewRedoBtn = $('#previewRedoBtn'),
-          previewNextBtn = $('#previewNextBtn'), surveySubmitBtn = $('#surveySubmitBtn');
+          previewNextBtn = $('#previewNextBtn');
 
-    // Interview data
+    // Interview data: 6 questions, conditions 1/1/2/2/3/3
     const Qs = [
-      "Tell me about yourself.",                    // idx 0 (cond 1)
-      "What are your strengths?",                   // idx 1 (cond 1)
-      "— video prompt —",                           // idx 2 (cond 2) 0729-1.mp4
-      "— video prompt —",                           // idx 3 (cond 2) 0729-2.mp4
-      "Describe a time you overcame a challenge.",  // idx 4 (cond 3)
-      "Where do you see yourself in five years?"    // idx 5 (cond 3)
+      "Tell me about yourself.",                    // cond 1 (mirror)
+      "What are your strengths?",                   // cond 1 (mirror)
+      "— video prompt —",                           // cond 2 (avatar video → picture during answer)
+      "— video prompt —",                           // cond 2
+      "Describe a time you overcame a challenge.",  // cond 3 (text/voice-only)
+      "Where do you see yourself in five years?"    // cond 3
     ];
-    const conds    = [1,1,2,2,3,3];                 // 1=mirror, 2=avatar(video→picture), 3=blank/text
+    const conds    = [1,1,2,2,3,3];                 
     const vidFiles = [null,null,"0729-1.mp4","0729-2.mp4",null,null];
 
     let idx = 0;
     let redoCounts = Array(Qs.length).fill(0);
     let stream = null, mediaRec = null, recChunks = [];
-    let surveyIdx = 0, responses = {};
 
     // STEP 1
     startIntroBtn.onclick = () => {
@@ -149,13 +123,12 @@ After each interview format, we'll ask how you felt during that experience. Your
       .then(s => { stream = s; })
       .catch(() => alert("Camera/microphone access is required."));
 
-    // Show a question or end
     function showQuestion() {
       if (idx >= Qs.length) { hide(interviewPage); show(endPage); return; }
 
-      hide(previewPage); hide(surveyPage); show(interviewPage);
+      hide(previewPage); show(interviewPage);
 
-      // Hide text during avatar/video condition (video is the question)
+      // Question text (empty for avatar/video prompts)
       qText.textContent = (conds[idx] === 2) ? "" : Qs[idx];
 
       redoCountSp.textContent = `Redo: ${redoCounts[idx]}`;
@@ -181,7 +154,7 @@ After each interview format, we'll ask how you felt during that experience. Your
         v.className = 'video-prompt';
         viewContainer.appendChild(v);
       }
-      // cond 3: text-only (leave viewContainer empty)
+      // cond 3: text-only (leave container empty)
     }
 
     // Start recording
@@ -203,11 +176,11 @@ After each interview format, we'll ask how you felt during that experience. Your
       recIndicator.style.visibility = 'visible';
       timerSp.style.visibility = 'visible';
 
-      // During avatar condition, swap the video out for the picture while they speak
+      // During avatar condition, swap video → static image while answering
       if (conds[idx] === 2) {
         viewContainer.innerHTML = '';
         const img = document.createElement('img');
-        img.src = 'input.jpg';
+        img.src = 'input.jpg';  // replace with your static avatar image
         img.alt = '';
         img.className = 'video-prompt';
         viewContainer.appendChild(img);
@@ -216,7 +189,6 @@ After each interview format, we'll ask how you felt during that experience. Your
       startTimer();
     };
 
-    // Countdown
     function startTimer() {
       let t = 30;
       timerSp.textContent = t;
@@ -230,7 +202,6 @@ After each interview format, we'll ask how you felt during that experience. Your
       }, 1000);
     }
 
-    // Redo current question
     function doRedo() {
       if (mediaRec && mediaRec.state === 'recording') mediaRec.stop();
       if (timerSp._timer) clearInterval(timerSp._timer);
@@ -240,63 +211,15 @@ After each interview format, we'll ask how you felt during that experience. Your
     redoBtn.onclick = doRedo;
     previewRedoBtn.onclick = doRedo;
 
-    // Finish stops recording
     finishBtn.onclick = () => { if (mediaRec && mediaRec.state === 'recording') mediaRec.stop(); };
 
-    // After preview → Next
+    // Preview → Next question (no surveys shown anywhere)
     previewNextBtn.onclick = () => {
       previewVideo.pause(); previewVideo.currentTime = 0;
       if (mediaRec && mediaRec.state === 'recording') mediaRec.stop();
       if (timerSp._timer) clearInterval(timerSp._timer);
-      idx++;  // advance to next question index
-
-      // 🚦 Show survey ONLY after Q2 and Q4 (idx === 2 or 4). No survey-loop.
-      if (idx === 2 || idx === 4) {
-        showSurvey();
-      } else {
-        showQuestion();
-      }
-    };
-
-    // Survey (triggered only from previewNextBtn for idx 2 and 4)
-    function showSurvey() {
-      hide(interviewPage); hide(previewPage); show(surveyPage);
-      surveyIdx = 0;
-
-      const lastCond = conds[idx - 1];
-      const name = lastCond === 1 ? 'Mirror' : lastCond === 2 ? 'Avatar' : 'Text-only';
-      surveyRound.textContent = `After ${name} segment`;
-
-      renderSurvey();
-    }
-
-    function renderSurvey() {
-      const q = postQs[surveyIdx];
-      surveyQuestion.textContent = q.text;
-      surveyOptions.innerHTML = '';
-      q.scale.forEach((opt, i) => {
-        const lbl = document.createElement('label');
-        lbl.innerHTML = `<input type="radio" name="surveyOpt" value="${i+1}"> ${opt}`;
-        surveyOptions.appendChild(lbl);
-      });
-      surveyProgress.textContent = `${surveyIdx + 1} of ${postQs.length}`;
-    }
-
-    // Submit one survey item → advance or return to next question
-    surveySubmitBtn.onclick = () => {
-      const sel = document.querySelector('input[name="surveyOpt"]:checked');
-      if (!sel) return alert('Choose an option.');
-      // You can store per-condition if needed:
-      // responses[ postQs[surveyIdx].id + `_cond${Math.ceil(idx/2)}` ] = sel.value;
-
-      surveyIdx++;
-      if (surveyIdx < postQs.length) {
-        renderSurvey();
-      } else {
-        // Do NOT change idx here; it already points at the next question (Q3 or Q5)
-        hide(surveyPage);
-        showQuestion();
-      }
+      idx++;
+      showQuestion();
     };
 
     // Cleanup
