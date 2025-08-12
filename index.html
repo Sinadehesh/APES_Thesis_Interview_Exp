@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Interview Demo </title>
+  <title>Interview Demo (Minimal Survey)</title>
   <style>
     body { display:flex; justify-content:center; align-items:center; min-height:100vh; margin:0; font-family:'Segoe UI', Tahoma, sans-serif; background:#f0f2f5; }
     .container { width:600px; max-width:90vw; padding:30px; background:#fff; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.1); text-align:center; }
@@ -15,6 +15,26 @@
     .status-row { display:flex; justify-content:space-between; align-items:center; margin:20px 0; }
     .status-row span { font-weight:bold; }
     .video-prompt, #viewContainer img, .preview-video { width:100%; border-radius:6px; }
+
+    /* Inline radio options in ONE row */
+    .radio-row { 
+      display:flex; 
+      flex-wrap:nowrap;    /* keep one row */
+      gap:14px; 
+      justify-content:center; 
+      align-items:center; 
+      overflow-x:auto;     /* scroll horizontally if too tight */
+      padding:8px 0; 
+    }
+    .radio-row label {
+      display:inline-flex; 
+      align-items:center; 
+      gap:6px; 
+      white-space:nowrap; 
+      cursor:pointer;
+      user-select:none;
+    }
+    .radio-row input[type="radio"] { transform:translateY(1px); }
   </style>
 </head>
 <body>
@@ -61,6 +81,14 @@
     </div>
   </div>
 
+  <!-- SURVEY (minimal; no headers) -->
+  <div id="surveyPage" class="container hidden">
+    <h3 id="surveyQuestion" style="margin-top:0;"></h3>
+    <div id="surveyOptions" class="radio-row"></div>
+    <button id="surveySubmitBtn">Submit</button>
+    <p><small id="surveyProgress"></small></p>
+  </div>
+
   <!-- END -->
   <div id="endPage" class="container hidden">
     <h2>Thank You!</h2>
@@ -76,7 +104,7 @@
     // DOM refs
     const startPage = $('#startPage'), introPage = $('#introPage'),
           interviewPage = $('#interviewPage'), previewPage = $('#previewPage'),
-          endPage = $('#endPage');
+          surveyPage = $('#surveyPage'), endPage = $('#endPage');
 
     const displayName = $('#displayName'), displayJob = $('#displayJob'),
           qText = $('#questionText'), viewContainer = $('#viewContainer'),
@@ -88,6 +116,11 @@
           startRecBtn = $('#startRecordingBtn'), redoBtn = $('#redoBtn'),
           finishBtn = $('#finishBtn'), previewRedoBtn = $('#previewRedoBtn'),
           previewNextBtn = $('#previewNextBtn');
+
+    const surveyQuestion = $('#surveyQuestion'),
+          surveyOptions = $('#surveyOptions'),
+          surveyProgress = $('#surveyProgress'),
+          surveySubmitBtn = $('#surveySubmitBtn');
 
     // Interview data: 6 questions, conditions 1/1/2/2/3/3
     const Qs = [
@@ -101,9 +134,17 @@
     const conds    = [1,1,2,2,3,3];                 
     const vidFiles = [null,null,"0729-1.mp4","0729-2.mp4",null,null];
 
+    // Minimal post-condition survey (after Q2, Q4)
+    const postQs = [
+      { id:"q1", text:"I felt anxious during this interview.", scale:["Strongly disagree","Disagree","Neutral","Agree","Strongly agree"] },
+      { id:"q2", text:"I was able to express myself clearly.", reverse:true, scale:["Strongly disagree","Disagree","Neutral","Agree","Strongly agree"] },
+      { id:"q3", text:"I felt I would be judged more negatively.", scale:["Strongly disagree","Disagree","Neutral","Agree","Strongly agree"] }
+    ];
+
     let idx = 0;
     let redoCounts = Array(Qs.length).fill(0);
     let stream = null, mediaRec = null, recChunks = [];
+    let surveyIdx = 0;
 
     // STEP 1
     startIntroBtn.onclick = () => {
@@ -126,7 +167,7 @@
     function showQuestion() {
       if (idx >= Qs.length) { hide(interviewPage); show(endPage); return; }
 
-      hide(previewPage); show(interviewPage);
+      hide(previewPage); hide(surveyPage); show(interviewPage);
 
       // Question text (empty for avatar/video prompts)
       qText.textContent = (conds[idx] === 2) ? "" : Qs[idx];
@@ -154,7 +195,7 @@
         v.className = 'video-prompt';
         viewContainer.appendChild(v);
       }
-      // cond 3: text-only 
+      // cond 3: text-only (no extra UI)
     }
 
     // Start recording
@@ -213,13 +254,50 @@
 
     finishBtn.onclick = () => { if (mediaRec && mediaRec.state === 'recording') mediaRec.stop(); };
 
-    // Preview → Next question
+    // Preview → Next question (show minimal survey only after Q2 and Q4)
     previewNextBtn.onclick = () => {
       previewVideo.pause(); previewVideo.currentTime = 0;
       if (mediaRec && mediaRec.state === 'recording') mediaRec.stop();
       if (timerSp._timer) clearInterval(timerSp._timer);
-      idx++;
-      showQuestion();
+      idx++;  // move to next question index
+
+      if (idx === 2 || idx === 4) {
+        showSurvey();
+      } else {
+        showQuestion();
+      }
+    };
+
+    // --- Minimal Survey ---
+    function showSurvey() {
+      hide(interviewPage); hide(previewPage); show(surveyPage);
+      surveyIdx = 0;
+      renderSurvey();
+    }
+
+    function renderSurvey() {
+      const q = postQs[surveyIdx];
+      surveyQuestion.textContent = q.text;
+      surveyOptions.innerHTML = '';
+      q.scale.forEach((opt, i) => {
+        const lbl = document.createElement('label');
+        lbl.innerHTML = `<input type="radio" name="surveyOpt" value="${i+1}"> ${opt}`;
+        surveyOptions.appendChild(lbl);
+      });
+      surveyProgress.textContent = `${surveyIdx + 1} of ${postQs.length}`;
+    }
+
+    surveySubmitBtn.onclick = () => {
+      const sel = document.querySelector('input[name="surveyOpt"]:checked');
+      if (!sel) return alert('Choose an option.');
+      surveyIdx++;
+      if (surveyIdx < postQs.length) {
+        renderSurvey();
+      } else {
+        // return to the next question (idx already points to it)
+        hide(surveyPage);
+        showQuestion();
+      }
     };
 
     // Cleanup
