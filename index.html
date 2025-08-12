@@ -96,7 +96,7 @@
       "— video prompt —",                           // cond 2 (avatar video → picture during answer)
       "— video prompt —",                           // cond 2
       "Describe a time you overcame a challenge.",  // cond 3 (text/voice-only)
-      "Where do you see yourself in five years?"    // cond 3
+      "Where do you see yourself in five years?"    // cond 3 (text/voice-only)
     ];
     const conds    = [1,1,2,2,3,3];                 
     const vidFiles = [null,null,"0729-1.mp4","0729-2.mp4",null,null];
@@ -154,7 +154,7 @@
         v.className = 'video-prompt';
         viewContainer.appendChild(v);
       }
-      // cond 3: text-only (leave container empty)
+      // cond 3: text-only 
     }
 
     // Start recording
@@ -180,7 +180,7 @@
       if (conds[idx] === 2) {
         viewContainer.innerHTML = '';
         const img = document.createElement('img');
-        img.src = 'input.jpg';  // replace with your static avatar image
+        img.src = 'input.jpg';  // replace with avatar image
         img.alt = '';
         img.className = 'video-prompt';
         viewContainer.appendChild(img);
@@ -213,7 +213,7 @@
 
     finishBtn.onclick = () => { if (mediaRec && mediaRec.state === 'recording') mediaRec.stop(); };
 
-    // Preview → Next question (no surveys shown anywhere)
+    // Preview → Next question
     previewNextBtn.onclick = () => {
       previewVideo.pause(); previewVideo.currentTime = 0;
       if (mediaRec && mediaRec.state === 'recording') mediaRec.stop();
