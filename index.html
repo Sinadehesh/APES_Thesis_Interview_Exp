@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Interview Demo (Minimal Survey)</title>
+  <title>Interview Demo (No Surveys)</title>
   <style>
     body { display:flex; justify-content:center; align-items:center; min-height:100vh; margin:0; font-family:'Segoe UI', Tahoma, sans-serif; background:#f0f2f5; }
     .container { width:600px; max-width:90vw; padding:30px; background:#fff; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.1); text-align:center; }
@@ -16,21 +16,21 @@
     .status-row span { font-weight:bold; }
     .video-prompt, #viewContainer img, .preview-video { width:100%; border-radius:6px; }
 
-    /* Inline radio options in ONE row */
-    .radio-row { 
-      display:flex; 
-      flex-wrap:nowrap;    /* keep one row */
-      gap:14px; 
-      justify-content:center; 
-      align-items:center; 
-      overflow-x:auto;     /* scroll horizontally if too tight */
-      padding:8px 0; 
+    /* inline survey options in one row */
+    .radio-row {
+      display:flex;
+      flex-wrap:nowrap;      /* single row */
+      gap:14px;
+      justify-content:center;
+      align-items:center;
+      white-space:nowrap;
+      overflow-x:auto;       /* scroll horizontally if too tight */
+      padding:8px 0;
     }
     .radio-row label {
-      display:inline-flex; 
-      align-items:center; 
-      gap:6px; 
-      white-space:nowrap; 
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
       cursor:pointer;
       user-select:none;
     }
@@ -81,7 +81,7 @@
     </div>
   </div>
 
-  <!-- SURVEY (minimal; no headers) -->
+  <!-- SURVEY (minimal; no header text like "Quick Check-In") -->
   <div id="surveyPage" class="container hidden">
     <h3 id="surveyQuestion" style="margin-top:0;"></h3>
     <div id="surveyOptions" class="radio-row"></div>
@@ -131,10 +131,10 @@
       "Describe a time you overcame a challenge.",  // cond 3 (text/voice-only)
       "Where do you see yourself in five years?"    // cond 3 (text/voice-only)
     ];
-    const conds    = [1,1,2,2,3,3];                 
+    const conds    = [1,1,2,2,3,3];
     const vidFiles = [null,null,"0729-1.mp4","0729-2.mp4",null,null];
 
-    // Minimal post-condition survey (after Q2, Q4)
+    // Minimal post-condition survey (after Q2, Q4) — ONLY change is item 3 text + inline options
     const postQs = [
       { id:"q1", text:"I felt anxious during this interview.", scale:["Strongly disagree","Disagree","Neutral","Agree","Strongly agree"] },
       { id:"q2", text:"I was able to express myself clearly.", reverse:true, scale:["Strongly disagree","Disagree","Neutral","Agree","Strongly agree"] },
@@ -195,7 +195,7 @@
         v.className = 'video-prompt';
         viewContainer.appendChild(v);
       }
-      // cond 3: text-only (no extra UI)
+      // cond 3: text-only
     }
 
     // Start recording
@@ -221,7 +221,7 @@
       if (conds[idx] === 2) {
         viewContainer.innerHTML = '';
         const img = document.createElement('img');
-        img.src = 'input.jpg';  // replace with avatar image
+        img.src = 'input.jpg';  // avatar image
         img.alt = '';
         img.className = 'video-prompt';
         viewContainer.appendChild(img);
@@ -254,13 +254,12 @@
 
     finishBtn.onclick = () => { if (mediaRec && mediaRec.state === 'recording') mediaRec.stop(); };
 
-    // Preview → Next question (show minimal survey only after Q2 and Q4)
+    // Preview → Next question (show survey only after Q2 and Q4)
     previewNextBtn.onclick = () => {
       previewVideo.pause(); previewVideo.currentTime = 0;
       if (mediaRec && mediaRec.state === 'recording') mediaRec.stop();
       if (timerSp._timer) clearInterval(timerSp._timer);
-      idx++;  // move to next question index
-
+      idx++;
       if (idx === 2 || idx === 4) {
         showSurvey();
       } else {
@@ -268,7 +267,7 @@
       }
     };
 
-    // --- Minimal Survey ---
+    // --- Minimal Survey (no “Quick Check-In” header) ---
     function showSurvey() {
       hide(interviewPage); hide(previewPage); show(surveyPage);
       surveyIdx = 0;
@@ -294,9 +293,8 @@
       if (surveyIdx < postQs.length) {
         renderSurvey();
       } else {
-        // return to the next question (idx already points to it)
         hide(surveyPage);
-        showQuestion();
+        showQuestion(); // continue to next question
       }
     };
 
