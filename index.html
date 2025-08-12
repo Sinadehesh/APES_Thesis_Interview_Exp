@@ -17,6 +17,21 @@
     .video-prompt, #viewContainer img, .preview-video { width:100%; border-radius:6px; }
 
     /* inline survey options in one row */
+    /* one-row radio options */
+#surveyOptions {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 14px;
+  align-items: center;
+  justify-content: center;
+  overflow-x: auto; /* scroll if too tight */
+}
+#surveyOptions label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
     .radio-row {
       display:flex;
       flex-wrap:nowrap;      /* single row */
