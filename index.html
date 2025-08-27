@@ -485,7 +485,7 @@
     <p>You'll complete <strong>3 different interview formats</strong>, each with <strong>2 questions</strong>:</p>
     <ul style="margin-left: 20px; margin-top: 10px;">
       <li>Format 1: You'll see yourself on screen (like a video call)</li>
-      <li>Format 2: You'll see an avatar presenter</li>
+      <li>Format 2: You'll see an animated avatar that asks the questions</li>
       <li>Format 3: You'll see only the question text</li>
     </ul>
   </div>
@@ -498,14 +498,6 @@
     <li>You can "Redo" if you want to try again</li>
     <li>Review your recording and click "Next"</li>
   </ol>
-  
-  <div class="instruction-text">
-    <strong>Tips for Success:</strong><br>
-    • Speak clearly and naturally<br>
-    • Don't worry about being perfect - just do your best<br>
-    • Remember, your recordings are NOT being saved<br>
-    • Take a moment to think before you start recording
-  </div>
   
   <p style="text-align: center; margin-top: 20px; color: #6c757d;">
     <strong>Need help?</strong> Contact: s.dehesh@campus.unimib.it
@@ -613,20 +605,22 @@
 const CONFIG = {
   // Interview Questions
   questions: [
-    "Tell me about yourself.",
-    "What are your strengths?",
-    "How do you prioritize your work?",
-    "How do you stay organized?",
-    "Describe a time you overcame a challenge.",
-    "Where do you see yourself in five years?"
+    "Tell me about yourself.",                    // Q1 - SRI condition
+    "What are your strengths?",                   // Q2 - SRI condition
+    "How do you prioritize your work?",           // Q3 - Avatar condition (0729-1.mp4)
+    "How do you stay organized?",                 // Q4 - Avatar condition (0729-2.mp4)
+    "Describe a time you overcame a challenge.",  // Q5 - Text-only condition
+    "Where do you see yourself in five years?"    // Q6 - Text-only condition
   ],
   
   // Condition mapping: 1=SRI, 2=Avatar, 3=Text-only
   conditions: [1, 1, 2, 2, 3, 3],
   
-  // Avatar video files
-  avatarVideos: ["avatar-q3.mp4", "avatar-q4.mp4"],
-  avatarImage: "avatar-static.jpg",
+  // Avatar video files (these videos ask the questions)
+  // 0729-1.mp4 asks "How do you prioritize your work?" (Question 3)
+  // 0729-2.mp4 asks "How do you stay organized?" (Question 4)
+  avatarVideos: ["0729-1.mp4", "0729-2.mp4"],
+  avatarImage: "input.jpg", // Static avatar image shown during recording
   
   // Survey questions
   surveyQuestions: [
@@ -858,10 +852,11 @@ function showQuestion() {
   
   // Clear previous content
   viewContainer.innerHTML = '';
+  viewContainer.style.display = 'block'; // Ensure container is visible
   questionText.textContent = '';
   
   // Set up condition-specific display
-  if (condition === 1) { // SRI Condition
+  if (condition === 1) { // SRI Condition - Show self-view with text question
     questionText.textContent = CONFIG.questions[questionIdx];
     if (state.stream) {
       const video = document.createElement('video');
@@ -871,21 +866,20 @@ function showQuestion() {
       video.playsinline = true;
       viewContainer.appendChild(video);
     }
-  } else if (condition === 2) { // Avatar Condition
-    // For avatar, the video asks the question
-    const avatarIdx = questionIdx - 2; // Questions 2,3 use avatar
+  } else if (condition === 2) { // Avatar Condition - Show avatar video that asks the question
+    // For avatar, the video asks the question (0729-1.mp4 for Q3, 0729-2.mp4 for Q4)
+    const avatarIdx = questionIdx - 2; // Questions index 2,3 use avatar videos
     const video = document.createElement('video');
     video.src = CONFIG.avatarVideos[avatarIdx];
-    video.controls = false;
+    video.controls = true; // Allow user to replay if needed
     video.autoplay = true;
     video.playsinline = true;
     viewContainer.appendChild(video);
     
-    // Also show question text for clarity
+    // Don't show text for avatar condition - the video contains the question
+  } else { // Text-only Condition - Show only text, hide video container
     questionText.textContent = CONFIG.questions[questionIdx];
-  } else { // Text-only Condition
-    questionText.textContent = CONFIG.questions[questionIdx];
-    viewContainer.style.display = 'none';
+    viewContainer.style.display = 'none'; // Hide container for text-only
   }
 }
 
@@ -908,12 +902,13 @@ function startRecording() {
   document.getElementById('recordingControls').style.display = 'flex';
   document.getElementById('recordIndicator').style.display = 'block';
   
-  // For avatar condition, switch to static image during recording
+  // For avatar condition, switch to static image during recording (input.jpg)
   if (condition === 2) {
     const viewContainer = document.getElementById('viewContainer');
+    viewContainer.style.display = 'block'; // Ensure visible
     viewContainer.innerHTML = '';
     const img = document.createElement('img');
-    img.src = CONFIG.avatarImage;
+    img.src = CONFIG.avatarImage; // This is now "input.jpg"
     img.alt = 'Avatar';
     viewContainer.appendChild(img);
   }
