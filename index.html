@@ -363,7 +363,7 @@
       .button-row {
         flex-direction: column;
       }
-    }
+  t   }
   </style>
 </head>
 <body>
@@ -393,7 +393,7 @@
     
     <h3>Voluntary Participation</h3>
     <p>Your participation is entirely voluntary. You may withdraw from the study at any time without penalty by closing your browser.</p>
-    
+s    
     <h3>Contact Information</h3>
     <p>If you have any questions about this research, please contact: <strong>s.dehesh@campus.unimib.it</strong></p>
     <p>Department of Psychology, University of Milano-Bicocca</p>
@@ -428,7 +428,7 @@
     <p>Click the button below to record yourself counting "1, 2, 3" while looking at the camera:</p>
     <div class="video-container">
       <video id="calibrationVideo" autoplay muted playsinline></video>
-    </div>
+  t   </div>
     <button id="startCalibrationBtn" class="btn-record">
       <span id="calibrationBtnText">Start Test Recording</span>
     </button>
@@ -440,7 +440,7 @@
       <div class="timer" id="calibrationTimer">0:03</div>
     </div>
   </div>
-  
+ s
   <div id="calibrationStep2" class="hidden">
     <h3>Review Your Test Recording</h3>
     <p>Please watch your test recording and confirm you can see and hear yourself:</p>
@@ -498,7 +498,7 @@
   
   <p style="text-align: center; margin-top: 20px; color: #6c757d;">
     <strong>Need help?</strong> Contact: s.dehesh@campus.unimib.it
-  </p>
+s  </p>
   
   <button id="startExperimentBtn" class="btn-primary">Begin Interview</button>
 </div>
@@ -556,7 +556,7 @@
   <div class="survey-question" id="surveyQuestion"></div>
   
   <div class="likert-scale" id="likertOptions"></div>
-  
+s  
   <button id="surveySubmitBtn" class="btn-primary" disabled>Next Question</button>
   
   <p style="text-align: center; color: #6c757d; margin-top: 20px;">
@@ -584,7 +584,7 @@
   <h3>Questions?</h3>
   <p>If you have any questions about this research or encountered any technical difficulties, please contact:</p>
   <p style="text-align: center; font-size: 1.1em;"><strong>s.dehesh@campus.unimib.it</strong></p>
-A  <p style="text-align: center;">Department of Psychology, University of Milano-Bicocca</p>
+  <p style="text-align: center;">Department of Psychology, University of Milano-Bicocca</p>
   
   <div style="text-align: center; margin-top: 30px;">
     <p style="font-size: 1.2em; color: #667eea; font-weight: 600;">
@@ -608,7 +608,7 @@ const CONFIG = {
   // 1=SRI (Self-View), 2=Avatar, 3=Text-only
   conditions: [1, 1, 2, 2, 3, 3],
   avatarVideos: ["0729-1.mp4", "0729-2.mp4"],
-  avatarImage: "input.jpg",
+s  avatarImage: "input.jpg",
   
   surveyQuestions: [
     {
@@ -619,7 +619,7 @@ const CONFIG = {
     {
       id: "expression",
       text: "While answering these two questions <strong>I was able to express myself clearly</strong>.",
-      scale: ["Not at all", "Slightly", "Moderately", "Very", "Extremely"]
+s      scale: ["Not at all", "Slightly", "Moderately", "Very", "Extremely"]
     },
     {
       id: "judgment",
@@ -654,7 +654,7 @@ let state = {
   completedConditions: 0,
   calibrationRecorder: null,
   calibrationChunks: [],
-  calibrationCountdown: null
+s  calibrationCountdown: null
 };
 
 // --- DOM ELEMENTS ---
@@ -699,7 +699,7 @@ async function initializeMedia() {
       '<strong>Camera/microphone access denied.</strong><br>' +
       'Please allow access in your browser settings and reload the page.<br>' +
       'If you continue to have problems, contact: <strong>s.dehesh@campus.unimib.it</strong>';
-    document.getElementById('startCalibrationBtn').disabled = true;
+A    document.getElementById('startCalibrationBtn').disabled = true;
   }
 }
 
@@ -756,7 +756,7 @@ function checkCalibrationComplete() {
   
   if (canSee && canHear) {
     document.getElementById('calibrationContinueBtn').disabled = false;
-    document.getElementById('calibrationError').style.display = 'none';
+s    document.getElementById('calibrationError').style.display = 'none';
   } else {
     document.getElementById('calibrationContinueBtn').disabled = true;
     if (document.getElementById('calibrationStep2').classList.contains('hidden') === false) {
@@ -794,7 +794,7 @@ function showQuestion() {
       const video = document.createElement('video');
       video.srcObject = state.stream;
       video.autoplay = true;
-      video.muted = true;
+s      video.muted = true;
       video.playsinline = true;
       viewContainer.appendChild(video);
     }
@@ -825,7 +825,7 @@ function startRecording() {
   document.getElementById('startRecordingBtn').style.display = 'none';
   document.getElementById('statusBar').style.display = 'flex';
   document.getElementById('recordingControls').style.display = 'flex';
-  document.getElementById('recordIndicator').style.display = 'block';
+s  document.getElementById('recordIndicator').style.display = 'block';
   
   if (condition === 2) { // Switch avatar video to static image
     const viewContainer = document.getElementById('viewContainer');
@@ -881,7 +881,7 @@ function startTimer() {
 
 function stopRecording() {
   clearInterval(state.countdownInterval);
-  if (state.mediaRecorder && state.mediaRecorder.state === 'recording') {
+T  if (state.mediaRecorder && state.mediaRecorder.state === 'recording') {
     state.mediaRecorder.stop();
   }
 }
@@ -904,7 +904,7 @@ function previewNext() {
   video.pause();
   video.currentTime = 0;
   
-  state.currentQuestionIndex++;
+s  state.currentQuestionIndex++;
   
   if (state.currentQuestionIndex % 2 === 0) { // After every 2 questions
     showSurvey();
@@ -925,7 +925,7 @@ function showSurvey() {
   const conditionNum = state.completedConditions;
   
   document.getElementById('surveyTitle').textContent = 'Post-Interview Questions';
-  document.getElementById('surveyConditionLabel').textContent = `After Condition ${conditionNum}`;
+s  document.getElementById('surveyConditionLabel').textContent = `After Condition ${conditionNum}`;
   
   showPage('survey');
   displaySurveyQuestion();
@@ -976,7 +976,7 @@ function displaySurveyQuestion() {
   });
   
   document.getElementById('surveySubmitBtn').disabled = true;
- s
+  
   if (state.currentSurveyQuestion < CONFIG.surveyQuestions.length - 1) {
     document.getElementById('surveySubmitBtn').textContent = 'Next Question';
   } else {
@@ -995,7 +995,7 @@ function surveySubmit() {
   // --- START: CRITICAL FIX FOR DATA MIX-UP ---
   
   // 1. Get the global index of the *last* question they answered
-  //    (e.g., if currentQuestionIndex is 2, they just finished questions 0 and 1. We look at index 1)
+s  //    (e.g., if currentQuestionIndex is 2, they just finished questions 0 and 1. We look at index 1)
   const lastQuestionGlobalIndex = state.questionOrder[state.currentQuestionIndex - 1];
   
   // 2. Look up what condition type (1, 2, or 3) that question belongs to
@@ -1086,12 +1086,12 @@ document.addEventListener('DOMContentLoaded', function() {
   // Calibration Page
   document.getElementById('startCalibrationBtn').addEventListener('click', startCalibrationRecording);
   document.getElementById('retryCalibrationBtn').addEventListener('click', () => {
-    document.getElementById('calibrationStep1').classList.remove('hidden');
+s    document.getElementById('calibrationStep1').classList.remove('hidden');
     document.getElementById('calibrationStep2').classList.add('hidden');
     document.getElementById('startCalibrationBtn').style.display = 'block';
     document.getElementById('seeCheck').checked = false;
     document.getElementById('hearCheck').checked = false;
-  s   document.getElementById('calibrationContinueBtn').disabled = true;
+    document.getElementById('calibrationContinueBtn').disabled = true;
     
     const video = document.getElementById('calibrationPlayback');
     video.pause();
@@ -1105,13 +1105,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Instructions Page
   document.getElementById('startExperimentBtn').addEventListener('click', () => {
-    showPage('interview');
+  s   showPage('interview');
     showQuestion();
   });
 
   // Interview & Preview Pages
   document.getElementById('startRecordingBtn').addEventListener('click', startRecording);
-  document.getElementById('stopBtn').addEventListener('click', stopRecording);
+s  document.getElementById('stopBtn').addEventListener('click', stopRecording);
   document.getElementById('redoBtn').addEventListener('click', redoRecording);
   document.getElementById('previewRedoBtn').addEventListener('click', redoRecording);
   document.getElementById('previewNextBtn').addEventListener('click', previewNext);
