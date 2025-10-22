@@ -319,7 +319,7 @@
       margin: 15px 0;
       padding: 15px;
       background: #f8f9fa;
-e      border-radius: 8px;
+      border-radius: 8px;
     }
 
     .calibration-check input[type="checkbox"] {
@@ -351,7 +351,7 @@ e      border-radius: 8px;
     @media (max-width: 768px) {
       .container {
         padding: 25px;
-      }
+.      }
       
       h1 { font-size: 1.6em; }
       h2 { font-size: 1.3em; }
@@ -509,7 +509,7 @@ e      border-radius: 8px;
   <div class="question-text" id="questionText"></div>
   
   <div id="viewContainer" class="video-container"></div>
-  
+ s
   <p id="recordInstruction" style="text-align: center; color: #6c757d; margin: 15px 0;">
     Click <strong>Start Recording</strong> when you're ready. You'll have 30 seconds.
   </p>
@@ -539,9 +539,9 @@ e      border-radius: 8px;
     <video id="previewVideo" controls></video>
   </div>
   
-  <div class="button-row">
+s <div class="button-row">
     <button id="previewRedoBtn" class="btn-secondary">Redo This Question</button>
-    <button id="previewNextBtn" class="btn-primary">Next</button>
+s   <button id="previewNextBtn" class="btn-primary">Next</button>
   </div>
 </div>
 
@@ -556,7 +556,7 @@ e      border-radius: 8px;
   <div class="survey-question" id="surveyQuestion"></div>
   
   <div class="likert-scale" id="likertOptions"></div>
-  
+s
   <button id="surveySubmitBtn" class="btn-primary" disabled>Next Question</button>
   
   <p style="text-align: center; color: #6c757d; margin-top: 20px;">
@@ -571,7 +571,7 @@ e      border-radius: 8px;
     <h3>Thank you for participating!</h3>
     <p>Your contribution helps us understand how visual feedback affects interview experiences.</p>
   </div>
-  
+s
   <h3>Study Purpose</h3>
   <p>This research examines whether seeing yourself during video interviews (self-referential information) affects anxiety levels and self-expression compared to alternative formats like avatars or text-only interfaces.</p>
   
@@ -584,7 +584,7 @@ e      border-radius: 8px;
   <h3>Questions?</h3>
   <p>If you have any questions about this research or encountered any technical difficulties, please contact:</p>
   <p style="text-align: center; font-size: 1.1em;"><strong>s.dehesh@campus.unimib.it</strong></p>
-  <p style="text-align: center;">Department of Psychology, University of Milano-Bicocca</p>
+s <p style="text-align: center;">Department of Psychology, University of Milano-Bicocca</p>
   
   <div style="text-align: center; margin-top: 30px;">
     <p style="font-size: 1.2em; color: #667eea; font-weight: 600;">
@@ -613,7 +613,7 @@ const CONFIG = {
     {
       id: "anxiety",
       text: "While answering these two questions <strong>I felt anxious</strong> during this interview.",
-      scale: ["Not at all", "Slightly", "Moderately", "Very", "Extremely"]
+s     scale: ["Not at all", "Slightly", "Moderately", "Very", "Extremely"]
     },
     {
       id: "expression",
@@ -623,14 +623,14 @@ const CONFIG = {
     {
       id: "judgment",
       text: "While answering these two questions <strong>I felt I would be judged more negatively</strong>.",
-      scale: ["Not at all", "Slightly", "Moderately", "Very", "Extremely"]
+s     scale: ["Not at all", "Slightly", "Moderately", "Very", "Extremely"]
     }
   ],
   
   orders: {
     A: [0,1,2,3,4,5],
     B: [0,1,4,5,2,3],
-    C: [2,3,0,1,4,5],
+a   C: [2,3,0,1,4,5],
     D: [2,3,4,5,0,1],
     E: [4,5,0,1,2,3],
     F: [4,5,2,3,0,1]
@@ -645,7 +645,7 @@ let state = {
   currentQuestionIndex: 0,
   currentCondition: 0,
   redoCounts: Array(6).fill(0),
-  responses: {},
+s responses: {},
   stream: null,
   mediaRecorder: null,
   recordedChunks: [],
@@ -659,7 +659,7 @@ const pages = {
   consent: document.getElementById('consentPage'),
   calibration: document.getElementById('calibrationPage'),
   instructions: document.getElementById('instructionsPage'),
-  interview: document.getElementById('interviewPage'),
+s interview: document.getElementById('interviewPage'),
   preview: document.getElementById('previewPage'),
   survey: document.getElementById('surveyPage'),
   debrief: document.getElementById('debriefPage')
@@ -693,7 +693,7 @@ async function initializeMedia() {
   } catch (error) {
     document.getElementById('calibrationError').style.display = 'block';
     document.getElementById('calibrationError').innerHTML = 
-      '<strong>Camera/microphone access denied.</strong><br>' +
+    E   '<strong>Camera/microphone access denied.</strong><br>' +
       'Please allow access in your browser settings and reload the page.<br>' +
       'If you continue to have problems, contact: <strong>s.dehesh@campus.unimib.it</strong>';
     document.getElementById('startCalibrationBtn').disabled = true;
@@ -756,7 +756,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     document.getElementById('startCalibrationBtn').style.display = 'none';
     document.getElementById('calibrationStatus').style.display = 'flex';
-   s
+    
     calibrationRecorder.start();
     
     let timeLeft = 3;
@@ -768,7 +768,7 @@ document.addEventListener('DOMContentLoaded', function() {
       
       if (timeLeft < 0) {
         clearInterval(calibrationCountdown);
-        calibrationRecorder.stop();
+s         calibrationRecorder.stop();
         document.getElementById('calibrationStatus').style.display = 'none';
       }
     }, 1000);
@@ -804,7 +804,7 @@ document.addEventListener('DOMContentLoaded', function() {
           document.getElementById('calibrationError').style.display = 'block';
         }
       }
-  s }
+    }
   }
 
   document.getElementById('calibrationContinueBtn').addEventListener('click', () => {
@@ -829,7 +829,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // Interview Functions
 function showQuestion() {
   const questionIdx = state.questionOrder[state.currentQuestionIndex];
-  const condition = CONFIG.conditions[questionIdx];
+s const condition = CONFIG.conditions[questionIdx];
   const conditionNum = Math.floor(state.currentQuestionIndex / 2) + 1;
   
   document.getElementById('conditionLabel').textContent = `Condition ${conditionNum} of 3`;
@@ -847,7 +847,7 @@ function showQuestion() {
   viewContainer.style.display = 'block';
   questionText.textContent = '';
   
-s if (condition === 1) {
+  if (condition === 1) {
     questionText.textContent = CONFIG.questions[questionIdx];
     if (state.stream) {
       const video = document.createElement('video');
@@ -864,7 +864,7 @@ s if (condition === 1) {
     video.controls = true;
     video.autoplay = true;
     video.playsinline = true;
-s    viewContainer.appendChild(video);
+    viewContainer.appendChild(video);
   } else {
     questionText.textContent = CONFIG.questions[questionIdx];
     viewContainer.style.display = 'none';
@@ -883,7 +883,7 @@ function startRecording() {
   document.getElementById('recordInstruction').style.display = 'none';
   document.getElementById('startRecordingBtn').style.display = 'none';
   document.getElementById('statusBar').style.display = 'flex';
-  document.getElementById('recordingControls').style.display = 'flex';
+s document.getElementById('recordingControls').style.display = 'flex';
   document.getElementById('recordIndicator').style.display = 'block';
   
   if (condition === 2) {
@@ -901,7 +901,7 @@ function startRecording() {
   
   state.mediaRecorder.ondataavailable = (event) => {
     if (event.data && event.data.size > 0) {
-      state.recordedChunks.push(event.data);
+s     state.recordedChunks.push(event.data);
     }
   };
   
@@ -951,7 +951,7 @@ function redoRecording() {
   
   clearInterval(state.countdownInterval);
   if (state.mediaRecorder && state.mediaRecorder.state === 'recording') {
-a    state.mediaRecorder.stop();
+    state.mediaRecorder.stop();
   }
   
   showPage('interview');
@@ -1007,11 +1007,11 @@ function displaySurveyQuestion() {
     div.className = 'likert-option';
     
     const input = document.createElement('input');
-    input.type = 'radio';
+s   input.type = 'radio';
     input.name = 'likert';
     input.value = index + 1;
     input.id = `option${index}`;
-  s   
+    
     const label = document.createElement('label');
     label.htmlFor = `option${index}`;
     label.textContent = option;
@@ -1020,7 +1020,7 @@ function displaySurveyQuestion() {
     
     div.appendChild(input);
     div.appendChild(label);
-    
+s   
     div.addEventListener('click', () => {
       document.querySelectorAll('.likert-option').forEach(opt => {
         opt.classList.remove('selected');
@@ -1028,7 +1028,7 @@ function displaySurveyQuestion() {
       
       div.classList.add('selected');
       input.checked = true;
-      document.getElementById('surveySubmitBtn').disabled = false;
+  s   document.getElementById('surveySubmitBtn').disabled = false;
     });
     
     optionsContainer.appendChild(div);
@@ -1043,9 +1043,6 @@ function displaySurveyQuestion() {
   }
 }
 
-// =================================================================
-// ===== THIS IS THE ONLY FUNCTION THAT HAS BEEN CHANGED =========
-// =================================================================
 function surveySubmit() {
   const selectedOption = document.querySelector('input[name="likert"]:checked');
   
@@ -1054,34 +1051,9 @@ function surveySubmit() {
     return;
   }
   
-  // --- START: CRITICAL FIX FOR DATA MIX-UP ---
-  
-  // 1. Get the global index of the *last* question they answered
-  //    (e.g., if currentQuestionIndex is 2, they just finished questions 0 and 1. We look at index 1)
-  const lastQuestionGlobalIndex = state.questionOrder[state.currentQuestionIndex - 1];
-  
-  // 2. Look up what condition type (1, 2, or 3) that question belongs to
-  const conditionType = CONFIG.conditions[lastQuestionGlobalIndex];
-  
-  // 3. Translate the type number into a clear name
-  let conditionName = '';
-  if (conditionType === 1) {
-s    conditionName = 'SRI'; // Self-View
-  } else if (conditionType === 2) {
-    conditionName = 'Avatar';
-  } else if (conditionType === 3) {
-    conditionName = 'Text';
-  }
-  
-  // 4. Get the ID of the survey question (e.g., "anxiety")
+  const conditionNum = state.completedConditions;
   const questionId = CONFIG.surveyQuestions[state.currentSurveyQuestion].id;
-  
-  // 5. Create the correct, un-mixed key (e.g., "SRI_anxiety")
-  const key = `${conditionName}_${questionId}`;
-  
-  // --- END: CRITICAL FIX ---
-  
-  // Store response using the new, correct key
+  const key = `condition${conditionNum}_${questionId}`;
   state.responses[key] = selectedOption.value;
   
   state.currentSurveyQuestion++;
@@ -1089,16 +1061,13 @@ s    conditionName = 'SRI'; // Self-View
   if (state.currentSurveyQuestion < CONFIG.surveyQuestions.length) {
     displaySurveyQuestion();
   } else if (state.currentQuestionIndex < 6) {
-    showPage('interview');
+s   showPage('interview');
     showQuestion();
   } else {
     showPage('debrief');
     submitData();
   }
 }
-// =================================================================
-// ================= END OF CHANGED SECTION ========================
-// =================================================================
 
 function submitData() {
   const data = {
@@ -1108,10 +1077,10 @@ function submitData() {
     ...state.responses,
     redoCounts: state.redoCounts.join(',')
   };
-  
+ s
   console.log('Study Complete. Submitting data:', data);
-  
-s  const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxjv4KhOsOOxjplXLWYxQMYqg07FAVs_YdAY7yQNMO2TNV2p04GOOnK_izOZZkV93TD/exec';
+ s
+  const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxjv4KhOsOOxjplXLWYxQMYqg07FAVs_YdAY7yQNMO2TNV2p04GOOnK_izOZZkV93TD/exec';
 
   fetch(GOOGLE_SCRIPT_URL, {
     method: 'POST',
@@ -1119,9 +1088,9 @@ s  const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxjv4KhOs
   })
   .then(response => response.json())
   .then(result => {
-    if (result.result === "success") {
+  s if (result.result === "success") {
       console.log('Data submitted successfully to Google Sheets.');
-s    } else {
+    } else {
       console.error('Error submitting data:', result.error);
     }
   })
@@ -1129,14 +1098,14 @@ s    } else {
     console.error('Network error while submitting data:', error);
   });
 }
-
+s
 window.addEventListener('beforeunload', () => {
   if (state.stream) {
     state.stream.getTracks().forEach(track => track.stop());
   }
   if (state.countdownInterval) {
     clearInterval(state.countdownInterval);
-  }
+s }
 });
 </script>
 
