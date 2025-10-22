@@ -319,7 +319,7 @@
       margin: 15px 0;
       padding: 15px;
       background: #f8f9fa;
-      border-radius: 8px;
+e      border-radius: 8px;
     }
 
     .calibration-check input[type="checkbox"] {
@@ -363,7 +363,7 @@
       .button-row {
         flex-direction: column;
       }
-  t   }
+    }
   </style>
 </head>
 <body>
@@ -393,7 +393,7 @@
     
     <h3>Voluntary Participation</h3>
     <p>Your participation is entirely voluntary. You may withdraw from the study at any time without penalty by closing your browser.</p>
-s    
+    
     <h3>Contact Information</h3>
     <p>If you have any questions about this research, please contact: <strong>s.dehesh@campus.unimib.it</strong></p>
     <p>Department of Psychology, University of Milano-Bicocca</p>
@@ -428,7 +428,7 @@ s    
     <p>Click the button below to record yourself counting "1, 2, 3" while looking at the camera:</p>
     <div class="video-container">
       <video id="calibrationVideo" autoplay muted playsinline></video>
-  t   </div>
+    </div>
     <button id="startCalibrationBtn" class="btn-record">
       <span id="calibrationBtnText">Start Test Recording</span>
     </button>
@@ -440,7 +440,7 @@ s    
       <div class="timer" id="calibrationTimer">0:03</div>
     </div>
   </div>
- s
+  
   <div id="calibrationStep2" class="hidden">
     <h3>Review Your Test Recording</h3>
     <p>Please watch your test recording and confirm you can see and hear yourself:</p>
@@ -498,7 +498,7 @@ s    
   
   <p style="text-align: center; margin-top: 20px; color: #6c757d;">
     <strong>Need help?</strong> Contact: s.dehesh@campus.unimib.it
-s  </p>
+  </p>
   
   <button id="startExperimentBtn" class="btn-primary">Begin Interview</button>
 </div>
@@ -556,7 +556,7 @@ s  </p>
   <div class="survey-question" id="surveyQuestion"></div>
   
   <div class="likert-scale" id="likertOptions"></div>
-s  
+  
   <button id="surveySubmitBtn" class="btn-primary" disabled>Next Question</button>
   
   <p style="text-align: center; color: #6c757d; margin-top: 20px;">
@@ -594,7 +594,7 @@ s  
 </div>
 
 <script>
-// --- CONFIGURATION ---
+// Configuration
 const CONFIG = {
   questions: [
     "Tell me about yourself.",
@@ -605,10 +605,9 @@ const CONFIG = {
     "Where do you see yourself in five years?"
   ],
   
-  // 1=SRI (Self-View), 2=Avatar, 3=Text-only
   conditions: [1, 1, 2, 2, 3, 3],
   avatarVideos: ["0729-1.mp4", "0729-2.mp4"],
-s  avatarImage: "input.jpg",
+  avatarImage: "input.jpg",
   
   surveyQuestions: [
     {
@@ -619,7 +618,7 @@ s  avatarImage: "input.jpg",
     {
       id: "expression",
       text: "While answering these two questions <strong>I was able to express myself clearly</strong>.",
-s      scale: ["Not at all", "Slightly", "Moderately", "Very", "Extremely"]
+      scale: ["Not at all", "Slightly", "Moderately", "Very", "Extremely"]
     },
     {
       id: "judgment",
@@ -629,21 +628,22 @@ s      scale: ["Not at all", "Slightly", "Moderately", "Very", "Extremely"]
   ],
   
   orders: {
-    A: [0,1,2,3,4,5], // SRI → Avatar → Text
-    B: [0,1,4,5,2,3], // SRI → Text → Avatar
-    C: [2,3,0,1,4,5], // Avatar → SRI → Text
-    D: [2,3,4,5,0,1], // Avatar → Text → SRI
-    E: [4,5,0,1,2,3], // Text → SRI → Avatar
-    F: [4,5,2,3,0,1]  // Text → Avatar → SRI
+    A: [0,1,2,3,4,5],
+    B: [0,1,4,5,2,3],
+    C: [2,3,0,1,4,5],
+    D: [2,3,4,5,0,1],
+    E: [4,5,0,1,2,3],
+    F: [4,5,2,3,0,1]
   }
 };
 
-// --- STATE MANAGEMENT ---
+// State Management
 let state = {
   participantId: null,
   orderGroup: null,
   questionOrder: [],
   currentQuestionIndex: 0,
+  currentCondition: 0,
   redoCounts: Array(6).fill(0),
   responses: {},
   stream: null,
@@ -651,13 +651,10 @@ let state = {
   recordedChunks: [],
   countdownInterval: null,
   currentSurveyQuestion: 0,
-  completedConditions: 0,
-  calibrationRecorder: null,
-  calibrationChunks: [],
-s  calibrationCountdown: null
+  completedConditions: 0
 };
 
-// --- DOM ELEMENTS ---
+// DOM Elements
 const pages = {
   consent: document.getElementById('consentPage'),
   calibration: document.getElementById('calibrationPage'),
@@ -668,7 +665,7 @@ const pages = {
   debrief: document.getElementById('debriefPage')
 };
 
-// --- UTILITY FUNCTIONS ---
+// Utility Functions
 function showPage(pageName) {
   Object.values(pages).forEach(page => page.classList.add('hidden'));
   pages[pageName].classList.remove('hidden');
@@ -683,7 +680,7 @@ function assignOrderGroup() {
   return groups[Math.floor(Math.random() * groups.length)];
 }
 
-// --- MEDIA INITIALIZATION ---
+// Initialize Media
 async function initializeMedia() {
   try {
     state.stream = await navigator.mediaDevices.getUserMedia({ 
@@ -699,75 +696,137 @@ async function initializeMedia() {
       '<strong>Camera/microphone access denied.</strong><br>' +
       'Please allow access in your browser settings and reload the page.<br>' +
       'If you continue to have problems, contact: <strong>s.dehesh@campus.unimib.it</strong>';
-A    document.getElementById('startCalibrationBtn').disabled = true;
+    document.getElementById('startCalibrationBtn').disabled = true;
   }
 }
 
-// --- CALIBRATION FUNCTIONS ---
-function startCalibrationRecording() {
-  if (!state.stream) {
-    alert('Camera not initialized. Please allow camera access and reload.');
-    return;
+// Wait for DOM to be fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+  // Consent Page
+  const consentCheck = document.getElementById('consentCheck');
+  const consentBtn = document.getElementById('consentBtn');
+  
+  if (consentCheck && consentBtn) {
+    consentCheck.addEventListener('change', (e) => {
+      consentBtn.disabled = !e.target.checked;
+    });
+    
+    consentBtn.addEventListener('click', async () => {
+      state.participantId = generateParticipantId();
+      state.orderGroup = assignOrderGroup();
+      state.questionOrder = CONFIG.orders[state.orderGroup];
+      
+      showPage('calibration');
+      await initializeMedia();
+    });
   }
-  
-  state.calibrationChunks = [];
-  state.calibrationRecorder = new MediaRecorder(state.stream);
-  
-  state.calibrationRecorder.ondataavailable = (event) => {
-    if (event.data && event.data.size > 0) {
-      state.calibrationChunks.push(event.data);
-    }
-  };
-  
-  state.calibrationRecorder.onstop = () => {
-    const blob = new Blob(state.calibrationChunks, { type: 'video/webm' });
-    const url = URL.createObjectURL(blob);
-    const playbackVideo = document.getElementById('calibrationPlayback');
-    playbackVideo.src = url;
-    playbackVideo.muted = false;
-    
-    document.getElementById('calibrationStep1').classList.add('hidden');
-    document.getElementById('calibrationStep2').classList.remove('hidden');
-  };
-  
-  document.getElementById('startCalibrationBtn').style.display = 'none';
-  document.getElementById('calibrationStatus').style.display = 'flex';
-  
-  state.calibrationRecorder.start();
-  
-  let timeLeft = 3;
-  const timerDisplay = document.getElementById('calibrationTimer');
-  
-  state.calibrationCountdown = setInterval(() => {
-    timerDisplay.textContent = `0:0${timeLeft}`;
-    timeLeft--;
-    
-    if (timeLeft < 0) {
-      clearInterval(state.calibrationCountdown);
-      state.calibrationRecorder.stop();
-      document.getElementById('calibrationStatus').style.display = 'none';
-    }
-  }, 1000);
-}
 
-function checkCalibrationComplete() {
-  const canSee = document.getElementById('seeCheck').checked;
-  const canHear = document.getElementById('hearCheck').checked;
-  
-  if (canSee && canHear) {
-    document.getElementById('calibrationContinueBtn').disabled = false;
-s    document.getElementById('calibrationError').style.display = 'none';
-  } else {
-    document.getElementById('calibrationContinueBtn').disabled = true;
-    if (document.getElementById('calibrationStep2').classList.contains('hidden') === false) {
-      if (!canSee || !canHear) {
-        document.getElementById('calibrationError').style.display = 'block';
+  // Calibration Page
+  let calibrationRecorder = null;
+  let calibrationChunks = [];
+  let calibrationCountdown = null;
+
+  document.getElementById('startCalibrationBtn').addEventListener('click', startCalibrationRecording);
+
+  function startCalibrationRecording() {
+    if (!state.stream) {
+      alert('Camera not initialized. Please allow camera access and reload.');
+      return;
+    }
+    
+    calibrationChunks = [];
+    calibrationRecorder = new MediaRecorder(state.stream);
+    
+    calibrationRecorder.ondataavailable = (event) => {
+      if (event.data && event.data.size > 0) {
+        calibrationChunks.push(event.data);
       }
-    }
+    };
+    
+    calibrationRecorder.onstop = () => {
+      const blob = new Blob(calibrationChunks, { type: 'video/webm' });
+      const url = URL.createObjectURL(blob);
+      const playbackVideo = document.getElementById('calibrationPlayback');
+      playbackVideo.src = url;
+      playbackVideo.muted = false;
+      
+      document.getElementById('calibrationStep1').classList.add('hidden');
+      document.getElementById('calibrationStep2').classList.remove('hidden');
+    };
+    
+    document.getElementById('startCalibrationBtn').style.display = 'none';
+    document.getElementById('calibrationStatus').style.display = 'flex';
+   s
+    calibrationRecorder.start();
+    
+    let timeLeft = 3;
+    const timerDisplay = document.getElementById('calibrationTimer');
+    
+    calibrationCountdown = setInterval(() => {
+      timerDisplay.textContent = `0:0${timeLeft}`;
+      timeLeft--;
+      
+      if (timeLeft < 0) {
+        clearInterval(calibrationCountdown);
+        calibrationRecorder.stop();
+        document.getElementById('calibrationStatus').style.display = 'none';
+      }
+    }, 1000);
   }
-}
 
-// --- INTERVIEW FUNCTIONS ---
+  document.getElementById('retryCalibrationBtn').addEventListener('click', () => {
+    document.getElementById('calibrationStep1').classList.remove('hidden');
+    document.getElementById('calibrationStep2').classList.add('hidden');
+    document.getElementById('startCalibrationBtn').style.display = 'block';
+    document.getElementById('seeCheck').checked = false;
+    document.getElementById('hearCheck').checked = false;
+    document.getElementById('calibrationContinueBtn').disabled = true;
+    
+    const video = document.getElementById('calibrationPlayback');
+    video.pause();
+    video.currentTime = 0;
+  });
+
+  document.getElementById('seeCheck').addEventListener('change', checkCalibrationComplete);
+  document.getElementById('hearCheck').addEventListener('change', checkCalibrationComplete);
+
+  function checkCalibrationComplete() {
+    const canSee = document.getElementById('seeCheck').checked;
+    const canHear = document.getElementById('hearCheck').checked;
+    
+    if (canSee && canHear) {
+      document.getElementById('calibrationContinueBtn').disabled = false;
+      document.getElementById('calibrationError').style.display = 'none';
+    } else {
+      document.getElementById('calibrationContinueBtn').disabled = true;
+      if (document.getElementById('calibrationStep2').classList.contains('hidden') === false) {
+        if (!canSee || !canHear) {
+          document.getElementById('calibrationError').style.display = 'block';
+        }
+      }
+  s }
+  }
+
+  document.getElementById('calibrationContinueBtn').addEventListener('click', () => {
+    showPage('instructions');
+  });
+
+  // Instructions Page
+  document.getElementById('startExperimentBtn').addEventListener('click', () => {
+    showPage('interview');
+    showQuestion();
+  });
+
+  // Interview Page Event Listeners
+  document.getElementById('startRecordingBtn').addEventListener('click', startRecording);
+  document.getElementById('stopBtn').addEventListener('click', stopRecording);
+  document.getElementById('redoBtn').addEventListener('click', redoRecording);
+  document.getElementById('previewRedoBtn').addEventListener('click', redoRecording);
+  document.getElementById('previewNextBtn').addEventListener('click', previewNext);
+  document.getElementById('surveySubmitBtn').addEventListener('click', surveySubmit);
+});
+
+// Interview Functions
 function showQuestion() {
   const questionIdx = state.questionOrder[state.currentQuestionIndex];
   const condition = CONFIG.conditions[questionIdx];
@@ -788,25 +847,25 @@ function showQuestion() {
   viewContainer.style.display = 'block';
   questionText.textContent = '';
   
-  if (condition === 1) { // SRI (Self-View)
+s if (condition === 1) {
     questionText.textContent = CONFIG.questions[questionIdx];
     if (state.stream) {
       const video = document.createElement('video');
       video.srcObject = state.stream;
       video.autoplay = true;
-s      video.muted = true;
+      video.muted = true;
       video.playsinline = true;
       viewContainer.appendChild(video);
     }
-  } else if (condition === 2) { // Avatar
-    const avatarIdx = questionIdx - 2; // Qs 2 and 3 map to avatar video 0 and 1
+  } else if (condition === 2) {
+    const avatarIdx = questionIdx - 2;
     const video = document.createElement('video');
     video.src = CONFIG.avatarVideos[avatarIdx];
     video.controls = true;
     video.autoplay = true;
     video.playsinline = true;
-    viewContainer.appendChild(video);
-  } else { // Text-only
+s    viewContainer.appendChild(video);
+  } else {
     questionText.textContent = CONFIG.questions[questionIdx];
     viewContainer.style.display = 'none';
   }
@@ -825,9 +884,9 @@ function startRecording() {
   document.getElementById('startRecordingBtn').style.display = 'none';
   document.getElementById('statusBar').style.display = 'flex';
   document.getElementById('recordingControls').style.display = 'flex';
-s  document.getElementById('recordIndicator').style.display = 'block';
+  document.getElementById('recordIndicator').style.display = 'block';
   
-  if (condition === 2) { // Switch avatar video to static image
+  if (condition === 2) {
     const viewContainer = document.getElementById('viewContainer');
     viewContainer.style.display = 'block';
     viewContainer.innerHTML = '';
@@ -881,7 +940,7 @@ function startTimer() {
 
 function stopRecording() {
   clearInterval(state.countdownInterval);
-T  if (state.mediaRecorder && state.mediaRecorder.state === 'recording') {
+  if (state.mediaRecorder && state.mediaRecorder.state === 'recording') {
     state.mediaRecorder.stop();
   }
 }
@@ -892,7 +951,7 @@ function redoRecording() {
   
   clearInterval(state.countdownInterval);
   if (state.mediaRecorder && state.mediaRecorder.state === 'recording') {
-    state.mediaRecorder.stop();
+a    state.mediaRecorder.stop();
   }
   
   showPage('interview');
@@ -904,20 +963,20 @@ function previewNext() {
   video.pause();
   video.currentTime = 0;
   
-s  state.currentQuestionIndex++;
+  state.currentQuestionIndex++;
   
-  if (state.currentQuestionIndex % 2 === 0) { // After every 2 questions
+  if (state.currentQuestionIndex % 2 === 0) {
     showSurvey();
-  } else if (state.currentQuestionIndex < 6) { // Go to next question
+  } else if (state.currentQuestionIndex < 6) {
     showPage('interview');
     showQuestion();
-  } else { // All 6 questions done
+  } else {
     showPage('debrief');
     submitData();
   }
 }
 
-// --- SURVEY FUNCTIONS ---
+// Survey Functions
 function showSurvey() {
   state.completedConditions++;
   state.currentSurveyQuestion = 0;
@@ -925,8 +984,8 @@ function showSurvey() {
   const conditionNum = state.completedConditions;
   
   document.getElementById('surveyTitle').textContent = 'Post-Interview Questions';
-s  document.getElementById('surveyConditionLabel').textContent = `After Condition ${conditionNum}`;
-  
+  document.getElementById('surveyConditionLabel').textContent = `After Condition ${conditionNum}`;
+ s
   showPage('survey');
   displaySurveyQuestion();
 }
@@ -942,7 +1001,7 @@ function displaySurveyQuestion() {
   
   const optionsContainer = document.getElementById('likertOptions');
   optionsContainer.innerHTML = '';
-  
+ s
   question.scale.forEach((option, index) => {
     const div = document.createElement('div');
     div.className = 'likert-option';
@@ -952,7 +1011,7 @@ function displaySurveyQuestion() {
     input.name = 'likert';
     input.value = index + 1;
     input.id = `option${index}`;
-    
+  s   
     const label = document.createElement('label');
     label.htmlFor = `option${index}`;
     label.textContent = option;
@@ -984,6 +1043,9 @@ function displaySurveyQuestion() {
   }
 }
 
+// =================================================================
+// ===== THIS IS THE ONLY FUNCTION THAT HAS BEEN CHANGED =========
+// =================================================================
 function surveySubmit() {
   const selectedOption = document.querySelector('input[name="likert"]:checked');
   
@@ -995,7 +1057,7 @@ function surveySubmit() {
   // --- START: CRITICAL FIX FOR DATA MIX-UP ---
   
   // 1. Get the global index of the *last* question they answered
-s  //    (e.g., if currentQuestionIndex is 2, they just finished questions 0 and 1. We look at index 1)
+  //    (e.g., if currentQuestionIndex is 2, they just finished questions 0 and 1. We look at index 1)
   const lastQuestionGlobalIndex = state.questionOrder[state.currentQuestionIndex - 1];
   
   // 2. Look up what condition type (1, 2, or 3) that question belongs to
@@ -1004,7 +1066,7 @@ s  //    (e.g., if currentQuestionIndex is 2, they just finished questions 0 an
   // 3. Translate the type number into a clear name
   let conditionName = '';
   if (conditionType === 1) {
-    conditionName = 'SRI'; // Self-View
+s    conditionName = 'SRI'; // Self-View
   } else if (conditionType === 2) {
     conditionName = 'Avatar';
   } else if (conditionType === 3) {
@@ -1018,9 +1080,10 @@ s  //    (e.g., if currentQuestionIndex is 2, they just finished questions 0 an
   const key = `${conditionName}_${questionId}`;
   
   // --- END: CRITICAL FIX ---
-
+  
+  // Store response using the new, correct key
   state.responses[key] = selectedOption.value;
- s
+  
   state.currentSurveyQuestion++;
   
   if (state.currentSurveyQuestion < CONFIG.surveyQuestions.length) {
@@ -1033,8 +1096,10 @@ s  //    (e.g., if currentQuestionIndex is 2, they just finished questions 0 an
     submitData();
   }
 }
+// =================================================================
+// ================= END OF CHANGED SECTION ========================
+// =================================================================
 
-// --- DATA SUBMISSION ---
 function submitData() {
   const data = {
     participantId: state.participantId,
@@ -1046,7 +1111,7 @@ function submitData() {
   
   console.log('Study Complete. Submitting data:', data);
   
-  const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxjv4KhOsOOxjplXLWYxQMYqg07FAVs_YdAY7yQNMO2TNV2p04GOOnK_izOZZkV93TD/exec';
+s  const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxjv4KhOsOOxjplXLWYxQMYqg07FAVs_YdAY7yQNMO2TNV2p04GOOnK_izOZZkV93TD/exec';
 
   fetch(GOOGLE_SCRIPT_URL, {
     method: 'POST',
@@ -1056,7 +1121,7 @@ function submitData() {
   .then(result => {
     if (result.result === "success") {
       console.log('Data submitted successfully to Google Sheets.');
-    } else {
+s    } else {
       console.error('Error submitting data:', result.error);
     }
   })
@@ -1065,62 +1130,6 @@ function submitData() {
   });
 }
 
-// --- PAGE LOAD & CLEANUP ---
-
-// This wrapper ensures the script doesn't run until the HTML is fully loaded
-document.addEventListener('DOMContentLoaded', function() {
-  // Consent Page
-  document.getElementById('consentCheck').addEventListener('change', (e) => {
-    document.getElementById('consentBtn').disabled = !e.target.checked;
-  });
-  
-  document.getElementById('consentBtn').addEventListener('click', async () => {
-    state.participantId = generateParticipantId();
-    state.orderGroup = assignOrderGroup();
-    state.questionOrder = CONFIG.orders[state.orderGroup];
-    
-    showPage('calibration');
-    await initializeMedia();
-  });
-
-  // Calibration Page
-  document.getElementById('startCalibrationBtn').addEventListener('click', startCalibrationRecording);
-  document.getElementById('retryCalibrationBtn').addEventListener('click', () => {
-s    document.getElementById('calibrationStep1').classList.remove('hidden');
-    document.getElementById('calibrationStep2').classList.add('hidden');
-    document.getElementById('startCalibrationBtn').style.display = 'block';
-    document.getElementById('seeCheck').checked = false;
-    document.getElementById('hearCheck').checked = false;
-    document.getElementById('calibrationContinueBtn').disabled = true;
-    
-    const video = document.getElementById('calibrationPlayback');
-    video.pause();
-    video.currentTime = 0;
-  });
-  document.getElementById('seeCheck').addEventListener('change', checkCalibrationComplete);
-  document.getElementById('hearCheck').addEventListener('change', checkCalibrationComplete);
-  document.getElementById('calibrationContinueBtn').addEventListener('click', () => {
-    showPage('instructions');
-  });
-
-  // Instructions Page
-  document.getElementById('startExperimentBtn').addEventListener('click', () => {
-  s   showPage('interview');
-    showQuestion();
-  });
-
-  // Interview & Preview Pages
-  document.getElementById('startRecordingBtn').addEventListener('click', startRecording);
-s  document.getElementById('stopBtn').addEventListener('click', stopRecording);
-  document.getElementById('redoBtn').addEventListener('click', redoRecording);
-  document.getElementById('previewRedoBtn').addEventListener('click', redoRecording);
-  document.getElementById('previewNextBtn').addEventListener('click', previewNext);
-  
-  // Survey Page
-  document.getElementById('surveySubmitBtn').addEventListener('click', surveySubmit);
-});
-
-// Cleanup on page unload
 window.addEventListener('beforeunload', () => {
   if (state.stream) {
     state.stream.getTracks().forEach(track => track.stop());
