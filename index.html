@@ -1109,7 +1109,7 @@ document.getElementById('surveySubmitBtn').addEventListener('click', () => {
   }
 });
 
-// Data Submission (to Google Sheets via Google Apps Script)
+// Updated Data Submission (to Google Sheets via Google Apps Script)before any tests
 function submitData() {
   const data = {
     participantId: state.participantId,
@@ -1119,6 +1119,33 @@ function submitData() {
     redoCounts: state.redoCounts.join(',')
   };
   
+  // Log data for your own testing (you can see this in the browser console)
+  console.log('Study Complete. Submitting data:', data);
+  
+  // THIS IS THE NEW PART
+  // Paste your Google Apps Script URL here
+  const GOOGLE_SCRIPT_URL = 'PASTE_YOUR_DEPLOYED_URL_HERE'; 
+
+  fetch(GOOGLE_SCRIPT_URL, {
+    method: 'POST',
+    // We remove the 'Content-Type' header.
+    // This sends the data as 'text/plain' and avoids a "CORS preflight" error
+    // that Google Apps Script cannot easily handle.
+    body: JSON.stringify(data)
+  })
+  .then(response => response.json())
+  .then(result => {
+    if (result.result === "success") {
+      console.log('Data submitted successfully to Google Sheets.');
+    } else {
+      console.error('Error submitting data:', result.error);
+    }
+  })
+  .catch(error => {
+    // This catch handles network errors (e.g., user is offline)
+    console.error('Network error while submitting data:', error);
+  });
+}
   // Log data for testing (replace with actual submission)
   console.log('Study Complete. Data collected:', data);
   
