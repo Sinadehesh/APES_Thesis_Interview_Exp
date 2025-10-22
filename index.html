@@ -1119,12 +1119,11 @@ function submitData() {
     redoCounts: state.redoCounts.join(',')
   };
   
-  // Log data for your own testing (you can see this in the browser console)
+  // Log data for your own testing 
   console.log('Study Complete. Submitting data:', data);
   
   // THIS IS THE NEW PART
-  // Paste your Google Apps Script URL here
-  const GOOGLE_SCRIPT_URL = 'PASTE_YOUR_DEPLOYED_URL_HERE'; 
+  const GOOGLE_SCRIPT_URL = https://script.google.com/macros/s/AKfycbxjv4KhOsOOxjplXLWYxQMYqg07FAVs_YdAY7yQNMO2TNV2p04GOOnK_izOZZkV93TD/exec; 
 
   fetch(GOOGLE_SCRIPT_URL, {
     method: 'POST',
