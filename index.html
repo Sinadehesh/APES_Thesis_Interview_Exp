@@ -1,1118 +1,1133 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Interview Experience Research - University of Milano-Bicocca</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interview Experience Research - University of Milano-Bicocca</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      padding: 20px;
-    }
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 20px;
+    }
 
-    .container {
-      width: 100%;
-      max-width: 700px;
-      padding: 40px;
-      background: white;
-      border-radius: 16px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-      animation: fadeIn 0.5s ease-out;
-    }
+    .container {
+      width: 100%;
+      max-width: 700px;
+      padding: 40px;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      animation: fadeIn 0.5s ease-out;
+    }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-    .hidden {
-      display: none !important;
-    }
+    .hidden {
+      display: none !important;
+    }
 
-    h1, h2 {
-      color: #2c3e50;
-      margin-bottom: 20px;
-      text-align: center;
-    }
+    h1, h2 {
+      color: #2c3e50;
+      margin-bottom: 20px;
+      text-align: center;
+    }
 
-    h1 {
-      font-size: 2em;
-      border-bottom: 3px solid #667eea;
-      padding-bottom: 10px;
-    }
+    h1 {
+      font-size: 2em;
+      border-bottom: 3px solid #667eea;
+      padding-bottom: 10px;
+    }
 
-    h2 {
-      font-size: 1.5em;
-      color: #34495e;
-    }
+    h2 {
+      font-size: 1.5em;
+      color: #34495e;
+    }
 
-    h3 {
-      font-size: 1.2em;
-      color: #34495e;
-      margin: 20px 0 15px 0;
-    }
+    h3 {
+      font-size: 1.2em;
+      color: #34495e;
+      margin: 20px 0 15px 0;
+    }
 
-    p {
-      color: #555;
-      line-height: 1.6;
-      margin-bottom: 15px;
-      text-align: justify;
-    }
+    p {
+      color: #555;
+      line-height: 1.6;
+      margin-bottom: 15px;
+      text-align: justify;
+    }
 
-    .info-box {
-      background: #f8f9fa;
-      border-left: 4px solid #667eea;
-      padding: 20px;
-      margin: 20px 0;
-      border-radius: 8px;
-    }
+    .info-box {
+      background: #f8f9fa;
+      border-left: 4px solid #667eea;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 8px;
+    }
 
-    .consent-text {
-      max-height: 400px;
-      overflow-y: auto;
-      padding: 20px;
-      background: #f8f9fa;
-      border: 1px solid #dee2e6;
-      border-radius: 8px;
-      margin: 20px 0;
-      font-size: 0.95em;
-    }
+    .consent-text {
+      max-height: 400px;
+      overflow-y: auto;
+      padding: 20px;
+      background: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 8px;
+      margin: 20px 0;
+      font-size: 0.95em;
+    }
 
-    .consent-checkbox {
-      display: flex;
-      align-items: flex-start;
-      margin: 20px 0;
-      padding: 15px;
-      background: #e8f4f8;
-      border-radius: 8px;
-      cursor: pointer;
-    }
+    .consent-checkbox {
+      display: flex;
+      align-items: flex-start;
+      margin: 20px 0;
+      padding: 15px;
+      background: #e8f4f8;
+      border-radius: 8px;
+      cursor: pointer;
+    }
 
-    .consent-checkbox input[type="checkbox"] {
-      margin-right: 10px;
-      margin-top: 3px;
-      transform: scale(1.2);
-      cursor: pointer;
-    }
+    .consent-checkbox input[type="checkbox"] {
+      margin-right: 10px;
+      margin-top: 3px;
+      transform: scale(1.2);
+      cursor: pointer;
+    }
 
-    .consent-checkbox label {
-      cursor: pointer;
-      flex: 1;
-    }
+    .consent-checkbox label {
+      cursor: pointer;
+      flex: 1;
+    }
 
-    button {
-      width: 100%;
-      padding: 14px 24px;
-      margin: 10px 0;
-      font-size: 1.1em;
-      font-weight: 600;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
+    button {
+      width: 100%;
+      padding: 14px 24px;
+      margin: 10px 0;
+      font-size: 1.1em;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
 
-    .btn-primary {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-    }
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
 
-    .btn-primary:hover:not(:disabled) {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
-    }
+    .btn-primary:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+    }
 
-    .btn-primary:disabled {
-      background: #ccc;
-      cursor: not-allowed;
-      opacity: 0.6;
-    }
+    .btn-primary:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
 
-    .btn-secondary {
-      background: #6c757d;
-      color: white;
-    }
+    .btn-secondary {
+      background: #6c757d;
+      color: white;
+    }
 
-    .btn-secondary:hover {
-      background: #5a6268;
-    }
+    .btn-secondary:hover {
+      background: #5a6268;
+    }
 
-    .btn-record {
-      background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+    .btn-record {
+      background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-    .btn-record:hover:not(:disabled) {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 20px rgba(244, 67, 54, 0.4);
-    }
+    .btn-record:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(244, 67, 54, 0.4);
+    }
 
-    .button-row {
-      display: flex;
-      gap: 15px;
-      margin-top: 20px;
-    }
+    .button-row {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
 
-    .button-row button {
-      flex: 1;
-    }
+    .button-row button {
+      flex: 1;
+    }
 
-    .video-container {
-      position: relative;
-      width: 100%;
-      max-width: 100%;
-      margin: 20px 0;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-      background: #000;
-    }
+    .video-container {
+      position: relative;
+      width: 100%;
+      max-width: 100%;
+      margin: 20px 0;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      background: #000;
+    }
 
-    video, .video-container img {
-      width: 100%;
-      height: auto;
-      display: block;
-      border-radius: 12px;
-    }
+    video, .video-container img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 12px;
+    }
 
-    .question-text {
-      font-size: 1.3em;
-      color: #2c3e50;
-      text-align: center;
-      margin: 20px 0;
-      padding: 20px;
-      background: #f8f9fa;
-      border-radius: 12px;
-      font-weight: 500;
-    }
+    .question-text {
+      font-size: 1.3em;
+      color: #2c3e50;
+      text-align: center;
+      margin: 20px 0;
+      padding: 20px;
+      background: #f8f9fa;
+      border-radius: 12px;
+      font-weight: 500;
+    }
 
-    .status-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 20px;
-      background: #f8f9fa;
-      border-radius: 8px;
-      margin: 20px 0;
-    }
+    .status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      margin: 20px 0;
+    }
 
-    .recording-indicator {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+    .recording-indicator {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-    .record-dot {
-      width: 16px;
-      height: 16px;
-      background: #d32f2f;
-      border-radius: 50%;
-      animation: pulse 1.5s infinite;
-    }
+    .record-dot {
+      width: 16px;
+      height: 16px;
+      background: #d32f2f;
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
 
-    @keyframes pulse {
-      0% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.7; transform: scale(1.1); }
-      100% { opacity: 1; transform: scale(1); }
-    }
+    @keyframes pulse {
+      0% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.1); }
+      100% { opacity: 1; transform: scale(1); }
+    }
 
-    .timer {
-      font-size: 1.5em;
-      font-weight: bold;
-      color: #d32f2f;
-      font-family: 'Courier New', monospace;
-    }
+    .timer {
+      font-size: 1.5em;
+      font-weight: bold;
+      color: #d32f2f;
+      font-family: 'Courier New', monospace;
+    }
 
-    .redo-counter {
-      color: #6c757d;
-      font-weight: 500;
-    }
+    .redo-counter {
+      color: #6c757d;
+      font-weight: 500;
+    }
 
-    /* Survey Styles */
-    .survey-question {
-      font-size: 1.1em;
-      color: #2c3e50;
-      margin: 25px 0;
-      line-height: 1.5;
-      text-align: center;
-    }
+    /* Survey Styles */
+    .survey-question {
+      font-size: 1.1em;
+      color: #2c3e50;
+      margin: 25px 0;
+      line-height: 1.5;
+      text-align: center;
+    }
 
-    .likert-scale {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin: 25px 0;
-    }
+    .likert-scale {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 25px 0;
+    }
 
-    .likert-option {
-      display: flex;
-      align-items: center;
-      padding: 15px 20px;
-      background: #f8f9fa;
-      border: 2px solid transparent;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
+    .likert-option {
+      display: flex;
+      align-items: center;
+      padding: 15px 20px;
+      background: #f8f9fa;
+      border: 2px solid transparent;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
 
-    .likert-option:hover {
-      background: #e9ecef;
-      border-color: #667eea;
-      transform: translateX(5px);
-    }
+    .likert-option:hover {
+      background: #e9ecef;
+      border-color: #667eea;
+      transform: translateX(5px);
+    }
 
-    .likert-option input[type="radio"] {
-      margin-right: 15px;
-      transform: scale(1.3);
-      cursor: pointer;
-    }
+    .likert-option input[type="radio"] {
+      margin-right: 15px;
+      transform: scale(1.3);
+      cursor: pointer;
+    }
 
-    .likert-option.selected {
-      background: linear-gradient(135deg, rgba(102,126,234,0.1) 0%, rgba(118,75,162,0.1) 100%);
-      border-color: #667eea;
-    }
+    .likert-option.selected {
+      background: linear-gradient(135deg, rgba(102,126,234,0.1) 0%, rgba(118,75,162,0.1) 100%);
+      border-color: #667eea;
+    }
 
-    .progress-bar {
-      width: 100%;
-      height: 8px;
-      background: #e9ecef;
-      border-radius: 4px;
-      margin: 20px 0;
-      overflow: hidden;
-    }
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: #e9ecef;
+      border-radius: 4px;
+      margin: 20px 0;
+      overflow: hidden;
+    }
 
-    .progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-      border-radius: 4px;
-      transition: width 0.5s ease;
-    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+      border-radius: 4px;
+      transition: width 0.5s ease;
+    }
 
-    .instruction-text {
-      background: #fff3cd;
-      border-left: 4px solid #ffc107;
-      padding: 15px;
-      margin: 20px 0;
-      border-radius: 8px;
-      color: #856404;
-    }
+    .instruction-text {
+      background: #fff3cd;
+      border-left: 4px solid #ffc107;
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 8px;
+      color: #856404;
+    }
 
-    .calibration-check {
-      display: flex;
-      align-items: center;
-      margin: 15px 0;
-      padding: 15px;
-      background: #f8f9fa;
-      border-radius: 8px;
-    }
+    .calibration-check {
+      display: flex;
+      align-items: center;
+      margin: 15px 0;
+      padding: 15px;
+      background: #f8f9fa;
+      border-radius: 8px;
+    }
 
-    .calibration-check input[type="checkbox"] {
-      margin-right: 15px;
-      transform: scale(1.3);
-    }
+    .calibration-check input[type="checkbox"] {
+      margin-right: 15px;
+      transform: scale(1.3);
+    }
 
-    .error-message {
-      background: #f8d7da;
-      border: 1px solid #f5c6cb;
-      color: #721c24;
-      padding: 15px;
-      border-radius: 8px;
-      margin: 15px 0;
-      display: none;
-    }
+    .error-message {
+      background: #f8d7da;
+      border: 1px solid #f5c6cb;
+      color: #721c24;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 15px 0;
+      display: none;
+    }
 
-    .block-label {
-      display: inline-block;
-      background: #667eea;
-      color: white;
-      padding: 5px 15px;
-      border-radius: 20px;
-      font-size: 0.9em;
-      font-weight: 600;
-      margin-bottom: 15px;
-    }
+    .block-label {
+      display: inline-block;
+      background: #667eea;
+      color: white;
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 0.9em;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
 
-    @media (max-width: 768px) {
-      .container {
-        padding: 25px;
-      }
-      
-      h1 { font-size: 1.6em; }
-      h2 { font-size: 1.3em; }
-      
-      .question-text {
-        font-size: 1.1em;
-      }
-      
-      .button-row {
-        flex-direction: column;
-      }
-    }
-  </style>
+    @media (max-width: 768px) {
+      .container {
+        padding: 25px;
+      }
+      
+      h1 { font-size: 1.6em; }
+      h2 { font-size: 1.3em; }
+      
+      .question-text {
+        font-size: 1.1em;
+      }
+      
+      .button-row {
+        flex-direction: column;
+      }
+    }
+  </style>
 </head>
 <body>
 
-<!-- CONSENT PAGE -->
 <div id="consentPage" class="container">
-  <h1>Research Study Consent</h1>
-  <div class="info-box">
-    <h3>Study Information</h3>
-    <p><strong>Title:</strong> Emotional Effects of Visual Feedback in Online Automated Interviews</p>
-    <p><strong>Researcher:</strong> Department of Psychology, University of Milano-Bicocca</p>
-    <p><strong>Supervisor:</strong> Prof. Rossana Actis-Grosso</p>
-    <p><strong>Contact:</strong> s.dehesh@campus.unimib.it</p>
-  </div>
-  
-  <div class="consent-text">
-    <h3>What is this study about?</h3>
-    <p>This research investigates how different visual feedback formats in automated online interviews affect the interview experience. You will complete three short interview sessions with different visual setups.</p>
-    
-    <h3>What will I be asked to do?</h3>
-    <p>You will answer 6 interview questions (2 per condition) while being recorded. Each response is limited to 30 seconds. After each pair of questions, you'll complete a brief survey about your experience. The entire study takes approximately 20-30 minutes.</p>
-    
-    <h3>Privacy and Data Protection</h3>
-    <p><strong>Important:</strong> No video or audio recordings will be saved. The recording functionality is only used to simulate a real interview experience. Only your survey responses will be collected for analysis, and these will be completely anonymous.</p>
-    
-    <h3>Requirements</h3>
-    <p>You need a computer with a working webcam and microphone, and a stable internet connection. Please ensure you're in a quiet environment where you won't be interrupted.</p>
-    
-    <h3>Voluntary Participation</h3>
-    <p>Your participation is entirely voluntary. You may withdraw from the study at any time without penalty by closing your browser.</p>
-    
-    <h3>Contact Information</h3>
-    <p>If you have any questions about this research, please contact: <strong>s.dehesh@campus.unimib.it</strong></p>
-    <p>Department of Psychology, University of Milano-Bicocca</p>
-  </div>
-  
-  <div class="consent-checkbox">
-    <input type="checkbox" id="consentCheck">
-    <label for="consentCheck">
-      <strong>I have read and understood the information above. I agree to participate in this study and allow access to my camera and microphone (for simulation only - no recordings will be saved).</strong>
-    </label>
-  </div>
-  
-  <p style="text-align: center; margin-top: 20px; color: #6c757d;">
-    <strong>Before you begin:</strong> If you have any questions, please email <strong>s.dehesh@campus.unimib.it</strong>
-  </p>
-  
-  <button id="consentBtn" class="btn-primary" disabled>Continue to Study</button>
+  <h1>Research Study Consent</h1>
+  <div class="info-box">
+    <h3>Study Information</h3>
+    <p><strong>Title:</strong> Emotional Effects of Visual Feedback in Online Automated Interviews</p>
+    <p><strong>Researcher:</strong> Department of Psychology, University of Milano-Bicocca</p>
+    <p><strong>Supervisor:</strong> Prof. Rossana Actis-Grosso</p>
+    <p><strong>Contact:</strong> s.dehesh@campus.unimib.it</p>
+  </div>
+  
+  <div class="consent-text">
+    <h3>What is this study about?</h3>
+    <p>This research investigates how different visual feedback formats in automated online interviews affect the interview experience. You will complete three short interview sessions with different visual setups.</p>
+    
+    <h3>What will I be asked to do?</h3>
+    <p>You will answer 6 interview questions (2 per condition) while being recorded. Each response is limited to 30 seconds. After each pair of questions, you'll complete a brief survey about your experience. The entire study takes approximately 20-30 minutes.</p>
+    
+    <h3>Privacy and Data Protection</h3>
+    <p><strong>Important:</strong> No video or audio recordings will be saved. The recording functionality is only used to simulate a real interview experience. Only your survey responses will be collected for analysis, and these will be completely anonymous.</p>
+    
+    <h3>Requirements</h3>
+    <p>You need a computer with a working webcam and microphone, and a stable internet connection. Please ensure you're in a quiet environment where you won't be interrupted.</p>
+    
+    <h3>Voluntary Participation</h3>
+    <p>Your participation is entirely voluntary. You may withdraw from the study at any time without penalty by closing your browser.</p>
+    
+    <h3>Contact Information</h3>
+    <p>If you have any questions about this research, please contact: <strong>s.dehesh@campus.unimib.it</strong></p>
+    <p>Department of Psychology, University of Milano-Bicocca</p>
+  </div>
+  
+  <div class="consent-checkbox">
+    <input type="checkbox" id="consentCheck">
+    <label for="consentCheck">
+      <strong>I have read and understood the information above. I agree to participate in this study and allow access to my camera and microphone (for simulation only - no recordings will be saved).</strong>
+    </label>
+  </div>
+  
+  <p style="text-align: center; margin-top: 20px; color: #6c757d;">
+    <strong>Before you begin:</strong> If you have any questions, please email <strong>s.dehesh@campus.unimib.it</strong>
+  </p>
+  
+  <button id="consentBtn" class="btn-primary" disabled>Continue to Study</button>
 </div>
 
-<!-- CALIBRATION PAGE -->
 <div id="calibrationPage" class="container hidden">
-  <h1>System Check</h1>
-  <div class="block-label">Calibration</div>
-  
-  <div class="instruction-text">
-    <strong>Let's make sure everything is working properly.</strong><br>
-    We'll test your camera and microphone. Remember, no recordings are being saved.<br>
-    If you experience any problems, please contact: <strong>s.dehesh@campus.unimib.it</strong>
-  </div>
-  
-  <div id="calibrationStep1">
-    <h3>Camera & Microphone Test</h3>
-    <p>Click the button below to record yourself counting "1, 2, 3" while looking at the camera:</p>
-    <div class="video-container">
-      <video id="calibrationVideo" autoplay muted playsinline></video>
-    </div>
-    <button id="startCalibrationBtn" class="btn-record">
-      <span id="calibrationBtnText">Start Test Recording</span>
-    </button>
-    <div class="status-bar" id="calibrationStatus" style="display: none;">
-      <div class="recording-indicator">
-        <div class="record-dot"></div>
-        <span style="color: #d32f2f;">Recording Test</span>
-      </div>
-      <div class="timer" id="calibrationTimer">0:03</div>
-    </div>
-  </div>
-  
-  <div id="calibrationStep2" class="hidden">
-    <h3>Review Your Test Recording</h3>
-    <p>Please watch your test recording and confirm you can see and hear yourself:</p>
-    <div class="video-container">
-      <video id="calibrationPlayback" controls></video>
-    </div>
-    
-    <div class="calibration-check">
-      <input type="checkbox" id="seeCheck">
-      <label for="seeCheck"><strong>Did you see yourself?</strong> Yes, I could see myself clearly</label>
-    </div>
-    
-    <div class="calibration-check">
-      <input type="checkbox" id="hearCheck">
-      <label for="hearCheck"><strong>Could you hear yourself?</strong> Yes, I could hear my voice clearly</label>
-    </div>
-    
-    <button id="retryCalibrationBtn" class="btn-secondary">Retry Test</button>
-    
-    <p style="text-align: center; margin-top: 15px; color: #6c757d; font-size: 0.9em;">
-      Can't see or hear yourself? Check your volume and try again.<br>
-      Still having issues? Contact: <strong>s.dehesh@campus.unimib.it</strong>
-    </p>
-  </div>
-  
-  <div class="error-message" id="calibrationError">
-    If you cannot see or hear yourself properly, please check your browser permissions and try again. 
-    For assistance, contact: <strong>s.dehesh@campus.unimib.it</strong>
-  </div>
-  
-  <button id="calibrationContinueBtn" class="btn-primary" disabled>Continue to Instructions</button>
+  <h1>System Check</h1>
+  <div class="block-label">Calibration</div>
+  
+  <div class="instruction-text">
+    <strong>Let's make sure everything is working properly.</strong><br>
+    We'll test your camera and microphone. Remember, no recordings are being saved.<br>
+    If you experience any problems, please contact: <strong>s.dehesh@campus.unimib.it</strong>
+  </div>
+  
+  <div id="calibrationStep1">
+    <h3>Camera & Microphone Test</h3>
+    <p>Click the button below to record yourself counting "1, 2, 3" while looking at the camera:</p>
+    <div class="video-container">
+      <video id="calibrationVideo" autoplay muted playsinline></video>
+    </div>
+    <button id="startCalibrationBtn" class="btn-record">
+      <span id="calibrationBtnText">Start Test Recording</span>
+    </button>
+    <div class="status-bar" id="calibrationStatus" style="display: none;">
+      <div class="recording-indicator">
+        <div class="record-dot"></div>
+        <span style="color: #d32f2f;">Recording Test</span>
+      </div>
+      <div class="timer" id="calibrationTimer">0:03</div>
+    </div>
+  </div>
+  
+  <div id="calibrationStep2" class="hidden">
+    <h3>Review Your Test Recording</h3>
+    <p>Please watch your test recording and confirm you can see and hear yourself:</p>
+    <div class="video-container">
+      <video id="calibrationPlayback" controls></video>
+    </div>
+    
+    <div class="calibration-check">
+      <input type="checkbox" id="seeCheck">
+      <label for="seeCheck"><strong>Did you see yourself?</strong> Yes, I could see myself clearly</label>
+    </div>
+    
+    <div class="calibration-check">
+      <input type="checkbox" id="hearCheck">
+      <label for="hearCheck"><strong>Could you hear yourself?</strong> Yes, I could hear my voice clearly</label>
+    </div>
+    
+    <button id="retryCalibrationBtn" class="btn-secondary">Retry Test</button>
+    
+    <p style="text-align: center; margin-top: 15px; color: #6c757d; font-size: 0.9em;">
+      Can't see or hear yourself? Check your volume and try again.<br>
+      Still having issues? Contact: <strong>s.dehesh@campus.unimib.it</strong>
+    </p>
+  </div>
+  
+  <div class="error-message" id="calibrationError">
+    If you cannot see or hear yourself properly, please check your browser permissions and try again. 
+    For assistance, contact: <strong>s.dehesh@campus.unimib.it</strong>
+  </div>
+  
+  <button id="calibrationContinueBtn" class="btn-primary" disabled>Continue to Instructions</button>
 </div>
 
-<!-- INSTRUCTIONS PAGE -->
 <div id="instructionsPage" class="container hidden">
-  <h1>Interview Instructions</h1>
-  
-  <div class="info-box">
-    <h3>What to Expect</h3>
-    <p>You'll complete <strong>3 different interview formats</strong>, each with <strong>2 questions</strong>:</p>
-    <ul style="margin-left: 20px; margin-top: 10px;">
-      <li>Format 1: You'll see yourself on screen (like a video call)</li>
-      <li>Format 2: You'll see an animated avatar that asks the questions</li>
-      <li>Format 3: You'll see only the question text</li>
-    </ul>
-  </div>
-  
-  <h3>For Each Question:</h3>
-  <ol style="margin-left: 20px; line-height: 1.8;">
-    <li>Read/watch the question carefully</li>
-    <li>Click "Start Recording" when ready</li>
-    <li>You have <strong>30 seconds</strong> to answer</li>
-    <li>You can "Redo" if you want to try again</li>
-    <li>Review your recording and click "Next"</li>
-  </ol>
-  
-  <p style="text-align: center; margin-top: 20px; color: #6c757d;">
-    <strong>Need help?</strong> Contact: s.dehesh@campus.unimib.it
-  </p>
-  
-  <button id="startExperimentBtn" class="btn-primary">Begin Interview</button>
+  <h1>Interview Instructions</h1>
+  
+  <div class="info-box">
+    <h3>What to Expect</h3>
+    <p>You'll complete <strong>3 different interview formats</strong>, each with <strong>2 questions</strong>:</p>
+    <ul style="margin-left: 20px; margin-top: 10px;">
+      <li>Format 1: You'll see yourself on screen (like a video call)</li>
+      <li>Format 2: You'll see an animated avatar that asks the questions</li>
+      <li>Format 3: You'll see only the question text</li>
+    </ul>
+  </div>
+  
+  <h3>For Each Question:</h3>
+  <ol style="margin-left: 20px; line-height: 1.8;">
+    <li>Read/watch the question carefully</li>
+    <li>Click "Start Recording" when ready</li>
+    <li>You have <strong>30 seconds</strong> to answer</li>
+    <li>You can "Redo" if you want to try again</li>
+    <li>Review your recording and click "Next"</li>
+  </ol>
+  
+  <p style="text-align: center; margin-top: 20px; color: #6c757d;">
+    <strong>Need help?</strong> Contact: s.dehesh@campus.unimib.it
+  </p>
+  
+  <button id="startExperimentBtn" class="btn-primary">Begin Interview</button>
 </div>
 
-<!-- INTERVIEW PAGE -->
 <div id="interviewPage" class="container hidden">
-  <div class="block-label" id="conditionLabel">Condition 1 of 3</div>
-  
-  <div class="question-text" id="questionText"></div>
-  
-  <div id="viewContainer" class="video-container"></div>
-  
-  <p id="recordInstruction" style="text-align: center; color: #6c757d; margin: 15px 0;">
-    Click <strong>Start Recording</strong> when you're ready. You'll have 30 seconds.
-  </p>
-  
-  <button id="startRecordingBtn" class="btn-record">Start Recording</button>
-  
-  <div class="status-bar" id="statusBar" style="display: none;">
-    <div class="redo-counter" id="redoCount">Attempts: 1</div>
-    <div class="recording-indicator">
-      <div class="record-dot" id="recordIndicator" style="display: none;"></div>
-      <span style="color: #d32f2f;">Recording</span>
-    </div>
-    <div class="timer" id="timerDisplay">0:30</div>
-  </div>
-  
-  <div class="button-row" id="recordingControls" style="display: none;">
-    <button id="redoBtn" class="btn-secondary">Redo</button>
-    <button id="stopBtn" class="btn-primary">Stop Recording</button>
-  </div>
+  <div class="block-label" id="conditionLabel">Condition 1 of 3</div>
+  
+  <div class="question-text" id="questionText"></div>
+  
+  <div id="viewContainer" class="video-container"></div>
+  
+  <p id="recordInstruction" style="text-align: center; color: #6c757d; margin: 15px 0;">
+    Click <strong>Start Recording</strong> when you're ready. You'll have 30 seconds.
+  </p>
+  
+  <button id="startRecordingBtn" class="btn-record">Start Recording</button>
+  
+  <div class="status-bar" id="statusBar" style="display: none;">
+    <div class="redo-counter" id="redoCount">Attempts: 1</div>
+    <div class="recording-indicator">
+      <div class="record-dot" id="recordIndicator" style="display: none;"></div>
+      <span style="color: #d32f2f;">Recording</span>
+    </div>
+    <div class="timer" id="timerDisplay">0:30</div>
+  </div>
+  
+  <div class="button-row" id="recordingControls" style="display: none;">
+    <button id="redoBtn" class="btn-secondary">Redo</button>
+    <button id="stopBtn" class="btn-primary">Stop Recording</button>
+  </div>
 </div>
 
-<!-- PREVIEW PAGE -->
 <div id="previewPage" class="container hidden">
-  <h2>Review Your Response</h2>
-  <p style="text-align: center; color: #6c757d;">Watch your recording. If you're satisfied, click Next. Otherwise, click Redo.</p>
-  
-  <div class="video-container">
-    <video id="previewVideo" controls></video>
-  </div>
-  
-  <div class="button-row">
-    <button id="previewRedoBtn" class="btn-secondary">Redo This Question</button>
-    <button id="previewNextBtn" class="btn-primary">Next</button>
-  </div>
+  <h2>Review Your Response</h2>
+  <p style="text-align: center; color: #6c757d;">Watch your recording. If you're satisfied, click Next. Otherwise, click Redo.</p>
+  
+  <div class="video-container">
+    <video id="previewVideo" controls></video>
+  </div>
+  
+  <div class="button-row">
+    <button id="previewRedoBtn" class="btn-secondary">Redo This Question</button>
+    <button id="previewNextBtn" class="btn-primary">Next</button>
+  </div>
 </div>
 
-<!-- SURVEY PAGE -->
 <div id="surveyPage" class="container hidden">
-  <h2 id="surveyTitle">Post-Interview Questions</h2>
-  <div class="block-label" id="surveyConditionLabel">After Condition 1</div>
-  
-  <div class="progress-bar">
-    <div class="progress-fill" id="surveyProgress"></div>
-  </div>
-  
-  <div class="survey-question" id="surveyQuestion"></div>
-  
-  <div class="likert-scale" id="likertOptions"></div>
-  
-  <button id="surveySubmitBtn" class="btn-primary" disabled>Next Question</button>
-  
-  <p style="text-align: center; color: #6c757d; margin-top: 20px;">
-    Question <span id="surveyQuestionNumber">1</span> of 3
-  </p>
+  <h2 id="surveyTitle">Post-Interview Questions</h2>
+  <div class="block-label" id="surveyConditionLabel">After Condition 1</div>
+  
+  <div class="progress-bar">
+    <div class="progress-fill" id="surveyProgress"></div>
+  </div>
+  
+  <div class="survey-question" id="surveyQuestion"></div>
+  
+  <div class="likert-scale" id="likertOptions"></div>
+  
+  <button id="surveySubmitBtn" class="btn-primary" disabled>Next Question</button>
+  
+  <p style="text-align: center; color: #6c757d; margin-top: 20px;">
+    Question <span id="surveyQuestionNumber">1</span> of 3
+  </p>
 </div>
 
-<!-- DEBRIEF PAGE -->
 <div id="debriefPage" class="container hidden">
-  <h1>Study Complete!</h1>
-  
-  <div class="info-box">
-    <h3>Thank you for participating!</h3>
-    <p>Your contribution helps us understand how visual feedback affects interview experiences.</p>
-  </div>
-  
-  <h3>Study Purpose</h3>
-  <p>This research examines whether seeing yourself during video interviews (self-referential information) affects anxiety levels and self-expression compared to alternative formats like avatars or text-only interfaces.</p>
-  
-  <h3>What We Measured</h3>
-  <p>We collected your ratings of anxiety, expressiveness, and perceived judgment across the three different interview formats. This will help us identify which formats create the best interview experience.</p>
-  
-  <h3>Your Privacy</h3>
-  <p><strong>Reminder:</strong> No video or audio recordings were saved. Only your survey responses were collected, and these are completely anonymous.</p>
-  
-  <h3>Questions?</h3>
-  <p>If you have any questions about this research or encountered any technical difficulties, please contact:</p>
-  <p style="text-align: center; font-size: 1.1em;"><strong>s.dehesh@campus.unimib.it</strong></p>
-  <p style="text-align: center;">Department of Psychology, University of Milano-Bicocca</p>
-  
-  <div style="text-align: center; margin-top: 30px;">
-    <p style="font-size: 1.2em; color: #667eea; font-weight: 600;">
-      We wish you the best of luck in your future endeavors!
-    </p>
-  </div>
+  <h1>Study Complete!</h1>
+  
+  <div class="info-box">
+    <h3>Thank you for participating!</h3>
+    <p>Your contribution helps us understand how visual feedback affects interview experiences.</p>
+  </div>
+  
+  <h3>Study Purpose</h3>
+  <p>This research examines whether seeing yourself during video interviews (self-referential information) affects anxiety levels and self-expression compared to alternative formats like avatars or text-only interfaces.</p>
+  
+  <h3>What We Measured</h3>
+  <p>We collected your ratings of anxiety, expressiveness, and perceived judgment across the three different interview formats. This will help us identify which formats create the best interview experience.</p>
+  
+  <h3>Your Privacy</h3>
+  <p><strong>Reminder:</strong> No video or audio recordings were saved. Only your survey responses were collected, and these are completely anonymous.</p>
+  
+  <h3>Questions?</h3>
+  <p>If you have any questions about this research or encountered any technical difficulties, please contact:</p>
+  <p style="text-align: center; font-size: 1.1em;"><strong>s.dehesh@campus.unimib.it</strong></p>
+A  <p style="text-align: center;">Department of Psychology, University of Milano-Bicocca</p>
+  
+  <div style="text-align: center; margin-top: 30px;">
+    <p style="font-size: 1.2em; color: #667eea; font-weight: 600;">
+      We wish you the best of luck in your future endeavors!
+    </p>
+  </div>
 </div>
 
 <script>
-// Configuration
+// --- CONFIGURATION ---
 const CONFIG = {
-  questions: [
-    "Tell me about yourself.",
-    "What are your strengths?",
-    "How do you prioritize your work?",
-    "How do you stay organized?",
-    "Describe a time you overcame a challenge.",
-    "Where do you see yourself in five years?"
-  ],
-  
-  conditions: [1, 1, 2, 2, 3, 3],
-  avatarVideos: ["0729-1.mp4", "0729-2.mp4"],
-  avatarImage: "input.jpg",
-  
-  surveyQuestions: [
-    {
-      id: "anxiety",
-      text: "While answering these two questions <strong>I felt anxious</strong> during this interview.",
-      scale: ["Not at all", "Slightly", "Moderately", "Very", "Extremely"]
-    },
-    {
-      id: "expression",
-      text: "While answering these two questions <strong>I was able to express myself clearly</strong>.",
-      scale: ["Not at all", "Slightly", "Moderately", "Very", "Extremely"]
-    },
-    {
-      id: "judgment",
-      text: "While answering these two questions <strong>I felt I would be judged more negatively</strong>.",
-      scale: ["Not at all", "Slightly", "Moderately", "Very", "Extremely"]
-    }
-  ],
-  
-  orders: {
-    A: [0,1,2,3,4,5],
-    B: [0,1,4,5,2,3],
-    C: [2,3,0,1,4,5],
-    D: [2,3,4,5,0,1],
-    E: [4,5,0,1,2,3],
-    F: [4,5,2,3,0,1]
-  }
+  questions: [
+    "Tell me about yourself.",
+    "What are your strengths?",
+    "How do you prioritize your work?",
+    "How do you stay organized?",
+    "Describe a time you overcame a challenge.",
+    "Where do you see yourself in five years?"
+  ],
+  
+  // 1=SRI (Self-View), 2=Avatar, 3=Text-only
+  conditions: [1, 1, 2, 2, 3, 3],
+  avatarVideos: ["0729-1.mp4", "0729-2.mp4"],
+  avatarImage: "input.jpg",
+  
+  surveyQuestions: [
+    {
+      id: "anxiety",
+      text: "While answering these two questions <strong>I felt anxious</strong> during this interview.",
+      scale: ["Not at all", "Slightly", "Moderately", "Very", "Extremely"]
+    },
+    {
+      id: "expression",
+      text: "While answering these two questions <strong>I was able to express myself clearly</strong>.",
+      scale: ["Not at all", "Slightly", "Moderately", "Very", "Extremely"]
+    },
+    {
+      id: "judgment",
+      text: "While answering these two questions <strong>I felt I would be judged more negatively</strong>.",
+      scale: ["Not at all", "Slightly", "Moderately", "Very", "Extremely"]
+    }
+  ],
+  
+  orders: {
+    A: [0,1,2,3,4,5], // SRI → Avatar → Text
+    B: [0,1,4,5,2,3], // SRI → Text → Avatar
+    C: [2,3,0,1,4,5], // Avatar → SRI → Text
+    D: [2,3,4,5,0,1], // Avatar → Text → SRI
+    E: [4,5,0,1,2,3], // Text → SRI → Avatar
+    F: [4,5,2,3,0,1]  // Text → Avatar → SRI
+  }
 };
 
-// State Management
+// --- STATE MANAGEMENT ---
 let state = {
-  participantId: null,
-  orderGroup: null,
-  questionOrder: [],
-  currentQuestionIndex: 0,
-  currentCondition: 0,
-  redoCounts: Array(6).fill(0),
-  responses: {},
-  stream: null,
-  mediaRecorder: null,
-  recordedChunks: [],
-  countdownInterval: null,
-  currentSurveyQuestion: 0,
-  completedConditions: 0
+  participantId: null,
+  orderGroup: null,
+  questionOrder: [],
+  currentQuestionIndex: 0,
+  redoCounts: Array(6).fill(0),
+  responses: {},
+  stream: null,
+  mediaRecorder: null,
+  recordedChunks: [],
+  countdownInterval: null,
+  currentSurveyQuestion: 0,
+  completedConditions: 0,
+  calibrationRecorder: null,
+  calibrationChunks: [],
+  calibrationCountdown: null
 };
 
-// DOM Elements
+// --- DOM ELEMENTS ---
 const pages = {
-  consent: document.getElementById('consentPage'),
-  calibration: document.getElementById('calibrationPage'),
-  instructions: document.getElementById('instructionsPage'),
-  interview: document.getElementById('interviewPage'),
-  preview: document.getElementById('previewPage'),
-  survey: document.getElementById('surveyPage'),
-  debrief: document.getElementById('debriefPage')
+  consent: document.getElementById('consentPage'),
+  calibration: document.getElementById('calibrationPage'),
+  instructions: document.getElementById('instructionsPage'),
+  interview: document.getElementById('interviewPage'),
+  preview: document.getElementById('previewPage'),
+  survey: document.getElementById('surveyPage'),
+  debrief: document.getElementById('debriefPage')
 };
 
-// Utility Functions
+// --- UTILITY FUNCTIONS ---
 function showPage(pageName) {
-  Object.values(pages).forEach(page => page.classList.add('hidden'));
-  pages[pageName].classList.remove('hidden');
+  Object.values(pages).forEach(page => page.classList.add('hidden'));
+  pages[pageName].classList.remove('hidden');
 }
 
 function generateParticipantId() {
-  return 'P' + Date.now() + Math.random().toString(36).substr(2, 5);
+  return 'P' + Date.now() + Math.random().toString(36).substr(2, 5);
 }
 
 function assignOrderGroup() {
-  const groups = ['A', 'B', 'C', 'D', 'E', 'F'];
-  return groups[Math.floor(Math.random() * groups.length)];
+  const groups = ['A', 'B', 'C', 'D', 'E', 'F'];
+  return groups[Math.floor(Math.random() * groups.length)];
 }
 
-// Initialize Media
+// --- MEDIA INITIALIZATION ---
 async function initializeMedia() {
-  try {
-    state.stream = await navigator.mediaDevices.getUserMedia({ 
-      video: true, 
-      audio: true 
-    });
-    
-    const calibrationVideo = document.getElementById('calibrationVideo');
-    calibrationVideo.srcObject = state.stream;
-  } catch (error) {
-    document.getElementById('calibrationError').style.display = 'block';
-    document.getElementById('calibrationError').innerHTML = 
-      '<strong>Camera/microphone access denied.</strong><br>' +
-      'Please allow access in your browser settings and reload the page.<br>' +
-      'If you continue to have problems, contact: <strong>s.dehesh@campus.unimib.it</strong>';
-    document.getElementById('startCalibrationBtn').disabled = true;
-  }
+  try {
+    state.stream = await navigator.mediaDevices.getUserMedia({ 
+      video: true, 
+      audio: true 
+    });
+    
+    const calibrationVideo = document.getElementById('calibrationVideo');
+    calibrationVideo.srcObject = state.stream;
+  } catch (error) {
+    document.getElementById('calibrationError').style.display = 'block';
+    document.getElementById('calibrationError').innerHTML = 
+      '<strong>Camera/microphone access denied.</strong><br>' +
+      'Please allow access in your browser settings and reload the page.<br>' +
+      'If you continue to have problems, contact: <strong>s.dehesh@campus.unimib.it</strong>';
+    document.getElementById('startCalibrationBtn').disabled = true;
+  }
 }
 
-// Wait for DOM to be fully loaded
-document.addEventListener('DOMContentLoaded', function() {
-  // Consent Page
-  const consentCheck = document.getElementById('consentCheck');
-  const consentBtn = document.getElementById('consentBtn');
-  
-  if (consentCheck && consentBtn) {
-    consentCheck.addEventListener('change', (e) => {
-      consentBtn.disabled = !e.target.checked;
-    });
-    
-    consentBtn.addEventListener('click', async () => {
-      state.participantId = generateParticipantId();
-      state.orderGroup = assignOrderGroup();
-      state.questionOrder = CONFIG.orders[state.orderGroup];
-      
-      showPage('calibration');
-      await initializeMedia();
-    });
-  }
+// --- CALIBRATION FUNCTIONS ---
+function startCalibrationRecording() {
+  if (!state.stream) {
+    alert('Camera not initialized. Please allow camera access and reload.');
+    return;
+  }
+  
+  state.calibrationChunks = [];
+  state.calibrationRecorder = new MediaRecorder(state.stream);
+  
+  state.calibrationRecorder.ondataavailable = (event) => {
+    if (event.data && event.data.size > 0) {
+      state.calibrationChunks.push(event.data);
+    }
+  };
+  
+  state.calibrationRecorder.onstop = () => {
+    const blob = new Blob(state.calibrationChunks, { type: 'video/webm' });
+    const url = URL.createObjectURL(blob);
+    const playbackVideo = document.getElementById('calibrationPlayback');
+    playbackVideo.src = url;
+    playbackVideo.muted = false;
+    
+    document.getElementById('calibrationStep1').classList.add('hidden');
+    document.getElementById('calibrationStep2').classList.remove('hidden');
+  };
+  
+  document.getElementById('startCalibrationBtn').style.display = 'none';
+  document.getElementById('calibrationStatus').style.display = 'flex';
+  
+  state.calibrationRecorder.start();
+  
+  let timeLeft = 3;
+  const timerDisplay = document.getElementById('calibrationTimer');
+  
+  state.calibrationCountdown = setInterval(() => {
+    timerDisplay.textContent = `0:0${timeLeft}`;
+    timeLeft--;
+    
+    if (timeLeft < 0) {
+      clearInterval(state.calibrationCountdown);
+      state.calibrationRecorder.stop();
+      document.getElementById('calibrationStatus').style.display = 'none';
+    }
+  }, 1000);
+}
 
-  // Calibration Page
-  let calibrationRecorder = null;
-  let calibrationChunks = [];
-  let calibrationCountdown = null;
+function checkCalibrationComplete() {
+  const canSee = document.getElementById('seeCheck').checked;
+  const canHear = document.getElementById('hearCheck').checked;
+  
+  if (canSee && canHear) {
+    document.getElementById('calibrationContinueBtn').disabled = false;
+    document.getElementById('calibrationError').style.display = 'none';
+  } else {
+    document.getElementById('calibrationContinueBtn').disabled = true;
+    if (document.getElementById('calibrationStep2').classList.contains('hidden') === false) {
+      if (!canSee || !canHear) {
+        document.getElementById('calibrationError').style.display = 'block';
+      }
+    }
+  }
+}
 
-  document.getElementById('startCalibrationBtn').addEventListener('click', startCalibrationRecording);
-
-  function startCalibrationRecording() {
-    if (!state.stream) {
-      alert('Camera not initialized. Please allow camera access and reload.');
-      return;
-    }
-    
-    calibrationChunks = [];
-    calibrationRecorder = new MediaRecorder(state.stream);
-    
-    calibrationRecorder.ondataavailable = (event) => {
-      if (event.data && event.data.size > 0) {
-        calibrationChunks.push(event.data);
-      }
-    };
-    
-    calibrationRecorder.onstop = () => {
-      const blob = new Blob(calibrationChunks, { type: 'video/webm' });
-      const url = URL.createObjectURL(blob);
-      const playbackVideo = document.getElementById('calibrationPlayback');
-      playbackVideo.src = url;
-      playbackVideo.muted = false;
-      
-      document.getElementById('calibrationStep1').classList.add('hidden');
-      document.getElementById('calibrationStep2').classList.remove('hidden');
-    };
-    
-    document.getElementById('startCalibrationBtn').style.display = 'none';
-    document.getElementById('calibrationStatus').style.display = 'flex';
-    
-    calibrationRecorder.start();
-    
-    let timeLeft = 3;
-    const timerDisplay = document.getElementById('calibrationTimer');
-    
-    calibrationCountdown = setInterval(() => {
-      timerDisplay.textContent = `0:0${timeLeft}`;
-      timeLeft--;
-      
-      if (timeLeft < 0) {
-        clearInterval(calibrationCountdown);
-        calibrationRecorder.stop();
-        document.getElementById('calibrationStatus').style.display = 'none';
-      }
-    }, 1000);
-  }
-
-  document.getElementById('retryCalibrationBtn').addEventListener('click', () => {
-    document.getElementById('calibrationStep1').classList.remove('hidden');
-    document.getElementById('calibrationStep2').classList.add('hidden');
-    document.getElementById('startCalibrationBtn').style.display = 'block';
-    document.getElementById('seeCheck').checked = false;
-    document.getElementById('hearCheck').checked = false;
-    document.getElementById('calibrationContinueBtn').disabled = true;
-    
-    const video = document.getElementById('calibrationPlayback');
-    video.pause();
-    video.currentTime = 0;
-  });
-
-  document.getElementById('seeCheck').addEventListener('change', checkCalibrationComplete);
-  document.getElementById('hearCheck').addEventListener('change', checkCalibrationComplete);
-
-  function checkCalibrationComplete() {
-    const canSee = document.getElementById('seeCheck').checked;
-    const canHear = document.getElementById('hearCheck').checked;
-    
-    if (canSee && canHear) {
-      document.getElementById('calibrationContinueBtn').disabled = false;
-      document.getElementById('calibrationError').style.display = 'none';
-    } else {
-      document.getElementById('calibrationContinueBtn').disabled = true;
-      if (document.getElementById('calibrationStep2').classList.contains('hidden') === false) {
-        if (!canSee || !canHear) {
-          document.getElementById('calibrationError').style.display = 'block';
-        }
-      }
-    }
-  }
-
-  document.getElementById('calibrationContinueBtn').addEventListener('click', () => {
-    showPage('instructions');
-  });
-
-  // Instructions Page
-  document.getElementById('startExperimentBtn').addEventListener('click', () => {
-    showPage('interview');
-    showQuestion();
-  });
-
-  // Interview Page Event Listeners
-  document.getElementById('startRecordingBtn').addEventListener('click', startRecording);
-  document.getElementById('stopBtn').addEventListener('click', stopRecording);
-  document.getElementById('redoBtn').addEventListener('click', redoRecording);
-  document.getElementById('previewRedoBtn').addEventListener('click', redoRecording);
-  document.getElementById('previewNextBtn').addEventListener('click', previewNext);
-  document.getElementById('surveySubmitBtn').addEventListener('click', surveySubmit);
-});
-
-// Interview Functions
+// --- INTERVIEW FUNCTIONS ---
 function showQuestion() {
-  const questionIdx = state.questionOrder[state.currentQuestionIndex];
-  const condition = CONFIG.conditions[questionIdx];
-  const conditionNum = Math.floor(state.currentQuestionIndex / 2) + 1;
-  
-  document.getElementById('conditionLabel').textContent = `Condition ${conditionNum} of 3`;
-  
-  document.getElementById('recordInstruction').style.display = 'block';
-  document.getElementById('startRecordingBtn').style.display = 'block';
-  document.getElementById('statusBar').style.display = 'none';
-  document.getElementById('recordingControls').style.display = 'none';
-  document.getElementById('redoCount').textContent = `Attempts: ${state.redoCounts[questionIdx] + 1}`;
-  
-  const viewContainer = document.getElementById('viewContainer');
-  const questionText = document.getElementById('questionText');
-  
-  viewContainer.innerHTML = '';
-  viewContainer.style.display = 'block';
-  questionText.textContent = '';
-  
-  if (condition === 1) {
-    questionText.textContent = CONFIG.questions[questionIdx];
-    if (state.stream) {
-      const video = document.createElement('video');
-      video.srcObject = state.stream;
-      video.autoplay = true;
-      video.muted = true;
-      video.playsinline = true;
-      viewContainer.appendChild(video);
-    }
-  } else if (condition === 2) {
-    const avatarIdx = questionIdx - 2;
-    const video = document.createElement('video');
-    video.src = CONFIG.avatarVideos[avatarIdx];
-    video.controls = true;
-    video.autoplay = true;
-    video.playsinline = true;
-    viewContainer.appendChild(video);
-  } else {
-    questionText.textContent = CONFIG.questions[questionIdx];
-    viewContainer.style.display = 'none';
-  }
+  const questionIdx = state.questionOrder[state.currentQuestionIndex];
+  const condition = CONFIG.conditions[questionIdx];
+  const conditionNum = Math.floor(state.currentQuestionIndex / 2) + 1;
+  
+  document.getElementById('conditionLabel').textContent = `Condition ${conditionNum} of 3`;
+  
+  document.getElementById('recordInstruction').style.display = 'block';
+  document.getElementById('startRecordingBtn').style.display = 'block';
+  document.getElementById('statusBar').style.display = 'none';
+  document.getElementById('recordingControls').style.display = 'none';
+  document.getElementById('redoCount').textContent = `Attempts: ${state.redoCounts[questionIdx] + 1}`;
+  
+  const viewContainer = document.getElementById('viewContainer');
+  const questionText = document.getElementById('questionText');
+  
+  viewContainer.innerHTML = '';
+  viewContainer.style.display = 'block';
+  questionText.textContent = '';
+  
+  if (condition === 1) { // SRI (Self-View)
+    questionText.textContent = CONFIG.questions[questionIdx];
+    if (state.stream) {
+      const video = document.createElement('video');
+      video.srcObject = state.stream;
+      video.autoplay = true;
+      video.muted = true;
+      video.playsinline = true;
+      viewContainer.appendChild(video);
+    }
+  } else if (condition === 2) { // Avatar
+    const avatarIdx = questionIdx - 2; // Qs 2 and 3 map to avatar video 0 and 1
+    const video = document.createElement('video');
+    video.src = CONFIG.avatarVideos[avatarIdx];
+    video.controls = true;
+    video.autoplay = true;
+    video.playsinline = true;
+    viewContainer.appendChild(video);
+  } else { // Text-only
+    questionText.textContent = CONFIG.questions[questionIdx];
+    viewContainer.style.display = 'none';
+  }
 }
 
 function startRecording() {
-  if (!state.stream) {
-    alert('Camera not initialized. Please reload the page.');
-    return;
-  }
-  
-  const questionIdx = state.questionOrder[state.currentQuestionIndex];
-  const condition = CONFIG.conditions[questionIdx];
-  
-  document.getElementById('recordInstruction').style.display = 'none';
-  document.getElementById('startRecordingBtn').style.display = 'none';
-  document.getElementById('statusBar').style.display = 'flex';
-  document.getElementById('recordingControls').style.display = 'flex';
-  document.getElementById('recordIndicator').style.display = 'block';
-  
-  if (condition === 2) {
-    const viewContainer = document.getElementById('viewContainer');
-    viewContainer.style.display = 'block';
-    viewContainer.innerHTML = '';
-    const img = document.createElement('img');
-    img.src = CONFIG.avatarImage;
-    img.alt = 'Avatar';
-    viewContainer.appendChild(img);
-  }
-  
-  state.recordedChunks = [];
-  state.mediaRecorder = new MediaRecorder(state.stream);
-  
-  state.mediaRecorder.ondataavailable = (event) => {
-    if (event.data && event.data.size > 0) {
-      state.recordedChunks.push(event.data);
-    }
-  };
-  
-  state.mediaRecorder.onstop = () => {
-    const blob = new Blob(state.recordedChunks, { type: 'video/webm' });
-    const url = URL.createObjectURL(blob);
-    const previewVideo = document.getElementById('previewVideo');
-    previewVideo.src = url;
-    previewVideo.muted = false;
-    showPage('preview');
-  };
-  
-  state.mediaRecorder.start();
-  startTimer();
+  if (!state.stream) {
+    alert('Camera not initialized. Please reload the page.');
+    return;
+  }
+  
+  const questionIdx = state.questionOrder[state.currentQuestionIndex];
+  const condition = CONFIG.conditions[questionIdx];
+  
+  document.getElementById('recordInstruction').style.display = 'none';
+  document.getElementById('startRecordingBtn').style.display = 'none';
+  document.getElementById('statusBar').style.display = 'flex';
+  document.getElementById('recordingControls').style.display = 'flex';
+  document.getElementById('recordIndicator').style.display = 'block';
+  
+  if (condition === 2) { // Switch avatar video to static image
+    const viewContainer = document.getElementById('viewContainer');
+    viewContainer.style.display = 'block';
+    viewContainer.innerHTML = '';
+    const img = document.createElement('img');
+    img.src = CONFIG.avatarImage;
+    img.alt = 'Avatar';
+    viewContainer.appendChild(img);
+  }
+  
+  state.recordedChunks = [];
+  state.mediaRecorder = new MediaRecorder(state.stream);
+  
+  state.mediaRecorder.ondataavailable = (event) => {
+    if (event.data && event.data.size > 0) {
+      state.recordedChunks.push(event.data);
+    }
+  };
+  
+  state.mediaRecorder.onstop = () => {
+    const blob = new Blob(state.recordedChunks, { type: 'video/webm' });
+    const url = URL.createObjectURL(blob);
+    const previewVideo = document.getElementById('previewVideo');
+    previewVideo.src = url;
+    previewVideo.muted = false;
+    showPage('preview');
+  };
+  
+  state.mediaRecorder.start();
+  startTimer();
 }
 
 function startTimer() {
-  let timeLeft = 30;
-  const timerDisplay = document.getElementById('timerDisplay');
-  
-  clearInterval(state.countdownInterval);
-  
-  state.countdownInterval = setInterval(() => {
-    const minutes = Math.floor(timeLeft / 60);
-    const seconds = timeLeft % 60;
-    timerDisplay.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-    
-    timeLeft--;
-    
-    if (timeLeft < 0) {
-      clearInterval(state.countdownInterval);
-      stopRecording();
-    }
-  }, 1000);
+  let timeLeft = 30;
+  const timerDisplay = document.getElementById('timerDisplay');
+  
+  clearInterval(state.countdownInterval);
+  
+  state.countdownInterval = setInterval(() => {
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+    timerDisplay.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    
+    timeLeft--;
+    
+    if (timeLeft < 0) {
+      clearInterval(state.countdownInterval);
+      stopRecording();
+    }
+  }, 1000);
 }
 
 function stopRecording() {
-  clearInterval(state.countdownInterval);
-  if (state.mediaRecorder && state.mediaRecorder.state === 'recording') {
-    state.mediaRecorder.stop();
-  }
+  clearInterval(state.countdownInterval);
+  if (state.mediaRecorder && state.mediaRecorder.state === 'recording') {
+    state.mediaRecorder.stop();
+  }
 }
 
 function redoRecording() {
-  const questionIdx = state.questionOrder[state.currentQuestionIndex];
-  state.redoCounts[questionIdx]++;
-  
-  clearInterval(state.countdownInterval);
-  if (state.mediaRecorder && state.mediaRecorder.state === 'recording') {
-    state.mediaRecorder.stop();
-  }
-  
-  showPage('interview');
-  showQuestion();
+  const questionIdx = state.questionOrder[state.currentQuestionIndex];
+  state.redoCounts[questionIdx]++;
+  
+  clearInterval(state.countdownInterval);
+  if (state.mediaRecorder && state.mediaRecorder.state === 'recording') {
+    state.mediaRecorder.stop();
+  }
+  
+  showPage('interview');
+  showQuestion();
 }
 
 function previewNext() {
-  const video = document.getElementById('previewVideo');
-  video.pause();
-  video.currentTime = 0;
-  
-  state.currentQuestionIndex++;
-  
-  if (state.currentQuestionIndex % 2 === 0) {
-    showSurvey();
-  } else if (state.currentQuestionIndex < 6) {
-    showPage('interview');
-    showQuestion();
-  } else {
-    showPage('debrief');
-    submitData();
-  }
+  const video = document.getElementById('previewVideo');
+  video.pause();
+  video.currentTime = 0;
+  
+  state.currentQuestionIndex++;
+  
+  if (state.currentQuestionIndex % 2 === 0) { // After every 2 questions
+    showSurvey();
+  } else if (state.currentQuestionIndex < 6) { // Go to next question
+    showPage('interview');
+    showQuestion();
+  } else { // All 6 questions done
+    showPage('debrief');
+    submitData();
+  }
 }
 
-// Survey Functions
+// --- SURVEY FUNCTIONS ---
 function showSurvey() {
-  state.completedConditions++;
-  state.currentSurveyQuestion = 0;
-  
-  const conditionNum = state.completedConditions;
-  
-  document.getElementById('surveyTitle').textContent = 'Post-Interview Questions';
-  document.getElementById('surveyConditionLabel').textContent = `After Condition ${conditionNum}`;
-  
-  showPage('survey');
-  displaySurveyQuestion();
+  state.completedConditions++;
+  state.currentSurveyQuestion = 0;
+  
+  const conditionNum = state.completedConditions;
+  
+  document.getElementById('surveyTitle').textContent = 'Post-Interview Questions';
+  document.getElementById('surveyConditionLabel').textContent = `After Condition ${conditionNum}`;
+  
+  showPage('survey');
+  displaySurveyQuestion();
 }
 
 function displaySurveyQuestion() {
-  const question = CONFIG.surveyQuestions[state.currentSurveyQuestion];
-  
-  document.getElementById('surveyQuestion').innerHTML = question.text;
-  document.getElementById('surveyQuestionNumber').textContent = state.currentSurveyQuestion + 1;
-  
-  const progress = ((state.currentSurveyQuestion + 1) / CONFIG.surveyQuestions.length) * 100;
-  document.getElementById('surveyProgress').style.width = `${progress}%`;
-  
-  const optionsContainer = document.getElementById('likertOptions');
-  optionsContainer.innerHTML = '';
-  
-  question.scale.forEach((option, index) => {
-    const div = document.createElement('div');
-    div.className = 'likert-option';
-    
-    const input = document.createElement('input');
-    input.type = 'radio';
-    input.name = 'likert';
-    input.value = index + 1;
-    input.id = `option${index}`;
-    
-    const label = document.createElement('label');
-    label.htmlFor = `option${index}`;
-    label.textContent = option;
-    label.style.flex = '1';
-    label.style.cursor = 'pointer';
-    
-    div.appendChild(input);
-    div.appendChild(label);
-    
-    div.addEventListener('click', () => {
-      document.querySelectorAll('.likert-option').forEach(opt => {
-        opt.classList.remove('selected');
-      });
-      
-      div.classList.add('selected');
-      input.checked = true;
-      document.getElementById('surveySubmitBtn').disabled = false;
-    });
-    
-    optionsContainer.appendChild(div);
-  });
-  
-  document.getElementById('surveySubmitBtn').disabled = true;
-  
-  if (state.currentSurveyQuestion < CONFIG.surveyQuestions.length - 1) {
-    document.getElementById('surveySubmitBtn').textContent = 'Next Question';
-  } else {
-    document.getElementById('surveySubmitBtn').textContent = 'Continue';
-  }
+  const question = CONFIG.surveyQuestions[state.currentSurveyQuestion];
+  
+  document.getElementById('surveyQuestion').innerHTML = question.text;
+  document.getElementById('surveyQuestionNumber').textContent = state.currentSurveyQuestion + 1;
+  
+  const progress = ((state.currentSurveyQuestion + 1) / CONFIG.surveyQuestions.length) * 100;
+  document.getElementById('surveyProgress').style.width = `${progress}%`;
+  
+  const optionsContainer = document.getElementById('likertOptions');
+  optionsContainer.innerHTML = '';
+  
+  question.scale.forEach((option, index) => {
+    const div = document.createElement('div');
+    div.className = 'likert-option';
+    
+    const input = document.createElement('input');
+    input.type = 'radio';
+    input.name = 'likert';
+    input.value = index + 1;
+    input.id = `option${index}`;
+    
+    const label = document.createElement('label');
+    label.htmlFor = `option${index}`;
+    label.textContent = option;
+    label.style.flex = '1';
+    label.style.cursor = 'pointer';
+    
+    div.appendChild(input);
+    div.appendChild(label);
+    
+    div.addEventListener('click', () => {
+      document.querySelectorAll('.likert-option').forEach(opt => {
+        opt.classList.remove('selected');
+      });
+      
+      div.classList.add('selected');
+      input.checked = true;
+      document.getElementById('surveySubmitBtn').disabled = false;
+    });
+    
+    optionsContainer.appendChild(div);
+  });
+  
+  document.getElementById('surveySubmitBtn').disabled = true;
+ s
+  if (state.currentSurveyQuestion < CONFIG.surveyQuestions.length - 1) {
+    document.getElementById('surveySubmitBtn').textContent = 'Next Question';
+  } else {
+    document.getElementById('surveySubmitBtn').textContent = 'Continue';
+  }
 }
 
 function surveySubmit() {
-  const selectedOption = document.querySelector('input[name="likert"]:checked');
-  
-  if (!selectedOption) {
-    alert('Please select an option.');
-    return;
-  }
-  
-  const conditionNum = state.completedConditions;
-  const questionId = CONFIG.surveyQuestions[state.currentSurveyQuestion].id;
-  const key = `condition${conditionNum}_${questionId}`;
-  state.responses[key] = selectedOption.value;
-  
-  state.currentSurveyQuestion++;
-  
-  if (state.currentSurveyQuestion < CONFIG.surveyQuestions.length) {
-    displaySurveyQuestion();
-  } else if (state.currentQuestionIndex < 6) {
-    showPage('interview');
-    showQuestion();
-  } else {
-    showPage('debrief');
-    submitData();
-  }
+  const selectedOption = document.querySelector('input[name="likert"]:checked');
+  
+  if (!selectedOption) {
+    alert('Please select an option.');
+    return;
+  }
+  
+  // --- START: CRITICAL FIX FOR DATA MIX-UP ---
+  
+  // 1. Get the global index of the *last* question they answered
+  //    (e.g., if currentQuestionIndex is 2, they just finished questions 0 and 1. We look at index 1)
+  const lastQuestionGlobalIndex = state.questionOrder[state.currentQuestionIndex - 1];
+  
+  // 2. Look up what condition type (1, 2, or 3) that question belongs to
+  const conditionType = CONFIG.conditions[lastQuestionGlobalIndex];
+  
+  // 3. Translate the type number into a clear name
+  let conditionName = '';
+  if (conditionType === 1) {
+    conditionName = 'SRI'; // Self-View
+  } else if (conditionType === 2) {
+    conditionName = 'Avatar';
+  } else if (conditionType === 3) {
+    conditionName = 'Text';
+  }
+  
+  // 4. Get the ID of the survey question (e.g., "anxiety")
+  const questionId = CONFIG.surveyQuestions[state.currentSurveyQuestion].id;
+  
+  // 5. Create the correct, un-mixed key (e.g., "SRI_anxiety")
+  const key = `${conditionName}_${questionId}`;
+  
+  // --- END: CRITICAL FIX ---
+
+  state.responses[key] = selectedOption.value;
+ s
+  state.currentSurveyQuestion++;
+  
+  if (state.currentSurveyQuestion < CONFIG.surveyQuestions.length) {
+    displaySurveyQuestion();
+  } else if (state.currentQuestionIndex < 6) {
+    showPage('interview');
+    showQuestion();
+  } else {
+    showPage('debrief');
+    submitData();
+  }
 }
 
+// --- DATA SUBMISSION ---
 function submitData() {
-  const data = {
-    participantId: state.participantId,
-    orderGroup: state.orderGroup,
-    timestamp: new Date().toISOString(),
-    ...state.responses,
-    redoCounts: state.redoCounts.join(',')
-  };
-  
-  console.log('Study Complete. Submitting data:', data);
-  
-  const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxjv4KhOsOOxjplXLWYxQMYqg07FAVs_YdAY7yQNMO2TNV2p04GOOnK_izOZZkV93TD/exec';
+  const data = {
+    participantId: state.participantId,
+    orderGroup: state.orderGroup,
+    timestamp: new Date().toISOString(),
+    ...state.responses,
+    redoCounts: state.redoCounts.join(',')
+  };
+  
+  console.log('Study Complete. Submitting data:', data);
+  
+  const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxjv4KhOsOOxjplXLWYxQMYqg07FAVs_YdAY7yQNMO2TNV2p04GOOnK_izOZZkV93TD/exec';
 
-  fetch(GOOGLE_SCRIPT_URL, {
-    method: 'POST',
-    body: JSON.stringify(data)
-  })
-  .then(response => response.json())
-  .then(result => {
-    if (result.result === "success") {
-      console.log('Data submitted successfully to Google Sheets.');
-    } else {
-      console.error('Error submitting data:', result.error);
-    }
-  })
-  .catch(error => {
-    console.error('Network error while submitting data:', error);
-  });
+  fetch(GOOGLE_SCRIPT_URL, {
+    method: 'POST',
+    body: JSON.stringify(data)
+  })
+  .then(response => response.json())
+  .then(result => {
+    if (result.result === "success") {
+      console.log('Data submitted successfully to Google Sheets.');
+    } else {
+      console.error('Error submitting data:', result.error);
+    }
+  })
+  .catch(error => {
+    console.error('Network error while submitting data:', error);
+  });
 }
 
+// --- PAGE LOAD & CLEANUP ---
+
+// This wrapper ensures the script doesn't run until the HTML is fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+  // Consent Page
+  document.getElementById('consentCheck').addEventListener('change', (e) => {
+    document.getElementById('consentBtn').disabled = !e.target.checked;
+  });
+  
+  document.getElementById('consentBtn').addEventListener('click', async () => {
+    state.participantId = generateParticipantId();
+    state.orderGroup = assignOrderGroup();
+    state.questionOrder = CONFIG.orders[state.orderGroup];
+    
+    showPage('calibration');
+    await initializeMedia();
+  });
+
+  // Calibration Page
+  document.getElementById('startCalibrationBtn').addEventListener('click', startCalibrationRecording);
+  document.getElementById('retryCalibrationBtn').addEventListener('click', () => {
+    document.getElementById('calibrationStep1').classList.remove('hidden');
+    document.getElementById('calibrationStep2').classList.add('hidden');
+    document.getElementById('startCalibrationBtn').style.display = 'block';
+    document.getElementById('seeCheck').checked = false;
+    document.getElementById('hearCheck').checked = false;
+  s   document.getElementById('calibrationContinueBtn').disabled = true;
+    
+    const video = document.getElementById('calibrationPlayback');
+    video.pause();
+    video.currentTime = 0;
+  });
+  document.getElementById('seeCheck').addEventListener('change', checkCalibrationComplete);
+  document.getElementById('hearCheck').addEventListener('change', checkCalibrationComplete);
+  document.getElementById('calibrationContinueBtn').addEventListener('click', () => {
+    showPage('instructions');
+  });
+
+  // Instructions Page
+  document.getElementById('startExperimentBtn').addEventListener('click', () => {
+    showPage('interview');
+    showQuestion();
+  });
+
+  // Interview & Preview Pages
+  document.getElementById('startRecordingBtn').addEventListener('click', startRecording);
+  document.getElementById('stopBtn').addEventListener('click', stopRecording);
+  document.getElementById('redoBtn').addEventListener('click', redoRecording);
+  document.getElementById('previewRedoBtn').addEventListener('click', redoRecording);
+  document.getElementById('previewNextBtn').addEventListener('click', previewNext);
+  
+  // Survey Page
+  document.getElementById('surveySubmitBtn').addEventListener('click', surveySubmit);
+});
+
+// Cleanup on page unload
 window.addEventListener('beforeunload', () => {
-  if (state.stream) {
-    state.stream.getTracks().forEach(track => track.stop());
-  }
-  if (state.countdownInterval) {
-    clearInterval(state.countdownInterval);
-  }
+  if (state.stream) {
+    state.stream.getTracks().forEach(track => track.stop());
+  }
+  if (state.countdownInterval) {
+    clearInterval(state.countdownInterval);
+  }
 });
 </script>
 
