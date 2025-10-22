@@ -66,7 +66,7 @@
     p {
       color: #555;
       line-height: 1.6;
-      margin-bottom: 15ューfp;
+      margin-bottom: 15px;
       text-align: justify;
     }
 
@@ -603,26 +603,19 @@
 <script>
 // Configuration
 const CONFIG = {
-  // Interview Questions
   questions: [
-    "Tell me about yourself.",                    // Q1 - SRI condition
-    "What are your strengths?",                   // Q2 - SRI condition
-    "How do you prioritize your work?",           // Q3 - Avatar condition (0729-1.mp4)
-    "How do you stay organized?",                 // Q4 - Avatar condition (0729-2.mp4)
-    "Describe a time you overcame a challenge.",  // Q5 - Text-only condition
-    "Where do you see yourself in five years?"    // Q6 - Text-only condition
+    "Tell me about yourself.",
+    "What are your strengths?",
+    "How do you prioritize your work?",
+    "How do you stay organized?",
+    "Describe a time you overcame a challenge.",
+    "Where do you see yourself in five years?"
   ],
   
-  // Condition mapping: 1=SRI, 2=Avatar, 3=Text-only
   conditions: [1, 1, 2, 2, 3, 3],
-  
-  // Avatar video files (these videos ask the questions)
-  // 0729-1.mp4 asks "How do you prioritize your work?" (Question 3)
-  // 0729-2.mp4 asks "How do you stay organized?" (Question 4)
   avatarVideos: ["0729-1.mp4", "0729-2.mp4"],
-  avatarImage: "input.jpg", // Static avatar image shown during recording
+  avatarImage: "input.jpg",
   
-  // Survey questions
   surveyQuestions: [
     {
       id: "anxiety",
@@ -641,14 +634,13 @@ const CONFIG = {
     }
   ],
   
-  // Counterbalancing orders
   orders: {
-    A: [0,1,2,3,4,5], // SRI → Avatar → Text
-    B: [0,1,4,5,2,3], // SRI → Text → Avatar
-    C: [2,3,0,1,4,5], // Avatar → SRI → Text
-    D: [2,3,4,5,0,1], // Avatar → Text → SRI
-    E: [4,5,0,1,2,3], // Text → SRI → Avatar
-    F: [4,5,2,3,0,1]  // Text → Avatar → SRI
+    A: [0,1,2,3,4,5],
+    B: [0,1,4,5,2,3],
+    C: [2,3,0,1,4,5],
+    D: [2,3,4,5,0,1],
+    E: [4,5,0,1,2,3],
+    F: [4,5,2,3,0,1]
   }
 };
 
@@ -691,24 +683,9 @@ function generateParticipantId() {
 }
 
 function assignOrderGroup() {
-  // Randomly assign to one of 6 counterbalancing orders
   const groups = ['A', 'B', 'C', 'D', 'E', 'F'];
   return groups[Math.floor(Math.random() * groups.length)];
 }
-
-// Consent Page
-document.getElementById('consentCheck').addEventListener('change', (e) => {
-  document.getElementById('consentBtn').disabled = !e.target.checked;
-});
-
-document.getElementById('consentBtn').addEventListener('click', async () => {
-  state.participantId = generateParticipantId();
-  state.orderGroup = assignOrderGroup();
-  state.questionOrder = CONFIG.orders[state.orderGroup];
-  
-  showPage('calibration');
-  await initializeMedia();
-});
 
 // Initialize Media
 async function initializeMedia() {
@@ -730,106 +707,130 @@ async function initializeMedia() {
   }
 }
 
-// Calibration Page
-let calibrationRecorder = null;
-let calibrationChunks = [];
-let calibrationCountdown = null;
-
-document.getElementById('startCalibrationBtn').addEventListener('click', startCalibrationRecording);
-
-function startCalibrationRecording() {
-  if (!state.stream) {
-    alert('Camera not initialized. Please allow camera access and reload.');
-    return;
+// Wait for DOM to be fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+  // Consent Page
+  const consentCheck = document.getElementById('consentCheck');
+  const consentBtn = document.getElementById('consentBtn');
+  
+  if (consentCheck && consentBtn) {
+    consentCheck.addEventListener('change', (e) => {
+      consentBtn.disabled = !e.target.checked;
+    });
+    
+    consentBtn.addEventListener('click', async () => {
+      state.participantId = generateParticipantId();
+      state.orderGroup = assignOrderGroup();
+      state.questionOrder = CONFIG.orders[state.orderGroup];
+      
+      showPage('calibration');
+      await initializeMedia();
+    });
   }
-  
-  calibrationChunks = [];
-  calibrationRecorder = new MediaRecorder(state.stream);
-  
-  calibrationRecorder.ondataavailable = (event) => {
-    if (event.data && event.data.size > 0) {
-      calibrationChunks.push(event.data);
+
+  // Calibration Page
+  let calibrationRecorder = null;
+  let calibrationChunks = [];
+  let calibrationCountdown = null;
+
+  document.getElementById('startCalibrationBtn').addEventListener('click', startCalibrationRecording);
+
+  function startCalibrationRecording() {
+    if (!state.stream) {
+      alert('Camera not initialized. Please allow camera access and reload.');
+      return;
     }
-  };
-  
-  calibrationRecorder.onstop = () => {
-    const blob = new Blob(calibrationChunks, { type: 'video/webm' });
-    const url = URL.createObjectURL(blob);
-    const playbackVideo = document.getElementById('calibrationPlayback');
-    playbackVideo.src = url;
-    playbackVideo.muted = false; // Important: allow audio playback
     
-    // Show playback section
-    document.getElementById('calibrationStep1').classList.add('hidden');
-    document.getElementById('calibrationStep2').classList.remove('hidden');
-  };
-  
-  // Update UI
-  document.getElementById('startCalibrationBtn').style.display = 'none';
-  document.getElementById('calibrationStatus').style.display = 'flex';
-  
-  // Start recording
-  calibrationRecorder.start();
-  
-  // 3-second countdown
-  let timeLeft = 3;
-  const timerDisplay = document.getElementById('calibrationTimer');
-  
-  calibrationCountdown = setInterval(() => {
-    timerDisplay.textContent = `0:0${timeLeft}`;
-    timeLeft--;
+    calibrationChunks = [];
+    calibrationRecorder = new MediaRecorder(state.stream);
     
-    if (timeLeft < 0) {
-      clearInterval(calibrationCountdown);
-      calibrationRecorder.stop();
-      document.getElementById('calibrationStatus').style.display = 'none';
-    }
-  }, 1000);
-}
+    calibrationRecorder.ondataavailable = (event) => {
+      if (event.data && event.data.size > 0) {
+        calibrationChunks.push(event.data);
+      }
+    };
+    
+    calibrationRecorder.onstop = () => {
+      const blob = new Blob(calibrationChunks, { type: 'video/webm' });
+      const url = URL.createObjectURL(blob);
+      const playbackVideo = document.getElementById('calibrationPlayback');
+      playbackVideo.src = url;
+      playbackVideo.muted = false;
+      
+      document.getElementById('calibrationStep1').classList.add('hidden');
+      document.getElementById('calibrationStep2').classList.remove('hidden');
+    };
+    
+    document.getElementById('startCalibrationBtn').style.display = 'none';
+    document.getElementById('calibrationStatus').style.display = 'flex';
+    
+    calibrationRecorder.start();
+    
+    let timeLeft = 3;
+    const timerDisplay = document.getElementById('calibrationTimer');
+    
+    calibrationCountdown = setInterval(() => {
+      timerDisplay.textContent = `0:0${timeLeft}`;
+      timeLeft--;
+      
+      if (timeLeft < 0) {
+        clearInterval(calibrationCountdown);
+        calibrationRecorder.stop();
+        document.getElementById('calibrationStatus').style.display = 'none';
+      }
+    }, 1000);
+  }
 
-document.getElementById('retryCalibrationBtn').addEventListener('click', () => {
-  // Reset to step 1
-  document.getElementById('calibrationStep1').classList.remove('hidden');
-  document.getElementById('calibrationStep2').classList.add('hidden');
-  document.getElementById('startCalibrationBtn').style.display = 'block';
-  document.getElementById('seeCheck').checked = false;
-  document.getElementById('hearCheck').checked = false;
-  document.getElementById('calibrationContinueBtn').disabled = true;
-  
-  // Reset the video
-  const video = document.getElementById('calibrationPlayback');
-  video.pause();
-  video.currentTime = 0;
-});
-
-document.getElementById('seeCheck').addEventListener('change', checkCalibrationComplete);
-document.getElementById('hearCheck').addEventListener('change', checkCalibrationComplete);
-
-function checkCalibrationComplete() {
-  const canSee = document.getElementById('seeCheck').checked;
-  const canHear = document.getElementById('hearCheck').checked;
-  
-  if (canSee && canHear) {
-    document.getElementById('calibrationContinueBtn').disabled = false;
-    document.getElementById('calibrationError').style.display = 'none';
-  } else {
+  document.getElementById('retryCalibrationBtn').addEventListener('click', () => {
+    document.getElementById('calibrationStep1').classList.remove('hidden');
+    document.getElementById('calibrationStep2').classList.add('hidden');
+    document.getElementById('startCalibrationBtn').style.display = 'block';
+    document.getElementById('seeCheck').checked = false;
+    document.getElementById('hearCheck').checked = false;
     document.getElementById('calibrationContinueBtn').disabled = true;
-    if (document.getElementById('calibrationStep2').classList.contains('hidden') === false) {
-      if (!canSee || !canHear) {
-        document.getElementById('calibrationError').style.display = 'block';
+    
+    const video = document.getElementById('calibrationPlayback');
+    video.pause();
+    video.currentTime = 0;
+  });
+
+  document.getElementById('seeCheck').addEventListener('change', checkCalibrationComplete);
+  document.getElementById('hearCheck').addEventListener('change', checkCalibrationComplete);
+
+  function checkCalibrationComplete() {
+    const canSee = document.getElementById('seeCheck').checked;
+    const canHear = document.getElementById('hearCheck').checked;
+    
+    if (canSee && canHear) {
+      document.getElementById('calibrationContinueBtn').disabled = false;
+      document.getElementById('calibrationError').style.display = 'none';
+    } else {
+      document.getElementById('calibrationContinueBtn').disabled = true;
+      if (document.getElementById('calibrationStep2').classList.contains('hidden') === false) {
+        if (!canSee || !canHear) {
+          document.getElementById('calibrationError').style.display = 'block';
+        }
       }
     }
   }
-}
 
-document.getElementById('calibrationContinueBtn').addEventListener('click', () => {
-  showPage('instructions');
-});
+  document.getElementById('calibrationContinueBtn').addEventListener('click', () => {
+    showPage('instructions');
+  });
 
-// Instructions Page
-document.getElementById('startExperimentBtn').addEventListener('click', () => {
-  showPage('interview');
-  showQuestion();
+  // Instructions Page
+  document.getElementById('startExperimentBtn').addEventListener('click', () => {
+    showPage('interview');
+    showQuestion();
+  });
+
+  // Interview Page Event Listeners
+  document.getElementById('startRecordingBtn').addEventListener('click', startRecording);
+  document.getElementById('stopBtn').addEventListener('click', stopRecording);
+  document.getElementById('redoBtn').addEventListener('click', redoRecording);
+  document.getElementById('previewRedoBtn').addEventListener('click', redoRecording);
+  document.getElementById('previewNextBtn').addEventListener('click', previewNext);
+  document.getElementById('surveySubmitBtn').addEventListener('click', surveySubmit);
 });
 
 // Interview Functions
@@ -840,7 +841,6 @@ function showQuestion() {
   
   document.getElementById('conditionLabel').textContent = `Condition ${conditionNum} of 3`;
   
-  // Reset UI
   document.getElementById('recordInstruction').style.display = 'block';
   document.getElementById('startRecordingBtn').style.display = 'block';
   document.getElementById('statusBar').style.display = 'none';
@@ -850,13 +850,11 @@ function showQuestion() {
   const viewContainer = document.getElementById('viewContainer');
   const questionText = document.getElementById('questionText');
   
-  // Clear previous content
   viewContainer.innerHTML = '';
-  viewContainer.style.display = 'block'; // Ensure container is visible
+  viewContainer.style.display = 'block';
   questionText.textContent = '';
   
-  // Set up condition-specific display
-  if (condition === 1) { // SRI Condition - Show self-view with text question
+  if (condition === 1) {
     questionText.textContent = CONFIG.questions[questionIdx];
     if (state.stream) {
       const video = document.createElement('video');
@@ -866,25 +864,19 @@ function showQuestion() {
       video.playsinline = true;
       viewContainer.appendChild(video);
     }
-  } else if (condition === 2) { // Avatar Condition - Show avatar video that asks the question
-    // For avatar, the video asks the question (0729-1.mp4 for Q3, 0729-2.mp4 for Q4)
-    const avatarIdx = questionIdx - 2; // Questions index 2,3 use avatar videos
+  } else if (condition === 2) {
+    const avatarIdx = questionIdx - 2;
     const video = document.createElement('video');
     video.src = CONFIG.avatarVideos[avatarIdx];
-    video.controls = true; // Allow user to replay if needed
+    video.controls = true;
     video.autoplay = true;
     video.playsinline = true;
     viewContainer.appendChild(video);
-    
-    // Don't show text for avatar condition - the video contains the question
-  } else { // Text-only Condition - Show only text, hide video container
+  } else {
     questionText.textContent = CONFIG.questions[questionIdx];
-    viewContainer.style.display = 'none'; // Hide container for text-only
+    viewContainer.style.display = 'none';
   }
 }
-
-// Start Recording
-document.getElementById('startRecordingBtn').addEventListener('click', startRecording);
 
 function startRecording() {
   if (!state.stream) {
@@ -895,25 +887,22 @@ function startRecording() {
   const questionIdx = state.questionOrder[state.currentQuestionIndex];
   const condition = CONFIG.conditions[questionIdx];
   
-  // UI Updates
   document.getElementById('recordInstruction').style.display = 'none';
   document.getElementById('startRecordingBtn').style.display = 'none';
   document.getElementById('statusBar').style.display = 'flex';
   document.getElementById('recordingControls').style.display = 'flex';
   document.getElementById('recordIndicator').style.display = 'block';
   
-  // For avatar condition, switch to static image during recording (input.jpg)
   if (condition === 2) {
     const viewContainer = document.getElementById('viewContainer');
-    viewContainer.style.display = 'block'; // Ensure visible
+    viewContainer.style.display = 'block';
     viewContainer.innerHTML = '';
     const img = document.createElement('img');
-    img.src = CONFIG.avatarImage; // This is now "input.jpg"
+    img.src = CONFIG.avatarImage;
     img.alt = 'Avatar';
     viewContainer.appendChild(img);
   }
   
-  // Start recording
   state.recordedChunks = [];
   state.mediaRecorder = new MediaRecorder(state.stream);
   
@@ -928,7 +917,7 @@ function startRecording() {
     const url = URL.createObjectURL(blob);
     const previewVideo = document.getElementById('previewVideo');
     previewVideo.src = url;
-    previewVideo.muted = false; // Allow audio playback in preview
+    previewVideo.muted = false;
     showPage('preview');
   };
   
@@ -936,7 +925,6 @@ function startRecording() {
   startTimer();
 }
 
-// Timer Function
 function startTimer() {
   let timeLeft = 30;
   const timerDisplay = document.getElementById('timerDisplay');
@@ -957,9 +945,6 @@ function startTimer() {
   }, 1000);
 }
 
-// Stop Recording
-document.getElementById('stopBtn').addEventListener('click', stopRecording);
-
 function stopRecording() {
   clearInterval(state.countdownInterval);
   if (state.mediaRecorder && state.mediaRecorder.state === 'recording') {
@@ -967,7 +952,6 @@ function stopRecording() {
   }
 }
 
-// Redo Function
 function redoRecording() {
   const questionIdx = state.questionOrder[state.currentQuestionIndex];
   state.redoCounts[questionIdx]++;
@@ -981,36 +965,29 @@ function redoRecording() {
   showQuestion();
 }
 
-document.getElementById('redoBtn').addEventListener('click', redoRecording);
-document.getElementById('previewRedoBtn').addEventListener('click', redoRecording);
-
-// Preview Next
-document.getElementById('previewNextBtn').addEventListener('click', () => {
+function previewNext() {
   const video = document.getElementById('previewVideo');
   video.pause();
   video.currentTime = 0;
   
   state.currentQuestionIndex++;
   
-  // Check if we need to show survey (after every 2 questions)
   if (state.currentQuestionIndex % 2 === 0) {
     showSurvey();
   } else if (state.currentQuestionIndex < 6) {
     showPage('interview');
     showQuestion();
   } else {
-    // All questions complete
     showPage('debrief');
     submitData();
   }
-});
+}
 
 // Survey Functions
 function showSurvey() {
   state.completedConditions++;
   state.currentSurveyQuestion = 0;
   
-  const conditionNames = ['Self-View (Mirror)', 'Avatar Presenter', 'Text-Only'];
   const conditionNum = state.completedConditions;
   
   document.getElementById('surveyTitle').textContent = 'Post-Interview Questions';
@@ -1026,11 +1003,9 @@ function displaySurveyQuestion() {
   document.getElementById('surveyQuestion').innerHTML = question.text;
   document.getElementById('surveyQuestionNumber').textContent = state.currentSurveyQuestion + 1;
   
-  // Update progress bar
   const progress = ((state.currentSurveyQuestion + 1) / CONFIG.surveyQuestions.length) * 100;
   document.getElementById('surveyProgress').style.width = `${progress}%`;
   
-  // Create Likert scale options
   const optionsContainer = document.getElementById('likertOptions');
   optionsContainer.innerHTML = '';
   
@@ -1054,12 +1029,10 @@ function displaySurveyQuestion() {
     div.appendChild(label);
     
     div.addEventListener('click', () => {
-      // Clear previous selection
       document.querySelectorAll('.likert-option').forEach(opt => {
         opt.classList.remove('selected');
       });
       
-      // Select this option
       div.classList.add('selected');
       input.checked = true;
       document.getElementById('surveySubmitBtn').disabled = false;
@@ -1068,10 +1041,8 @@ function displaySurveyQuestion() {
     optionsContainer.appendChild(div);
   });
   
-  // Reset submit button
   document.getElementById('surveySubmitBtn').disabled = true;
   
-  // Update button text
   if (state.currentSurveyQuestion < CONFIG.surveyQuestions.length - 1) {
     document.getElementById('surveySubmitBtn').textContent = 'Next Question';
   } else {
@@ -1079,8 +1050,7 @@ function displaySurveyQuestion() {
   }
 }
 
-// Survey Submit
-document.getElementById('surveySubmitBtn').addEventListener('click', () => {
+function surveySubmit() {
   const selectedOption = document.querySelector('input[name="likert"]:checked');
   
   if (!selectedOption) {
@@ -1088,13 +1058,11 @@ document.getElementById('surveySubmitBtn').addEventListener('click', () => {
     return;
   }
   
-  // Store response
   const conditionNum = state.completedConditions;
   const questionId = CONFIG.surveyQuestions[state.currentSurveyQuestion].id;
   const key = `condition${conditionNum}_${questionId}`;
   state.responses[key] = selectedOption.value;
   
-  // Move to next survey question or continue with interview
   state.currentSurveyQuestion++;
   
   if (state.currentSurveyQuestion < CONFIG.surveyQuestions.length) {
@@ -1103,13 +1071,11 @@ document.getElementById('surveySubmitBtn').addEventListener('click', () => {
     showPage('interview');
     showQuestion();
   } else {
-    // All complete
     showPage('debrief');
     submitData();
   }
-});
+}
 
-// Updated Data Submission (to Google Sheets via Google Apps Script)before any tests
 function submitData() {
   const data = {
     participantId: state.participantId,
@@ -1119,17 +1085,12 @@ function submitData() {
     redoCounts: state.redoCounts.join(',')
   };
   
-  // Log data for your own testing 
   console.log('Study Complete. Submitting data:', data);
   
-  // THIS IS THE NEW PART
-  const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxjv4KhOsOOxjplXLWYxQMYqg07FAVs_YdAY7yQNMO2TNV2p04GOOnK_izOZZkV93TD/exec'; 
+  const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxjv4KhOsOOxjplXLWYxQMYqg07FAVs_YdAY7yQNMO2TNV2p04GOOnK_izOZZkV93TD/exec';
 
   fetch(GOOGLE_SCRIPT_URL, {
     method: 'POST',
-    // We remove the 'Content-Type' header.
-    // This sends the data as 'text/plain' and avoids a "CORS preflight" error
-    // that Google Apps Script cannot easily handle.
     body: JSON.stringify(data)
   })
   .then(response => response.json())
@@ -1141,28 +1102,10 @@ function submitData() {
     }
   })
   .catch(error => {
-    // This catch handles network errors (e.g., user is offline)
     console.error('Network error while submitting data:', error);
   });
 }
-  // Log data for testing (replace with actual submission)
-  console.log('Study Complete. Data collected:', data);
-  
-  // To submit to Google Sheets, you would need a Google Apps Script endpoint
-  // Example:
-  /*
-  fetch('YOUR_GOOGLE_APPS_SCRIPT_URL', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data)
-  })
-  .then(response => response.json())
-  .then(result => console.log('Data submitted successfully'))
-  .catch(error => console.error('Error submitting data:', error));
-  */
-}
 
-// Cleanup on page unload
 window.addEventListener('beforeunload', () => {
   if (state.stream) {
     state.stream.getTracks().forEach(track => track.stop());
