@@ -1057,6 +1057,7 @@ function displaySurveyQuestion() {
 }
 
 // =================================================================
+// =================================================================
 // ===== REPLACE your existing surveySubmit function with this =====
 // =================================================================
 function surveySubmit() {
@@ -1094,6 +1095,53 @@ function surveySubmit() {
       showPage('debrief');
       return;
   }
+  
+  // 3. Translate the type number into a clear name
+  let conditionName = '';
+  if (conditionType === 1) {
+    conditionName = 'SRI'; // Self-View
+  } else if (conditionType === 2) {
+    conditionName = 'Avatar';
+  } else if (conditionType === 3) {
+    conditionName = 'Text';
+  } else {
+    console.error("Unknown condition type:", conditionType);
+    conditionName = 'Unknown'; // Fallback name for safety, check CONFIG if this happens
+  }
+  
+  // 4. Get the ID of the survey question (e.g., "anxiety")
+  if (state.currentSurveyQuestion >= CONFIG.surveyQuestions.length) {
+      console.error("Invalid current survey question index:", state.currentSurveyQuestion);
+      // Decide how to handle this error
+      showPage('debrief');
+      return;
+  }
+  const questionId = CONFIG.surveyQuestions[state.currentSurveyQuestion].id;
+  
+  // 5. Create the correct, un-mixed key (e.g., "SRI_anxiety")
+  const key = `${conditionName}_${questionId}`;
+  
+  // --- END: CRITICAL FIX ---
+  
+  // Store response using the new, correct key
+  state.responses[key] = selectedOption.value;
+  
+  // --- Proceed as before ---
+  state.currentSurveyQuestion++;
+  
+  if (state.currentSurveyQuestion < CONFIG.surveyQuestions.length) {
+    displaySurveyQuestion(); // Show next survey question in the block
+  } else if (state.currentQuestionIndex < 6) {
+    showPage('interview'); // Move to next interview question (pair)
+    showQuestion();
+  } else {
+    showPage('debrief'); // All questions and surveys done
+    submitData();
+  }
+}
+// =================================================================
+// ================= END OF REPLACEMENT BLOCK ======================
+// =================================================================
   
   // 3. Translate the type number into a clear name
   let conditionName = '';
