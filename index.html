@@ -6,74 +6,499 @@
   <title>Interview Experience Research - University of Milano-Bicocca</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    
     body {
-      display: flex; justify-content: center; align-items: center;
+      display: flex; 
+      justify-content: center; 
+      align-items: center;
       min-height: 100vh;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      padding: 20px;
+      padding: clamp(15px, 3vw, 20px);
     }
+    
     .container {
-      width: 100%; max-width: 700px; padding: 40px; background: white;
-      border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      width: 100%; 
+      max-width: 700px; 
+      padding: clamp(20px, 5vw, 40px); 
+      background: white;
+      border-radius: clamp(12px, 2vw, 16px); 
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
       animation: fadeIn 0.5s ease-out;
     }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px);} to { opacity:1; transform: translateY(0);} }
+    
+    @keyframes fadeIn { 
+      from { opacity: 0; transform: translateY(20px);} 
+      to { opacity:1; transform: translateY(0);} 
+    }
+    
     .hidden { display: none !important; }
-    h1, h2 { color: #2c3e50; margin-bottom: 20px; text-align: center; }
-    h1 { font-size: 2em; border-bottom: 3px solid #667eea; padding-bottom: 10px; }
-    h2 { font-size: 1.5em; color: #34495e; }
-    h3 { font-size: 1.2em; color: #34495e; margin: 20px 0 15px 0; }
-    p { color: #555; line-height: 1.6; margin-bottom: 15px; text-align: justify; }
-    .info-box { background: #f8f9fa; border-left: 4px solid #667eea; padding: 20px; margin: 20px 0; border-radius: 8px; }
+    
+    h1, h2 { 
+      color: #2c3e50; 
+      margin-bottom: clamp(15px, 3vw, 20px); 
+      text-align: center; 
+    }
+    
+    h1 { 
+      font-size: clamp(1.5rem, 4vw, 2rem); 
+      border-bottom: 3px solid #667eea; 
+      padding-bottom: clamp(8px, 2vw, 10px); 
+    }
+    
+    h2 { 
+      font-size: clamp(1.2rem, 3.5vw, 1.5rem); 
+      color: #34495e; 
+    }
+    
+    h3 { 
+      font-size: clamp(1rem, 2.5vw, 1.2rem); 
+      color: #34495e; 
+      margin: clamp(15px, 3vw, 20px) 0 clamp(10px, 2vw, 15px) 0; 
+    }
+    
+    p { 
+      color: #555; 
+      line-height: 1.6; 
+      margin-bottom: clamp(12px, 2.5vw, 15px); 
+      text-align: justify; 
+      font-size: clamp(0.9rem, 2vw, 1rem);
+    }
+    
+    .info-box { 
+      background: #f8f9fa; 
+      border-left: 4px solid #667eea; 
+      padding: clamp(15px, 3vw, 20px); 
+      margin: clamp(15px, 3vw, 20px) 0; 
+      border-radius: clamp(6px, 1.5vw, 8px); 
+    }
+    
     .consent-text {
-      max-height: 400px; overflow-y: auto; padding: 20px; background: #f8f9fa;
-      border: 1px solid #dee2e6; border-radius: 8px; margin: 20px 0; font-size: 0.95em;
+      max-height: clamp(300px, 50vh, 400px); 
+      overflow-y: auto; 
+      padding: clamp(15px, 3vw, 20px); 
+      background: #f8f9fa;
+      border: 1px solid #dee2e6; 
+      border-radius: clamp(6px, 1.5vw, 8px); 
+      margin: clamp(15px, 3vw, 20px) 0; 
+      font-size: clamp(0.85rem, 1.8vw, 0.95rem);
     }
-    .consent-checkbox { display: flex; align-items: flex-start; margin: 20px 0; padding: 15px; background: #e8f4f8; border-radius: 8px; cursor: pointer; }
-    .consent-checkbox input[type="checkbox"] { margin-right: 10px; margin-top: 3px; transform: scale(1.2); cursor: pointer; }
-    .consent-checkbox label { cursor: pointer; flex: 1; }
+    
+    .consent-checkbox { 
+      display: flex; 
+      align-items: flex-start; 
+      margin: clamp(15px, 3vw, 20px) 0; 
+      padding: clamp(12px, 2.5vw, 15px); 
+      background: #e8f4f8; 
+      border-radius: clamp(6px, 1.5vw, 8px); 
+      cursor: pointer; 
+    }
+    
+    .consent-checkbox input[type="checkbox"] { 
+      margin-right: clamp(8px, 2vw, 10px); 
+      margin-top: 3px; 
+      min-width: 18px;
+      min-height: 18px;
+      transform: scale(clamp(1, 1.2vw, 1.2)); 
+      cursor: pointer; 
+    }
+    
+    .consent-checkbox label { 
+      cursor: pointer; 
+      flex: 1;
+      font-size: clamp(0.9rem, 2vw, 1rem);
+    }
+    
     button {
-      width: 100%; padding: 14px 24px; margin: 10px 0; font-size: 1.1em; font-weight: 600;
-      border: none; border-radius: 8px; cursor: pointer; transition: all 0.3s ease;
-      text-transform: uppercase; letter-spacing: 0.5px;
+      width: 100%; 
+      padding: clamp(12px, 3vw, 14px) clamp(20px, 4vw, 24px); 
+      margin: clamp(8px, 2vw, 10px) 0; 
+      font-size: clamp(0.95rem, 2.2vw, 1.1rem); 
+      font-weight: 600;
+      border: none; 
+      border-radius: clamp(6px, 1.5vw, 8px); 
+      cursor: pointer; 
+      transition: all 0.3s ease;
+      text-transform: uppercase; 
+      letter-spacing: 0.5px;
+      min-height: 48px; /* Touch-friendly */
     }
-    .btn-primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
-    .btn-primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4); }
-    .btn-primary:disabled { background: #ccc; cursor: not-allowed; opacity: 0.6; }
-    .btn-secondary { background: #6c757d; color: white; }
-    .btn-secondary:hover { background: #5a6268; }
-    .btn-record { background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%); color: white; display: flex; align-items: center; justify-content: center; }
-    .btn-record:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(244, 67, 54, 0.4); }
-    .button-row { display: flex; gap: 15px; margin-top: 20px; }
-    .button-row button { flex: 1; }
-    .video-container { position: relative; width: 100%; max-width: 100%; margin: 20px 0; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.2); background: #000; }
-    video, .video-container img { width: 100%; height: auto; display: block; border-radius: 12px; }
-    .question-text { font-size: 1.3em; color: #2c3e50; text-align: center; margin: 20px 0; padding: 20px; background: #f8f9fa; border-radius: 12px; font-weight: 500; }
-    .status-bar { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: #f8f9fa; border-radius: 8px; margin: 20px 0; }
-    .recording-indicator { display: flex; align-items: center; gap: 10px; }
-    .record-dot { width: 16px; height: 16px; background: #d32f2f; border-radius: 50%; animation: pulse 1.5s infinite; }
-    @keyframes pulse { 0%{opacity:1; transform:scale(1);} 50%{opacity:.7; transform:scale(1.1);} 100%{opacity:1; transform:scale(1);} }
-    .timer { font-size: 1.5em; font-weight: bold; color: #d32f2f; font-family: 'Courier New', monospace; }
-    .redo-counter { color: #6c757d; font-weight: 500; }
-    .survey-question { font-size: 1.1em; color: #2c3e50; margin: 25px 0; line-height: 1.5; text-align: center; }
-    .likert-scale { display: flex; flex-direction: column; gap: 10px; margin: 25px 0; }
-    .likert-option { display: flex; align-items: center; padding: 15px 20px; background: #f8f9fa; border: 2px solid transparent; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; }
-    .likert-option:hover { background: #e9ecef; border-color: #667eea; transform: translateX(5px); }
-    .likert-option input[type="radio"] { margin-right: 15px; transform: scale(1.3); cursor: pointer; }
-    .likert-option.selected { background: linear-gradient(135deg, rgba(102,126,234,0.1) 0%, rgba(118,75,162,0.1) 100%); border-color: #667eea; }
-    .progress-bar { width: 100%; height: 8px; background: #e9ecef; border-radius: 4px; margin: 20px 0; overflow: hidden; }
-    .progress-fill { height: 100%; background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); border-radius: 4px; transition: width 0.5s ease; }
-    .instruction-text { background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin: 20px 0; border-radius: 8px; color: #856404; }
-    .calibration-check { display: flex; align-items: center; margin: 15px 0; padding: 15px; background: #f8f9fa; border-radius: 8px; }
-    .calibration-check input[type="checkbox"] { margin-right: 15px; transform: scale(1.3); }
-    .error-message { background: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; padding: 15px; border-radius: 8px; margin: 15px 0; display: none; }
-    .block-label { display: inline-block; background: #667eea; color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.9em; font-weight: 600; margin-bottom: 15px; }
+    
+    .btn-primary { 
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+      color: white; 
+    }
+    
+    .btn-primary:hover:not(:disabled) { 
+      transform: translateY(-2px); 
+      box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4); 
+    }
+    
+    .btn-primary:disabled { 
+      background: #ccc; 
+      cursor: not-allowed; 
+      opacity: 0.6; 
+    }
+    
+    .btn-secondary { 
+      background: #6c757d; 
+      color: white; 
+    }
+    
+    .btn-secondary:hover { 
+      background: #5a6268; 
+    }
+    
+    .btn-record { 
+      background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%); 
+      color: white; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+    }
+    
+    .btn-record:hover:not(:disabled) { 
+      transform: translateY(-2px); 
+      box-shadow: 0 5px 20px rgba(244, 67, 54, 0.4); 
+    }
+    
+    .button-row { 
+      display: flex; 
+      gap: clamp(10px, 2.5vw, 15px); 
+      margin-top: clamp(15px, 3vw, 20px);
+      flex-wrap: wrap;
+    }
+    
+    .button-row button { 
+      flex: 1;
+      min-width: 150px;
+    }
+    
+    .video-container { 
+      position: relative; 
+      width: 100%; 
+      max-width: 100%; 
+      margin: clamp(15px, 3vw, 20px) 0; 
+      border-radius: clamp(10px, 2vw, 12px); 
+      overflow: hidden; 
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2); 
+      background: #000; 
+    }
+    
+    video, .video-container img { 
+      width: 100%; 
+      height: auto; 
+      display: block; 
+      border-radius: clamp(10px, 2vw, 12px); 
+    }
+    
+    .question-text { 
+      font-size: clamp(1.1rem, 2.8vw, 1.3rem); 
+      color: #2c3e50; 
+      text-align: center; 
+      margin: clamp(15px, 3vw, 20px) 0; 
+      padding: clamp(15px, 3vw, 20px); 
+      background: #f8f9fa; 
+      border-radius: clamp(10px, 2vw, 12px); 
+      font-weight: 500; 
+      line-height: 1.5;
+    }
+    
+    .status-bar { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      padding: clamp(12px, 2.5vw, 15px) clamp(15px, 3vw, 20px); 
+      background: #f8f9fa; 
+      border-radius: clamp(6px, 1.5vw, 8px); 
+      margin: clamp(15px, 3vw, 20px) 0;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    
+    .recording-indicator { 
+      display: flex; 
+      align-items: center; 
+      gap: clamp(8px, 2vw, 10px); 
+    }
+    
+    .record-dot { 
+      width: clamp(14px, 3vw, 16px); 
+      height: clamp(14px, 3vw, 16px); 
+      background: #d32f2f; 
+      border-radius: 50%; 
+      animation: pulse 1.5s infinite; 
+    }
+    
+    @keyframes pulse { 
+      0%{opacity:1; transform:scale(1);} 
+      50%{opacity:.7; transform:scale(1.1);} 
+      100%{opacity:1; transform:scale(1);} 
+    }
+    
+    .timer { 
+      font-size: clamp(1.2rem, 3vw, 1.5rem); 
+      font-weight: bold; 
+      color: #d32f2f; 
+      font-family: 'Courier New', monospace; 
+    }
+    
+    .redo-counter { 
+      color: #6c757d; 
+      font-weight: 500;
+      font-size: clamp(0.9rem, 2vw, 1rem);
+    }
+    
+    .survey-question { 
+      font-size: clamp(1rem, 2.5vw, 1.1rem); 
+      color: #2c3e50; 
+      margin: clamp(20px, 4vw, 25px) 0; 
+      line-height: 1.5; 
+      text-align: center; 
+    }
+    
+    .likert-scale { 
+      display: flex; 
+      flex-direction: column; 
+      gap: clamp(8px, 2vw, 10px); 
+      margin: clamp(20px, 4vw, 25px) 0; 
+    }
+    
+    .likert-option { 
+      display: flex; 
+      align-items: center; 
+      padding: clamp(12px, 2.5vw, 15px) clamp(15px, 3vw, 20px); 
+      background: #f8f9fa; 
+      border: 2px solid transparent; 
+      border-radius: clamp(6px, 1.5vw, 8px); 
+      cursor: pointer; 
+      transition: all 0.3s ease;
+      min-height: 48px; /* Touch-friendly */
+    }
+    
+    .likert-option:hover { 
+      background: #e9ecef; 
+      border-color: #667eea; 
+      transform: translateX(5px); 
+    }
+    
+    .likert-option input[type="radio"] { 
+      margin-right: clamp(12px, 2.5vw, 15px); 
+      min-width: 18px;
+      min-height: 18px;
+      transform: scale(clamp(1.1, 1.5vw, 1.3)); 
+      cursor: pointer; 
+    }
+    
+    .likert-option.selected { 
+      background: linear-gradient(135deg, rgba(102,126,234,0.1) 0%, rgba(118,75,162,0.1) 100%); 
+      border-color: #667eea; 
+    }
+    
+    .progress-bar { 
+      width: 100%; 
+      height: clamp(6px, 1.5vw, 8px); 
+      background: #e9ecef; 
+      border-radius: 4px; 
+      margin: clamp(15px, 3vw, 20px) 0; 
+      overflow: hidden; 
+    }
+    
+    .progress-fill { 
+      height: 100%; 
+      background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); 
+      border-radius: 4px; 
+      transition: width 0.5s ease; 
+    }
+    
+    .instruction-text { 
+      background: #fff3cd; 
+      border-left: 4px solid #ffc107; 
+      padding: clamp(12px, 2.5vw, 15px); 
+      margin: clamp(15px, 3vw, 20px) 0; 
+      border-radius: clamp(6px, 1.5vw, 8px); 
+      color: #856404;
+      font-size: clamp(0.9rem, 2vw, 1rem);
+    }
+    
+    .calibration-check { 
+      display: flex; 
+      align-items: center; 
+      margin: clamp(12px, 2.5vw, 15px) 0; 
+      padding: clamp(12px, 2.5vw, 15px); 
+      background: #f8f9fa; 
+      border-radius: clamp(6px, 1.5vw, 8px); 
+    }
+    
+    .calibration-check input[type="checkbox"] { 
+      margin-right: clamp(12px, 2.5vw, 15px); 
+      min-width: 18px;
+      min-height: 18px;
+      transform: scale(clamp(1.1, 1.5vw, 1.3)); 
+    }
+    
+    .calibration-check label {
+      font-size: clamp(0.9rem, 2vw, 1rem);
+    }
+    
+    .error-message { 
+      background: #f8d7da; 
+      border: 1px solid #f5c6cb; 
+      color: #721c24; 
+      padding: clamp(12px, 2.5vw, 15px); 
+      border-radius: clamp(6px, 1.5vw, 8px); 
+      margin: clamp(12px, 2.5vw, 15px) 0; 
+      display: none;
+      font-size: clamp(0.9rem, 2vw, 1rem);
+    }
+    
+    .block-label { 
+      display: inline-block; 
+      background: #667eea; 
+      color: white; 
+      padding: clamp(4px, 1vw, 5px) clamp(12px, 2.5vw, 15px); 
+      border-radius: 20px; 
+      font-size: clamp(0.8rem, 1.8vw, 0.9rem); 
+      font-weight: 600; 
+      margin-bottom: clamp(12px, 2.5vw, 15px); 
+    }
+    
+    ul, ol {
+      margin-left: clamp(15px, 4vw, 20px);
+      line-height: 1.8;
+      font-size: clamp(0.9rem, 2vw, 1rem);
+    }
+    
+    ul li, ol li {
+      margin-bottom: clamp(8px, 1.5vw, 10px);
+    }
+    
+    /* Tablet adjustments */
+    @media (max-width: 968px) {
+      .container { 
+        padding: clamp(20px, 4vw, 30px); 
+      }
+      
+      .button-row button {
+        min-width: 120px;
+      }
+    }
+    
+    /* Mobile optimizations */
     @media (max-width: 768px) {
-      .container { padding: 25px; }
-      h1 { font-size: 1.6em; } h2 { font-size: 1.3em; }
-      .question-text { font-size: 1.1em; }
-      .button-row { flex-direction: column; }
+      body {
+        padding: 10px;
+      }
+      
+      .container { 
+        padding: 20px; 
+        border-radius: 12px;
+      }
+      
+      h1 { 
+        font-size: 1.4rem; 
+      }
+      
+      h2 { 
+        font-size: 1.2rem; 
+      }
+      
+      .question-text { 
+        font-size: 1.05rem;
+        padding: 12px;
+      }
+      
+      .button-row { 
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .button-row button {
+        width: 100%;
+        min-width: auto;
+      }
+      
+      .status-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+      
+      .timer {
+        align-self: flex-end;
+      }
+      
+      .consent-text {
+        max-height: 250px;
+        font-size: 0.85rem;
+      }
+      
+      .likert-option {
+        padding: 10px 12px;
+      }
+    }
+    
+    /* Small mobile phones */
+    @media (max-width: 480px) {
+      .container {
+        padding: 15px;
+      }
+      
+      h1 {
+        font-size: 1.3rem;
+        padding-bottom: 8px;
+      }
+      
+      h2 {
+        font-size: 1.1rem;
+      }
+      
+      h3 {
+        font-size: 1rem;
+      }
+      
+      p, .consent-checkbox label, ul li, ol li {
+        font-size: 0.9rem;
+      }
+      
+      button {
+        padding: 12px 16px;
+        font-size: 0.9rem;
+        min-height: 44px;
+      }
+      
+      .question-text {
+        font-size: 1rem;
+        padding: 10px;
+      }
+      
+      .survey-question {
+        font-size: 0.95rem;
+      }
+      
+      .timer {
+        font-size: 1.2rem;
+      }
+      
+      .video-container {
+        margin: 12px 0;
+        border-radius: 8px;
+      }
+    }
+    
+    /* Landscape mobile */
+    @media (max-height: 600px) and (orientation: landscape) {
+      .container {
+        margin: 10px 0;
+      }
+      
+      .consent-text {
+        max-height: 200px;
+      }
+      
+      h1 {
+        margin-bottom: 10px;
+      }
     }
   </style>
 </head>
@@ -108,7 +533,7 @@
     <input type="checkbox" id="consentCheck">
     <label for="consentCheck"><strong>I have read and understood the information above. I agree to participate in this study and allow access to my camera and microphone (for simulation only - no recordings will be saved).</strong></label>
   </div>
-  <p style="text-align: center; margin-top: 20px; color: #6c757d;">
+  <p style="text-align: center; margin-top: 20px; color: #6c757d; font-size: clamp(0.85rem, 1.8vw, 0.95rem);">
     <strong>Before you begin:</strong> If you have any questions, please email <strong>s.dehesh@campus.unimib.it</strong>
   </p>
   <button id="consentBtn" class="btn-primary" disabled>Continue to Study</button>
@@ -155,7 +580,7 @@
       <label for="hearCheck"><strong>Could you hear yourself?</strong> Yes, I could hear my voice clearly</label>
     </div>
     <button id="retryCalibrationBtn" class="btn-secondary">Retry Test</button>
-    <p style="text-align: center; margin-top: 15px; color: #6c757d; font-size: 0.9em;">
+    <p style="text-align: center; margin-top: 15px; color: #6c757d; font-size: clamp(0.8rem, 1.8vw, 0.9rem);">
       Can't see or hear yourself? Check your volume and try again.<br>
       Still having issues? Contact: <strong>s.dehesh@campus.unimib.it</strong>
     </p>
@@ -187,7 +612,7 @@
     <li>You can "Redo" if you want to try again</li>
     <li>Review your recording and click "Next"</li>
   </ol>
-  <p style="text-align: center; margin-top: 20px; color: #6c757d;">
+  <p style="text-align: center; margin-top: 20px; color: #6c757d; font-size: clamp(0.85rem, 1.8vw, 0.95rem);">
     <strong>Need help?</strong> Contact: s.dehesh@campus.unimib.it
   </p>
   <button id="startExperimentBtn" class="btn-primary">Begin Interview</button>
@@ -198,7 +623,7 @@
   <div class="block-label" id="conditionLabel">Condition 1 of 3</div>
   <div class="question-text" id="questionText"></div>
   <div id="viewContainer" class="video-container"></div>
-  <p id="recordInstruction" style="text-align: center; color: #6c757d; margin: 15px 0;">
+  <p id="recordInstruction" style="text-align: center; color: #6c757d; margin: 15px 0; font-size: clamp(0.85rem, 1.8vw, 0.95rem);">
     Click <strong>Start Recording</strong> when you're ready. You'll have 30 seconds.
   </p>
   <button id="startRecordingBtn" class="btn-record">Start Recording</button>
@@ -219,7 +644,7 @@
 <!-- PREVIEW PAGE -->
 <div id="previewPage" class="container hidden">
   <h2>Review Your Response</h2>
-  <p style="text-align: center; color: #6c757d;">Watch your recording. If you're satisfied, click Next. Otherwise, click Redo.</p>
+  <p style="text-align: center; color: #6c757d; font-size: clamp(0.9rem, 2vw, 1rem);">Watch your recording. If you're satisfied, click Next. Otherwise, click Redo.</p>
   <div class="video-container">
     <video id="previewVideo" controls></video>
   </div>
@@ -237,7 +662,7 @@
   <div class="survey-question" id="surveyQuestion"></div>
   <div class="likert-scale" id="likertOptions"></div>
   <button id="surveySubmitBtn" class="btn-primary" disabled>Next Question</button>
-  <p style="text-align: center; color: #6c757d; margin-top: 20px;">Question <span id="surveyQuestionNumber">1</span> of 3</p>
+  <p style="text-align: center; color: #6c757d; margin-top: 20px; font-size: clamp(0.85rem, 1.8vw, 0.95rem);">Question <span id="surveyQuestionNumber">1</span> of 3</p>
 </div>
 
 <!-- DEBRIEF PAGE -->
@@ -255,10 +680,10 @@
   <p><strong>Reminder:</strong> No video or audio recordings were saved. Only your survey responses were collected, and these are completely anonymous.</p>
   <h3>Questions?</h3>
   <p>If you have any questions about this research or encountered any technical difficulties, please contact:</p>
-  <p style="text-align: center; font-size: 1.1em;"><strong>s.dehesh@campus.unimib.it</strong></p>
-  <p style="text-align: center;">Department of Psychology, University of Milano-Bicocca</p>
+  <p style="text-align: center; font-size: clamp(1rem, 2.2vw, 1.1rem);"><strong>s.dehesh@campus.unimib.it</strong></p>
+  <p style="text-align: center; font-size: clamp(0.9rem, 2vw, 1rem);">Department of Psychology, University of Milano-Bicocca</p>
   <div style="text-align: center; margin-top: 30px;">
-    <p style="font-size: 1.2em; color: #667eea; font-weight: 600;">We wish you the best of luck in your future endeavors!</p>
+    <p style="font-size: clamp(1.1rem, 2.5vw, 1.2rem); color: #667eea; font-weight: 600;">We wish you the best of luck in your future endeavors!</p>
   </div>
 </div>
 
@@ -292,8 +717,8 @@ const CONFIG = {
 };
 
 // UI labels vs Sheet keys
-const CONDITION_LABELS = { 1: 'SRI', 2: 'Avatar', 3: 'TextOnly' }; // what participants see
-const CONDITION_KEYS   = { 1: 'SRI', 2: 'Avatar', 3: 'Text' };     // what your sheet expects
+const CONDITION_LABELS = { 1: 'SRI', 2: 'Avatar', 3: 'TextOnly' };
+const CONDITION_KEYS   = { 1: 'SRI', 2: 'Avatar', 3: 'Text' };
 
 // State
 let state = {
@@ -448,8 +873,8 @@ document.addEventListener('DOMContentLoaded', function() {
 // Interview
 function showQuestion() {
   const questionIdx = state.questionOrder[state.currentQuestionIndex];
-  const conditionCode = CONFIG.conditions[questionIdx]; // 1|2|3
-  const conditionNameUI = CONDITION_LABELS[conditionCode]; // SRI|Avatar|TextOnly
+  const conditionCode = CONFIG.conditions[questionIdx];
+  const conditionNameUI = CONDITION_LABELS[conditionCode];
   const conditionNum = Math.floor(state.currentQuestionIndex / 2) + 1;
 
   document.getElementById('conditionLabel').textContent =
@@ -467,21 +892,21 @@ function showQuestion() {
   viewContainer.innerHTML = ''; viewContainer.style.display = 'block';
   questionText.textContent = '';
 
-  if (conditionCode === 1) { // SRI
+  if (conditionCode === 1) {
     questionText.textContent = CONFIG.questions[questionIdx];
     if (state.stream) {
       const video = document.createElement('video');
       video.srcObject = state.stream; video.autoplay = true; video.muted = true; video.playsinline = true;
       viewContainer.appendChild(video);
     }
-  } else if (conditionCode === 2) { // Avatar
+  } else if (conditionCode === 2) {
     const avatarIdx = questionIdx - 2;
     const video = document.createElement('video');
     video.src = CONFIG.avatarVideos[avatarIdx];
     video.controls = true; video.autoplay = true; video.playsinline = true;
     viewContainer.appendChild(video);
     questionText.textContent = CONFIG.questions[questionIdx];
-  } else { // TextOnly
+  } else {
     questionText.textContent = CONFIG.questions[questionIdx];
     viewContainer.style.display = 'none';
   }
@@ -565,7 +990,7 @@ function showSurvey() {
   state.completedConditions++;
   state.currentSurveyQuestion = 0;
 
-  const conditionNum = state.completedConditions; // 1..3
+  const conditionNum = state.completedConditions;
   const qIdxInOrder = state.questionOrder[(conditionNum - 1) * 2];
   const conditionLabelUI = CONDITION_LABELS[CONFIG.conditions[qIdxInOrder]];
 
@@ -609,17 +1034,15 @@ function surveySubmit() {
   const selectedOption = document.querySelector('input[name="likert"]:checked');
   if (!selectedOption) { alert('Please select an option.'); return; }
 
-  const conditionNum = state.completedConditions; // 1..3
+  const conditionNum = state.completedConditions;
   const surveyMeta = CONFIG.surveyQuestions[state.currentSurveyQuestion];
   const questionId = surveyMeta.id;
 
-  // Block → actual condition code
   const blockStartIdx = (conditionNum - 1) * 2;
   const qIdxInOrder = state.questionOrder[blockStartIdx];
   const conditionCode = CONFIG.conditions[qIdxInOrder];
 
-  // Keys: numeric block and sheet key
-  const conditionKey = CONDITION_KEYS[conditionCode]; // 'SRI' | 'Avatar' | 'Text'
+  const conditionKey = CONDITION_KEYS[conditionCode];
 
   state.responses[`condition${conditionNum}_${questionId}`] = selectedOption.value;
   state.responses[`${conditionKey}_${questionId}`] = selectedOption.value;
@@ -660,7 +1083,6 @@ function submitData() {
 
   const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzl1xkzvneC3tHrkCuQP7-YzuekrxhirqPfrCWnwhz1mrreeK6A4DvUGlWNY4PFVcDi/exec';
 
-  // No custom headers → no CORS preflight
   fetch(GOOGLE_SCRIPT_URL, {
     method: 'POST',
     body: JSON.stringify(data)
