@@ -6,6 +6,21 @@
   <title>Interview Experience Research - University of Milano-Bicocca</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    <script>
+  // Reveal animations on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal-section, .reveal-stagger').forEach((el) => {
+    observer.observe(el);
+  });
+</script>
+
     body {
       display: flex; justify-content: center; align-items: center;
       min-height: 100vh;
