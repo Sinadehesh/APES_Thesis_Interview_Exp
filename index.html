@@ -1,685 +1,1843 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Interview Experience Research - University of Milano-Bicocca</title>
+  <title>Daily Sublime - The Art Of Observation</title>
+  <meta name="description"
+    content="Dear Rebel, reclaim your humanity with Daily Sublime's daily ritual. One painter. One practice. Stop the scroll.">
+  <!-- Enhanced SEO / Social -->
+  <meta property="og:title" content="Daily Sublime - The Art Of Observation">
+  <meta property="og:description"
+    content="Dear Rebel, Shall we begin? Reclaim your attention with luxury daily rituals.">
+  <meta property="og:image" content="hero-banner.jpg">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- Preloads for Performance -->
+  <link rel="preload" href="hero-banner.jpg" as="image" type="image/jpeg">
+  <link rel="preload" href="wmremove-transformed.jpg" as="image" type="image/jpeg">
+  <link rel="preload" href="unnamed-3.jpg" as="image" type="image/jpeg">
+  <link rel="preload" href="1684px-Caspar_David_Friedrich_-_Wanderer_above_the_Sea_of_Fog.jpg" as="image"
+    type="image/jpeg">
+  <!-- Fonts for Visual Hierarchy -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    /* =====================================================
+        DAILY SUBLIME - PREMIUM LUXURY DESIGN SYSTEM 2026
+        Ultra-responsive, Interactive, and Premium
+        ===================================================== */
+
+    :root {
+      /* Core Color Palette - Refined Luxury */
+      --bg-primary: #08080a;
+      --bg-surface: #0f1013;
+      --bg-card: #161820;
+      --bg-elevated: #1c1e26;
+
+      /* Text Colors with Hierarchy */
+      --text-main: #f5ece0;
+      --text-secondary: #c8bfb0;
+      --text-muted: #8a8279;
+
+      /* Accent Colors - Luxurious Gold System */
+      --accent-gold: #d4af37;
+      --accent-gold-light: #e5c866;
+      --accent-gold-dark: #a68a29;
+      --accent-amber: #f59e0b;
+      --accent-purple: #9d7cff;
+      --accent-rose: #ff6b8a;
+      --accent-emerald: #10b981;
+
+      /* Gradients */
+      --gradient-gold: linear-gradient(135deg, #d4af37 0%, #f5d270 50%, #d4af37 100%);
+      --gradient-gold-subtle: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(245, 210, 112, 0.05) 100%);
+      --gradient-purple: linear-gradient(135deg, #9d7cff 0%, #7c5ce7 100%);
+      --gradient-amber: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      --gradient-dark: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-surface) 100%);
+      --gradient-hero: linear-gradient(135deg, rgba(8, 8, 10, 0.85) 0%, rgba(8, 8, 10, 0.4) 40%, rgba(8, 8, 10, 0.95) 100%);
+
+      /* Shadows & Glows */
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.4);
+      --shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.5);
+      --shadow-xl: 0 40px 80px rgba(0, 0, 0, 0.6);
+      --glow-gold: 0 0 40px rgba(212, 175, 55, 0.4);
+      --glow-gold-intense: 0 0 60px rgba(212, 175, 55, 0.6);
+      --glow-purple: 0 0 40px rgba(157, 124, 255, 0.4);
+      --glow-amber: 0 0 40px rgba(245, 158, 11, 0.5);
+
+      /* Typography Scale - Fluid */
+      --fs-hero: clamp(3rem, 8vw, 7rem);
+      --fs-xl: clamp(2.5rem, 5vw, 4.5rem);
+      --fs-lg: clamp(1.75rem, 3.5vw, 3rem);
+      --fs-md: clamp(1.25rem, 2.5vw, 2rem);
+      --fs-base: clamp(1rem, 1.5vw, 1.25rem);
+      --fs-sm: clamp(0.875rem, 1.2vw, 1rem);
+      --fs-xs: clamp(0.75rem, 1vw, 0.875rem);
+
+      /* Spacing - 8pt Grid */
+      --space-xs: 0.5rem;
+      --space-sm: 1rem;
+      --space-md: 1.5rem;
+      --space-lg: 2rem;
+      --space-xl: 3rem;
+      --space-2xl: 4rem;
+      --space-3xl: 6rem;
+      --space-4xl: 8rem;
+
+      /* Border Radius */
+      --radius-sm: 0.5rem;
+      --radius-md: 1rem;
+      --radius-lg: 1.5rem;
+      --radius-xl: 2rem;
+      --radius-full: 100px;
+
+      /* Transitions */
+      --ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+
+      /* Borders */
+      --border-subtle: 1px solid rgba(212, 175, 55, 0.15);
+      --border-gold: 1px solid rgba(212, 175, 55, 0.3);
+      --border-strong: 2px solid var(--accent-gold);
+    }
+
+    /* Reset & Base */
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 5rem;
+      font-size: 16px;
+    }
+
     body {
-      display: flex; justify-content: center; align-items: center;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-main);
+      line-height: 1.7;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Typography */
+    h1,
+    h2,
+    h3,
+    h4 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 400;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+
+    /* Selection */
+    ::selection {
+      background: var(--accent-gold);
+      color: var(--bg-primary);
+    }
+
+    /* =====================================================
+        HEADER - Glassmorphism Navigation
+        ===================================================== */
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      padding: var(--space-sm) var(--space-lg);
+      background: rgba(8, 8, 10, 0.8);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: var(--border-subtle);
+      transition: all 0.5s var(--ease-smooth);
+    }
+
+    .site-header.scrolled {
+      padding: var(--space-xs) var(--space-lg);
+      background: rgba(8, 8, 10, 0.95);
+    }
+
+    .header-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .site-logo {
+      height: 3.5rem;
+      width: 3.5rem;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--accent-gold);
+      transition: all 0.6s var(--ease-bounce);
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .site-logo:hover {
+      transform: scale(1.1) rotate(10deg);
+      box-shadow: var(--glow-gold);
+    }
+
+    /* =====================================================
+        HERO SECTION - Immersive Full-Screen
+        ===================================================== */
+    .hero-section {
       min-height: 100vh;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      padding: 20px;
+      min-height: 100svh;
+      /* Safari mobile fix */
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
     }
-    .container {
-      width: 100%; max-width: 700px; padding: 40px; background: white;
-      border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-      animation: fadeIn 0.5s ease-out;
+
+    .hero-image {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 8s ease-out, filter 0.8s ease;
     }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px);} to { opacity:1; transform: translateY(0);} }
-    .hidden { display: none !important; }
-    h1, h2 { color: #2c3e50; margin-bottom: 20px; text-align: center; }
-    h1 { font-size: 2em; border-bottom: 3px solid #667eea; padding-bottom: 10px; }
-    h2 { font-size: 1.5em; color: #34495e; }
-    h3 { font-size: 1.2em; color: #34495e; margin: 20px 0 15px 0; }
-    p { color: #555; line-height: 1.6; margin-bottom: 15px; text-align: justify; }
-    .info-box { background: #f8f9fa; border-left: 4px solid #667eea; padding: 20px; margin: 20px 0; border-radius: 8px; }
-    .consent-text {
-      max-height: 400px; overflow-y: auto; padding: 20px; background: #f8f9fa;
-      border: 1px solid #dee2e6; border-radius: 8px; margin: 20px 0; font-size: 0.95em;
+
+    .hero-section:hover .hero-image {
+      transform: scale(1.05);
     }
-    .consent-checkbox { display: flex; align-items: flex-start; margin: 20px 0; padding: 15px; background: #e8f4f8; border-radius: 8px; cursor: pointer; }
-    .consent-checkbox input[type="checkbox"] { margin-right: 10px; margin-top: 3px; transform: scale(1.2); cursor: pointer; }
-    .consent-checkbox label { cursor: pointer; flex: 1; }
-    button {
-      width: 100%; padding: 14px 24px; margin: 10px 0; font-size: 1.1em; font-weight: 600;
-      border: none; border-radius: 8px; cursor: pointer; transition: all 0.3s ease;
-      text-transform: uppercase; letter-spacing: 0.5px;
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: var(--gradient-hero);
+      z-index: 1;
     }
-    .btn-primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
-    .btn-primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4); }
-    .btn-primary:disabled { background: #ccc; cursor: not-allowed; opacity: 0.6; }
-    .btn-secondary { background: #6c757d; color: white; }
-    .btn-secondary:hover { background: #5a6268; }
-    .btn-record { background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%); color: white; display: flex; align-items: center; justify-content: center; }
-    .btn-record:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(244, 67, 54, 0.4); }
-    .button-row { display: flex; gap: 15px; margin-top: 20px; }
-    .button-row button { flex: 1; }
-    .video-container { position: relative; width: 100%; max-width: 100%; margin: 20px 0; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.2); background: #000; }
-    video, .video-container img { width: 100%; height: auto; display: block; border-radius: 12px; }
-    .question-text { font-size: 1.3em; color: #2c3e50; text-align: center; margin: 20px 0; padding: 20px; background: #f8f9fa; border-radius: 12px; font-weight: 500; }
-    .status-bar { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: #f8f9fa; border-radius: 8px; margin: 20px 0; }
-    .recording-indicator { display: flex; align-items: center; gap: 10px; }
-    .record-dot { width: 16px; height: 16px; background: #d32f2f; border-radius: 50%; animation: pulse 1.5s infinite; }
-    @keyframes pulse { 0%{opacity:1; transform:scale(1);} 50%{opacity:.7; transform:scale(1.1);} 100%{opacity:1; transform:scale(1);} }
-    .timer { font-size: 1.5em; font-weight: bold; color: #d32f2f; font-family: 'Courier New', monospace; }
-    .redo-counter { color: #6c757d; font-weight: 500; }
-    .survey-question { font-size: 1.1em; color: #2c3e50; margin: 25px 0; line-height: 1.5; text-align: center; }
-    .likert-scale { display: flex; flex-direction: column; gap: 10px; margin: 25px 0; }
-    .likert-option { display: flex; align-items: center; padding: 15px 20px; background: #f8f9fa; border: 2px solid transparent; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; }
-    .likert-option:hover { background: #e9ecef; border-color: #667eea; transform: translateX(5px); }
-    .likert-option input[type="radio"] { margin-right: 15px; transform: scale(1.3); cursor: pointer; }
-    .likert-option.selected { background: linear-gradient(135deg, rgba(102,126,234,0.1) 0%, rgba(118,75,162,0.1) 100%); border-color: #667eea; }
-    .progress-bar { width: 100%; height: 8px; background: #e9ecef; border-radius: 4px; margin: 20px 0; overflow: hidden; }
-    .progress-fill { height: 100%; background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); border-radius: 4px; transition: width 0.5s ease; }
-    .instruction-text { background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin: 20px 0; border-radius: 8px; color: #856404; }
-    .calibration-check { display: flex; align-items: center; margin: 15px 0; padding: 15px; background: #f8f9fa; border-radius: 8px; }
-    .calibration-check input[type="checkbox"] { margin-right: 15px; transform: scale(1.3); }
-    .error-message { background: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; padding: 15px; border-radius: 8px; margin: 15px 0; display: none; }
-    .block-label { display: inline-block; background: #667eea; color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.9em; font-weight: 600; margin-bottom: 15px; }
-    @media (max-width: 768px) {
-      .container { padding: 25px; }
-      h1 { font-size: 1.6em; } h2 { font-size: 1.3em; }
-      .question-text { font-size: 1.1em; }
-      .button-row { flex-direction: column; }
+
+    /* Animated Particles */
+    .hero-particles {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      background: radial-gradient(circle, var(--accent-gold) 0%, transparent 70%);
+      border-radius: 50%;
+      animation: floatParticle 15s ease-in-out infinite;
+      opacity: 0.6;
+    }
+
+    .particle:nth-child(odd) {
+      background: radial-gradient(circle, var(--accent-amber) 0%, transparent 70%);
+    }
+
+    .particle:nth-child(1) {
+      width: 8px;
+      height: 8px;
+      top: 15%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+
+    .particle:nth-child(2) {
+      width: 6px;
+      height: 6px;
+      top: 45%;
+      left: 85%;
+      animation-delay: 2s;
+    }
+
+    .particle:nth-child(3) {
+      width: 10px;
+      height: 10px;
+      top: 75%;
+      left: 20%;
+      animation-delay: 4s;
+    }
+
+    .particle:nth-child(4) {
+      width: 5px;
+      height: 5px;
+      top: 10%;
+      left: 75%;
+      animation-delay: 1s;
+    }
+
+    .particle:nth-child(5) {
+      width: 7px;
+      height: 7px;
+      top: 65%;
+      left: 5%;
+      animation-delay: 3s;
+    }
+
+    .particle:nth-child(6) {
+      width: 4px;
+      height: 4px;
+      top: 25%;
+      left: 90%;
+      animation-delay: 5s;
+    }
+
+    .particle:nth-child(7) {
+      width: 9px;
+      height: 9px;
+      top: 85%;
+      left: 55%;
+      animation-delay: 6s;
+    }
+
+    .particle:nth-child(8) {
+      width: 6px;
+      height: 6px;
+      top: 35%;
+      left: 15%;
+      animation-delay: 7s;
+    }
+
+    @keyframes floatParticle {
+
+      0%,
+      100% {
+        transform: translateY(0) translateX(0) scale(1);
+        opacity: 0.4;
+      }
+
+      25% {
+        transform: translateY(-40px) translateX(20px) scale(1.2);
+        opacity: 0.8;
+      }
+
+      50% {
+        transform: translateY(-20px) translateX(-30px) scale(0.8);
+        opacity: 0.6;
+      }
+
+      75% {
+        transform: translateY(-60px) translateX(10px) scale(1.1);
+        opacity: 0.9;
+      }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      text-align: center;
+      padding: 0 var(--space-lg);
+      max-width: 900px;
+    }
+
+    .hero-title {
+      font-size: var(--fs-hero);
+      font-weight: 300;
+      margin-bottom: var(--space-lg);
+      background: linear-gradient(135deg, var(--text-main) 0%, var(--accent-gold) 50%, var(--accent-gold-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      opacity: 0;
+      transform: translateY(60px);
+      animation: heroReveal 1.5s 0.3s var(--ease-out) forwards;
+      text-shadow: 0 0 80px rgba(212, 175, 55, 0.3);
+    }
+
+    .hero-subtitle {
+      font-size: var(--fs-lg);
+      font-weight: 300;
+      color: var(--text-secondary);
+      margin-bottom: var(--space-2xl);
+      opacity: 0;
+      transform: translateY(40px);
+      animation: heroReveal 1.5s 0.6s var(--ease-out) forwards;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      font-size: var(--fs-base);
+      font-weight: 600;
+      color: var(--bg-primary);
+      background: var(--gradient-gold);
+      padding: var(--space-md) var(--space-2xl);
+      border-radius: var(--radius-full);
+      text-decoration: none;
+      transition: all 0.5s var(--ease-bounce);
+      box-shadow: var(--shadow-lg), var(--glow-gold);
+      opacity: 0;
+      transform: translateY(30px);
+      animation: heroReveal 1.5s 0.9s var(--ease-out) forwards;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--accent-gold-light), var(--accent-amber));
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .hero-cta:hover::before {
+      opacity: 1;
+    }
+
+    .hero-cta span {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-cta:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: var(--shadow-xl), var(--glow-gold-intense);
+    }
+
+    .hero-cta::after {
+      content: '→';
+      position: relative;
+      z-index: 1;
+      transition: transform 0.4s var(--ease-bounce);
+    }
+
+    .hero-cta:hover::after {
+      transform: translateX(5px);
+    }
+
+    @keyframes heroReveal {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Scroll Indicator */
+    .scroll-indicator {
+      position: absolute;
+      bottom: var(--space-xl);
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      opacity: 0;
+      animation: fadeIn 1s 2s forwards, bounce 2s 2s infinite;
+    }
+
+    .scroll-indicator::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 40px;
+      border: 2px solid var(--accent-gold);
+      border-radius: 12px;
+      position: relative;
+    }
+
+    .scroll-indicator::after {
+      content: '';
+      position: absolute;
+      width: 4px;
+      height: 8px;
+      background: var(--accent-gold);
+      border-radius: 2px;
+      top: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: scrollDot 2s infinite;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 0.7;
+      }
+    }
+
+    @keyframes bounce {
+
+      0%,
+      100% {
+        transform: translateX(-50%) translateY(0);
+      }
+
+      50% {
+        transform: translateX(-50%) translateY(10px);
+      }
+    }
+
+    @keyframes scrollDot {
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+
+      50% {
+        opacity: 0.3;
+        transform: translateX(-50%) translateY(12px);
+      }
+    }
+
+    /* =====================================================
+        REVEAL ANIMATIONS
+        ===================================================== */
+    .reveal-section {
+      opacity: 0;
+      transform: translateY(60px);
+      transition: all 1s var(--ease-out);
+    }
+
+    .reveal-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-stagger {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s var(--ease-out);
+    }
+
+    .reveal-stagger.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-stagger.visible:nth-child(1) {
+      transition-delay: 0.1s;
+    }
+
+    .reveal-stagger.visible:nth-child(2) {
+      transition-delay: 0.2s;
+    }
+
+    .reveal-stagger.visible:nth-child(3) {
+      transition-delay: 0.3s;
+    }
+
+    .reveal-stagger.visible:nth-child(4) {
+      transition-delay: 0.4s;
+    }
+
+    .reveal-stagger.visible:nth-child(5) {
+      transition-delay: 0.5s;
+    }
+
+    .reveal-stagger.visible:nth-child(6) {
+      transition-delay: 0.6s;
+    }
+
+    /* =====================================================
+        REBEL SECTION - Premium Asymmetric Layout
+        ===================================================== */
+    .rebel-section-wrapper {
+      padding: var(--space-4xl) var(--space-lg);
+      background: var(--gradient-dark);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Decorative Lines */
+    .rebel-section-wrapper::before,
+    .rebel-section-wrapper::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(90%, 800px);
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+    }
+
+    .rebel-section-wrapper::before {
+      top: 0;
+    }
+
+    .rebel-section-wrapper::after {
+      bottom: 0;
+    }
+
+    /* Floating Orbs */
+    .rebel-decoration {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(212, 175, 55, 0.08), transparent 70%);
+      pointer-events: none;
+      animation: floatOrb 20s ease-in-out infinite;
+    }
+
+    .rebel-decoration:nth-child(1) {
+      width: clamp(150px, 25vw, 300px);
+      height: clamp(150px, 25vw, 300px);
+      top: 10%;
+      left: 5%;
+    }
+
+    .rebel-decoration:nth-child(2) {
+      width: clamp(200px, 30vw, 400px);
+      height: clamp(200px, 30vw, 400px);
+      bottom: 15%;
+      right: 5%;
+      background: radial-gradient(circle, rgba(157, 124, 255, 0.06), transparent 70%);
+      animation-delay: 7s;
+    }
+
+    @keyframes floatOrb {
+
+      0%,
+      100% {
+        transform: translate(0, 0) scale(1);
+      }
+
+      33% {
+        transform: translate(30px, -40px) scale(1.1);
+      }
+
+      66% {
+        transform: translate(-20px, 30px) scale(0.95);
+      }
+    }
+
+    .rebel-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Section Title */
+    .rebel-title-spectacular {
+      text-align: center;
+      margin-bottom: var(--space-3xl);
+    }
+
+    .rebel-title-spectacular h2 {
+      font-size: var(--fs-xl);
+      font-weight: 300;
+      background: linear-gradient(135deg, var(--text-main), var(--accent-gold), var(--accent-gold-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: var(--space-md);
+      position: relative;
+      display: inline-block;
+    }
+
+    .rebel-title-spectacular::after {
+      content: '';
+      display: block;
+      width: clamp(60px, 12vw, 120px);
+      height: 3px;
+      background: var(--gradient-gold);
+      margin: var(--space-md) auto 0;
+      border-radius: 2px;
+      box-shadow: var(--glow-gold);
+    }
+
+    /* Premium Grid Layout */
+    .rebel-premium-grid {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr 0.75fr;
+      gap: var(--space-xl);
+      align-items: center;
+    }
+
+    /* Image Cards */
+    .rebel-image-left,
+    .rebel-image-right {
+      position: relative;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-xl);
+      transition: all 0.8s var(--ease-bounce);
+      aspect-ratio: 3 / 4;
+    }
+
+    .rebel-image-left {
+      border: 2px solid var(--accent-gold);
+      transform: rotate(-2deg);
+    }
+
+    .rebel-image-right {
+      border: 2px solid var(--accent-purple);
+      transform: rotate(3deg) translateY(40px);
+    }
+
+    .rebel-image-left::before,
+    .rebel-image-right::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .rebel-image-left::before {
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.3), transparent 60%);
+    }
+
+    .rebel-image-right::before {
+      background: linear-gradient(225deg, rgba(157, 124, 255, 0.3), transparent 60%);
+    }
+
+    .rebel-image-left:hover::before,
+    .rebel-image-right:hover::before {
+      opacity: 1;
+    }
+
+    .rebel-image-left:hover {
+      transform: rotate(0deg) scale(1.03) translateY(-10px);
+      box-shadow: var(--shadow-xl), var(--glow-gold);
+    }
+
+    .rebel-image-right:hover {
+      transform: rotate(0deg) scale(1.05) translateY(30px);
+      box-shadow: var(--shadow-xl), var(--glow-purple);
+    }
+
+    .rebel-image-left img,
+    .rebel-image-right img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 1s ease;
+    }
+
+    .rebel-image-left:hover img,
+    .rebel-image-right:hover img {
+      transform: scale(1.1);
+    }
+
+    /* Center Text Content */
+    .rebel-text-center {
+      padding: var(--space-lg);
+      text-align: left;
+    }
+
+    .rebel-text-center p {
+      font-size: var(--fs-base);
+      color: var(--text-secondary);
+      line-height: 1.9;
+      margin-bottom: var(--space-md);
+      transition: all 0.4s ease;
+    }
+
+    .rebel-text-center p:hover {
+      color: var(--text-main);
+      transform: translateX(8px);
+    }
+
+    .rebel-text-center p:first-of-type {
+      font-size: var(--fs-lg);
+      color: var(--accent-gold);
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 500;
+      margin-bottom: var(--space-lg);
+    }
+
+    .rebel-text-center p:first-of-type:hover {
+      transform: translateX(0);
+    }
+
+    .rebel-text-center p strong {
+      color: var(--text-main);
+      font-weight: 600;
+      position: relative;
+    }
+
+    .rebel-text-center p strong::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--gradient-gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s var(--ease-out);
+    }
+
+    .rebel-text-center p:hover strong::after {
+      transform: scaleX(1);
+    }
+
+    .rebel-text-center p:last-of-type {
+      font-size: var(--fs-md);
+      color: var(--accent-gold);
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 500;
+      margin-top: var(--space-lg);
+    }
+
+    /* CTA Button - Spectacular */
+    .rebel-button-spectacular {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      font-size: var(--fs-sm);
+      font-weight: 700;
+      color: var(--bg-primary);
+      background: var(--gradient-gold);
+      padding: var(--space-md) var(--space-2xl);
+      border-radius: var(--radius-full);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      transition: all 0.6s var(--ease-bounce);
+      box-shadow: var(--shadow-lg), var(--glow-gold);
+      position: relative;
+      overflow: hidden;
+      margin-top: var(--space-lg);
+    }
+
+    .rebel-button-spectacular::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gradient-purple);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .rebel-button-spectacular:hover::before {
+      opacity: 1;
+    }
+
+    .rebel-button-spectacular span {
+      position: relative;
+      z-index: 1;
+    }
+
+    .rebel-button-spectacular::after {
+      content: '→';
+      position: relative;
+      z-index: 1;
+      margin-left: var(--space-xs);
+      transition: transform 0.4s var(--ease-bounce);
+    }
+
+    .rebel-button-spectacular:hover {
+      transform: translateY(-8px) scale(1.05);
+      box-shadow: var(--shadow-xl), var(--glow-purple);
+    }
+
+    .rebel-button-spectacular:hover::after {
+      transform: translateX(8px);
+    }
+
+    /* =====================================================
+        CONTENT SECTIONS
+        ===================================================== */
+    .content-section {
+      padding: var(--space-4xl) var(--space-lg);
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-size: var(--fs-xl);
+      text-align: center;
+      margin-bottom: var(--space-3xl);
+      background: linear-gradient(135deg, var(--text-main), var(--accent-gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* =====================================================
+        FEATURES GRID
+        ===================================================== */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-xl);
+    }
+
+    .feature-card {
+      background: linear-gradient(145deg, var(--bg-card), var(--bg-elevated));
+      border: var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: var(--space-2xl);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.6s var(--ease-bounce);
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--gradient-gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.6s var(--ease-out);
+    }
+
+    .feature-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .feature-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gradient-gold-subtle);
+      opacity: 0;
+      transition: opacity 0.6s ease;
+      pointer-events: none;
+    }
+
+    .feature-card:hover::after {
+      opacity: 1;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-15px);
+      border-color: var(--accent-gold);
+      box-shadow: var(--shadow-lg), var(--glow-gold);
+    }
+
+    .feature-icon {
+      width: 60px;
+      height: 60px;
+      background: var(--gradient-gold);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: var(--space-lg);
+      font-size: 1.5rem;
+      transition: transform 0.5s var(--ease-bounce);
+    }
+
+    .feature-card:hover .feature-icon {
+      transform: scale(1.1) rotate(5deg);
+    }
+
+    .feature-card h3 {
+      font-size: var(--fs-md);
+      color: var(--accent-gold);
+      margin-bottom: var(--space-md);
+      position: relative;
+      z-index: 1;
+    }
+
+    .feature-card p {
+      font-size: var(--fs-base);
+      color: var(--text-secondary);
+      line-height: 1.8;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* =====================================================
+        PRICING SECTION
+        ===================================================== */
+    .pricing-section {
+      background: var(--bg-surface);
+      padding: var(--space-4xl) var(--space-lg);
+    }
+
+    .pricing-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-xl);
+      align-items: stretch;
+    }
+
+    .pricing-card {
+      background: linear-gradient(145deg, var(--bg-card), var(--bg-elevated));
+      border: var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: var(--space-2xl);
+      text-align: center;
+      transition: all 0.6s var(--ease-bounce);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .pricing-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gradient-gold-subtle);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .pricing-card:hover::before {
+      opacity: 1;
+    }
+
+    .pricing-card:hover {
+      transform: translateY(-10px);
+      box-shadow: var(--shadow-lg), var(--glow-gold);
+      border-color: var(--accent-gold);
+    }
+
+    .pricing-card.featured {
+      border-color: var(--accent-amber);
+      transform: scale(1.05);
+      box-shadow: var(--shadow-lg), var(--glow-amber);
+      z-index: 1;
+    }
+
+    .pricing-card.featured:hover {
+      transform: scale(1.08) translateY(-10px);
+    }
+
+    .pricing-badge {
+      position: absolute;
+      top: -1px;
+      right: var(--space-lg);
+      background: var(--gradient-amber);
+      color: var(--bg-primary);
+      padding: var(--space-xs) var(--space-md);
+      border-radius: 0 0 var(--radius-md) var(--radius-md);
+      font-size: var(--fs-xs);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      box-shadow: var(--glow-amber);
+    }
+
+    .pricing-name {
+      font-size: var(--fs-md);
+      color: var(--text-main);
+      margin-bottom: var(--space-sm);
+      position: relative;
+      z-index: 1;
+    }
+
+    .pricing-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 6vw, 4rem);
+      font-weight: 500;
+      background: var(--gradient-gold);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: var(--space-xs);
+      position: relative;
+      z-index: 1;
+    }
+
+    .pricing-period {
+      font-size: var(--fs-sm);
+      color: var(--text-muted);
+      margin-bottom: var(--space-lg);
+      position: relative;
+      z-index: 1;
+    }
+
+    .pricing-features {
+      list-style: none;
+      margin-bottom: var(--space-xl);
+      text-align: left;
+      flex: 1;
+      position: relative;
+      z-index: 1;
+    }
+
+    .pricing-features li {
+      font-size: var(--fs-sm);
+      color: var(--text-secondary);
+      margin-bottom: var(--space-sm);
+      padding-left: var(--space-lg);
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    .pricing-features li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--accent-gold);
+      font-weight: bold;
+    }
+
+    .pricing-features li:hover {
+      color: var(--text-main);
+    }
+
+    .pricing-button {
+      width: 100%;
+      font-size: var(--fs-base);
+      font-weight: 600;
+      color: var(--bg-primary);
+      background: var(--gradient-gold);
+      border: none;
+      padding: var(--space-md) var(--space-xl);
+      border-radius: var(--radius-lg);
+      cursor: pointer;
+      transition: all 0.5s var(--ease-bounce);
+      box-shadow: var(--shadow-md);
+      position: relative;
+      z-index: 1;
+    }
+
+    .pricing-button:hover {
+      transform: scale(1.05);
+      box-shadow: var(--glow-gold);
+    }
+
+    .pricing-popularity {
+      font-size: var(--fs-xs);
+      color: var(--accent-emerald);
+      font-weight: 600;
+      margin-top: var(--space-sm);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* =====================================================
+        FOOTER
+        ===================================================== */
+    .site-footer {
+      text-align: center;
+      padding: var(--space-3xl) var(--space-lg);
+      border-top: var(--border-subtle);
+      background: var(--bg-primary);
+    }
+
+    .footer-logo {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 2px solid var(--accent-gold);
+      margin-bottom: var(--space-md);
+      transition: all 0.5s var(--ease-bounce);
+    }
+
+    .footer-logo:hover {
+      transform: rotate(360deg);
+      box-shadow: var(--glow-gold);
+    }
+
+    .footer-text {
+      color: var(--text-muted);
+      font-size: var(--fs-sm);
+    }
+
+    .footer-tagline {
+      color: var(--accent-gold);
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: var(--fs-base);
+      margin-top: var(--space-xs);
+    }
+
+    /* =====================================================
+        RESPONSIVE DESIGN - Mobile First Approach
+        ===================================================== */
+
+    /* Tablet & Below */
+    @media (max-width: 1200px) {
+      .rebel-premium-grid {
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--space-lg);
+      }
+
+      .rebel-image-right {
+        display: none;
+      }
+
+      .rebel-image-left {
+        aspect-ratio: 4 / 5;
+      }
+
+      .features-grid,
+      .pricing-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .pricing-card.featured {
+        transform: scale(1);
+        grid-column: span 2;
+        max-width: 450px;
+        margin: 0 auto;
+      }
+    }
+
+    @media (max-width: 968px) {
+      .rebel-premium-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-xl);
+      }
+
+      .rebel-image-left {
+        order: 1;
+        transform: rotate(0deg);
+        aspect-ratio: 16 / 10;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .rebel-text-center {
+        order: 2;
+        text-align: center;
+        padding: var(--space-lg) var(--space-md);
+      }
+
+      .rebel-text-center p:hover {
+        transform: translateX(0);
+      }
+
+      .rebel-button-spectacular {
+        margin: var(--space-lg) auto 0;
+      }
+
+      .rebel-image-right {
+        display: block;
+        order: 3;
+        transform: rotate(0deg) translateY(0);
+        aspect-ratio: 16 / 10;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+        margin: 0 auto;
+      }
+
+      .pricing-grid {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+        margin: 0 auto;
+      }
+
+      .pricing-card.featured {
+        grid-column: span 1;
+        max-width: 100%;
+      }
+    }
+
+    /* Mobile - Enhanced Readability */
+    @media (max-width: 640px) {
+      :root {
+        /* Mobile-optimized spacing */
+        --space-lg: 1.25rem;
+        --space-xl: 1.75rem;
+        --space-2xl: 2.5rem;
+        --space-3xl: 3.5rem;
+        --space-4xl: 4.5rem;
+
+        /* Mobile-optimized typography - MUCH LARGER for readability */
+        --fs-hero: clamp(2.5rem, 12vw, 3.5rem);
+        --fs-xl: clamp(1.75rem, 7vw, 2.5rem);
+        --fs-lg: clamp(1.5rem, 5vw, 2rem);
+        --fs-md: clamp(1.25rem, 4vw, 1.5rem);
+        --fs-base: 1.125rem;
+        /* 18px - very readable */
+        --fs-sm: 1rem;
+        /* 16px */
+        --fs-xs: 0.9375rem;
+        /* 15px */
+      }
+
+      /* Base body text larger and more readable */
+      body {
+        font-size: 1.0625rem;
+        /* 17px base */
+        line-height: 1.8;
+      }
+
+      .site-header {
+        padding: var(--space-sm) var(--space-md);
+      }
+
+      .site-logo {
+        height: 2.75rem;
+        width: 2.75rem;
+      }
+
+      .hero-section {
+        min-height: 90vh;
+        min-height: 90svh;
+      }
+
+      .hero-content {
+        padding: 0 var(--space-lg);
+      }
+
+      .hero-title {
+        font-size: clamp(2.5rem, 13vw, 4rem);
+        margin-bottom: var(--space-md);
+        line-height: 1.1;
+      }
+
+      .hero-subtitle {
+        font-size: clamp(1.25rem, 5vw, 1.75rem);
+        margin-bottom: var(--space-xl);
+        line-height: 1.4;
+      }
+
+      .hero-cta {
+        padding: 1rem 2rem;
+        font-size: 1rem;
+        font-weight: 600;
+      }
+
+      /* Rebel Section - Mobile Optimized */
+      .rebel-section-wrapper {
+        padding: var(--space-3xl) var(--space-md);
+      }
+
+      .rebel-title-spectacular h2 {
+        font-size: clamp(1.75rem, 8vw, 2.5rem);
+        line-height: 1.2;
+        padding: 0 var(--space-sm);
+      }
+
+      .rebel-text-center {
+        padding: var(--space-lg) var(--space-sm);
+      }
+
+      .rebel-text-center p {
+        font-size: 1.0625rem;
+        /* 17px */
+        line-height: 1.85;
+        margin-bottom: var(--space-md);
+      }
+
+      .rebel-text-center p:first-of-type {
+        font-size: 1.5rem;
+        line-height: 1.3;
+        margin-bottom: var(--space-lg);
+      }
+
+      .rebel-text-center p:last-of-type {
+        font-size: 1.25rem;
+        margin-top: var(--space-md);
+      }
+
+      .rebel-button-spectacular {
+        padding: 1rem 1.75rem;
+        font-size: 0.875rem;
+        letter-spacing: 0.12em;
+      }
+
+      /* Features Section - Mobile */
+      .content-section {
+        padding: var(--space-3xl) var(--space-md);
+      }
+
+      .section-title {
+        font-size: clamp(1.75rem, 7vw, 2.25rem);
+        margin-bottom: var(--space-2xl);
+        line-height: 1.2;
+      }
+
+      .features-grid {
+        gap: var(--space-lg);
+      }
+
+      .feature-card {
+        padding: var(--space-lg);
+      }
+
+      .feature-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.25rem;
+        margin-bottom: var(--space-md);
+      }
+
+      .feature-card h3 {
+        font-size: 1.375rem;
+        /* 22px */
+        margin-bottom: var(--space-sm);
+        line-height: 1.3;
+      }
+
+      .feature-card p {
+        font-size: 1rem;
+        /* 16px */
+        line-height: 1.75;
+      }
+
+      /* Pricing Section - Mobile */
+      .pricing-section {
+        padding: var(--space-3xl) var(--space-md);
+      }
+
+      .pricing-grid {
+        gap: var(--space-lg);
+      }
+
+      .pricing-card {
+        padding: var(--space-lg);
+      }
+
+      .pricing-name {
+        font-size: 1.5rem;
+        margin-bottom: var(--space-xs);
+      }
+
+      .pricing-price {
+        font-size: 2.75rem;
+      }
+
+      .pricing-period {
+        font-size: 1rem;
+        margin-bottom: var(--space-md);
+      }
+
+      .pricing-features li {
+        font-size: 1rem;
+        line-height: 1.6;
+        margin-bottom: 0.75rem;
+        padding-left: 1.5rem;
+      }
+
+      .pricing-button {
+        padding: 1rem 1.5rem;
+        font-size: 1rem;
+      }
+
+      .pricing-badge {
+        font-size: 0.75rem;
+        padding: 0.375rem 0.75rem;
+      }
+
+      .pricing-popularity {
+        font-size: 0.9375rem;
+      }
+
+      /* Footer - Mobile */
+      .site-footer {
+        padding: var(--space-2xl) var(--space-md);
+      }
+
+      .footer-logo {
+        width: 45px;
+        height: 45px;
+      }
+
+      .footer-text {
+        font-size: 0.9375rem;
+      }
+
+      .footer-tagline {
+        font-size: 1.0625rem;
+      }
+
+      .scroll-indicator {
+        display: none;
+      }
+    }
+
+    /* Very Small Screens (320px-380px) */
+    @media (max-width: 380px) {
+      :root {
+        --fs-base: 1rem;
+        --fs-sm: 0.9375rem;
+        --fs-xs: 0.875rem;
+      }
+
+      body {
+        font-size: 1rem;
+      }
+
+      .hero-title {
+        font-size: clamp(2rem, 14vw, 3rem);
+      }
+
+      .hero-subtitle {
+        font-size: 1.125rem;
+      }
+
+      .hero-cta {
+        padding: 0.875rem 1.5rem;
+        font-size: 0.9375rem;
+      }
+
+      .rebel-title-spectacular h2 {
+        font-size: clamp(1.5rem, 9vw, 2rem);
+      }
+
+      .rebel-text-center p {
+        font-size: 1rem;
+      }
+
+      .rebel-text-center p:first-of-type {
+        font-size: 1.25rem;
+      }
+
+      .rebel-button-spectacular {
+        padding: 0.875rem 1.25rem;
+        font-size: 0.8125rem;
+        letter-spacing: 0.1em;
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+      }
+
+      .feature-card h3 {
+        font-size: 1.25rem;
+      }
+
+      .feature-card p {
+        font-size: 0.9375rem;
+      }
+
+      .pricing-name {
+        font-size: 1.375rem;
+      }
+
+      .pricing-price {
+        font-size: 2.25rem;
+      }
+
+      .pricing-features li {
+        font-size: 0.9375rem;
+      }
+
+      .pricing-button {
+        padding: 0.875rem 1.25rem;
+        font-size: 0.9375rem;
+      }
+    }
+
+    /* Landscape Mobile */
+    @media (max-height: 500px) and (orientation: landscape) {
+      .hero-section {
+        min-height: 100vh;
+        padding: var(--space-2xl) 0;
+      }
+
+      .hero-title {
+        font-size: clamp(2rem, 6vw, 3.5rem);
+        margin-bottom: var(--space-sm);
+      }
+
+      .hero-subtitle {
+        font-size: clamp(1rem, 2.5vw, 1.5rem);
+        margin-bottom: var(--space-md);
+      }
+
+      .scroll-indicator {
+        display: none;
+      }
+    }
+
+    /* Reduce Motion */
+    @media (prefers-reduced-motion: reduce) {
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      html {
+        scroll-behavior: auto;
+      }
+    }
+
+    /* High Contrast Mode */
+    @media (prefers-contrast: high) {
+      :root {
+        --border-subtle: 2px solid var(--accent-gold);
+        --text-secondary: var(--text-main);
+      }
+    }
+
+    /* Touch Device Optimizations */
+    @media (hover: none) and (pointer: coarse) {
+
+      .feature-card:hover,
+      .pricing-card:hover,
+      .rebel-image-left:hover,
+      .rebel-image-right:hover {
+        transform: none;
+      }
+
+      .hero-cta:hover,
+      .rebel-button-spectacular:hover,
+      .pricing-button:hover {
+        transform: none;
+      }
+
+      /* Add active states for touch */
+      .hero-cta:active,
+      .rebel-button-spectacular:active,
+      .pricing-button:active {
+        transform: scale(0.98);
+      }
+
+      .feature-card:active,
+      .pricing-card:active {
+        transform: scale(0.99);
+      }
     }
   </style>
 </head>
+
 <body>
-
-<!-- CONSENT PAGE -->
-<div id="consentPage" class="container">
-  <h1>Research Study Consent</h1>
-  <div class="info-box">
-    <h3>Study Information</h3>
-    <p><strong>Title:</strong> Emotional Effects of Visual Feedback in Online Automated Interviews</p>
-    <p><strong>Researcher:</strong> Department of Psychology, University of Milano-Bicocca</p>
-    <p><strong>Supervisor:</strong> Prof. Rossana Actis-Grosso</p>
-    <p><strong>Contact:</strong> s.dehesh@campus.unimib.it</p>
-  </div>
-  <div class="consent-text">
-    <h3>What is this study about?</h3>
-    <p>This research investigates how different visual feedback formats in automated online interviews affect the interview experience. You will complete three short interview sessions with different visual setups.</p>
-    <h3>What will I be asked to do?</h3>
-    <p>You will answer 6 interview questions (2 per condition) while being recorded. Each response is limited to 30 seconds. After each pair of questions, you'll complete a brief survey about your experience. The entire study takes approximately 20-30 minutes.</p>
-    <h3>Privacy and Data Protection</h3>
-    <p><strong>Important:</strong> No video or audio recordings will be saved. The recording functionality is only used to simulate a real interview experience. Only your survey responses will be collected for analysis, and these will be completely anonymous.</p>
-    <h3>Requirements</h3>
-    <p>You need a computer with a working webcam and microphone, and a stable internet connection. Please ensure you're in a quiet environment where you won't be interrupted.</p>
-    <h3>Voluntary Participation</h3>
-    <p>Your participation is entirely voluntary. You may withdraw from the study at any time without penalty by closing your browser.</p>
-    <h3>Contact Information</h3>
-    <p>If you have any questions about this research, please contact: <strong>s.dehesh@campus.unimib.it</strong></p>
-    <p>Department of Psychology, University of Milano-Bicocca</p>
-  </div>
-  <div class="consent-checkbox">
-    <input type="checkbox" id="consentCheck">
-    <label for="consentCheck"><strong>I have read and understood the information above. I agree to participate in this study and allow access to my camera and microphone (for simulation only - no recordings will be saved).</strong></label>
-  </div>
-  <p style="text-align: center; margin-top: 20px; color: #6c757d;">
-    <strong>Before you begin:</strong> If you have any questions, please email <strong>s.dehesh@campus.unimib.it</strong>
-  </p>
-  <button id="consentBtn" class="btn-primary" disabled>Continue to Study</button>
-</div>
-
-<!-- CALIBRATION PAGE -->
-<div id="calibrationPage" class="container hidden">
-  <h1>System Check</h1>
-  <div class="block-label">Calibration</div>
-  <div class="instruction-text">
-    <strong>Let's make sure everything is working properly.</strong><br>
-    We'll test your camera and microphone. Remember, no recordings are being saved.<br>
-    If you experience any problems, please contact: <strong>s.dehesh@campus.unimib.it</strong>
-  </div>
-  <div id="calibrationStep1">
-    <h3>Camera & Microphone Test</h3>
-    <p>Click the button below to record yourself counting "1, 2, 3" while looking at the camera:</p>
-    <div class="video-container">
-      <video id="calibrationVideo" autoplay muted playsinline></video>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-container">
+      <img src="wmremove-transformed.jpg" alt="Daily Sublime Logo" class="site-logo">
     </div>
-    <button id="startCalibrationBtn" class="btn-record">
-      <span id="calibrationBtnText">Start Test Recording</span>
-    </button>
-    <div class="status-bar" id="calibrationStatus" style="display: none;">
-      <div class="recording-indicator">
-        <div class="record-dot"></div>
-        <span style="color: #d32f2f;">Recording Test</span>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section reveal-section">
+    <img src="hero-banner.jpg" alt="Masterwork Painting" class="hero-image" loading="eager">
+    <div class="hero-overlay"></div>
+    <div class="hero-particles">
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+    </div>
+    <div class="hero-content">
+      <h1 class="hero-title">Sublime</h1>
+      <p class="hero-subtitle">The Art Of Observation</p>
+      <a href="#rebel-section" class="hero-cta"><span>Start Your Journey</span></a>
+    </div>
+    <div class="scroll-indicator" aria-hidden="true"></div>
+  </section>
+
+  <!-- Rebel Section -->
+  <section class="rebel-section-wrapper reveal-section" id="rebel-section">
+    <div class="rebel-decoration"></div>
+    <div class="rebel-decoration"></div>
+
+    <div class="rebel-container">
+      <div class="rebel-title-spectacular">
+        <h2>Attention is a luxury!</h2>
       </div>
-      <div class="timer" id="calibrationTimer">0:03</div>
+
+      <div class="rebel-premium-grid">
+        <!-- Left Image -->
+        <div class="rebel-image-left">
+          <img src="unnamed (3).jpg" alt="Mystery and Melancholy of a Street - Giorgio de Chirico" loading="lazy">
+        </div>
+
+        <!-- Center Text -->
+        <div class="rebel-text-center">
+          <p>Dear Rebel,</p>
+          <p>We are gripped by a <strong>poverty of presence</strong> in a world too frictionless to be noticed. In a
+            life on autopilot, seizing your attention is a <strong>radical act of rebellion.</strong></p>
+          <p>The sublime life waits for your gaze.</p>
+          <p>This course is your <strong>daily ritual of reclamation.</strong> Each morning, we bring you one painter
+            and one practice, a moment to stop the scroll, and reclaim your humanity.</p>
+          <p>Shall we begin?</p>
+          <a href="#pricing" class="rebel-button-spectacular"><span>YES!</span></a>
+        </div>
+
+        <!-- Right Image -->
+        <div class="rebel-image-right">
+          <img src="1684px-Caspar_David_Friedrich_-_Wanderer_above_the_Sea_of_Fog.jpeg"
+            alt="Wanderer Above the Sea of Fog - Caspar David Friedrich" loading="lazy">
+        </div>
+      </div>
     </div>
-  </div>
-  <div id="calibrationStep2" class="hidden">
-    <h3>Review Your Test Recording</h3>
-    <p>Please watch your test recording and confirm you can see and hear yourself:</p>
-    <div class="video-container">
-      <video id="calibrationPlayback" controls></video>
+  </section>
+
+  <!-- Features Section -->
+  <section class="content-section reveal-section">
+    <h2 class="section-title">What You'll Receive</h2>
+    <div class="features-grid">
+      <div class="feature-card reveal-stagger">
+        <div class="feature-icon">🎨</div>
+        <h3>Daily Masterwork</h3>
+        <p>One breathtaking painting delivered each morning to awaken your visual consciousness and inspire deep
+          reflection.</p>
+      </div>
+      <div class="feature-card reveal-stagger">
+        <div class="feature-icon">🧘</div>
+        <h3>Guided Practice</h3>
+        <p>Simple, profound exercises to deepen your engagement with art and transform how you perceive the world around
+          you.</p>
+      </div>
+      <div class="feature-card reveal-stagger">
+        <div class="feature-icon">📖</div>
+        <h3>Artist Insights</h3>
+        <p>Discover the stories, techniques, and philosophies behind each masterpiece, enriching your understanding of
+          great art.</p>
+      </div>
     </div>
-    <div class="calibration-check">
-      <input type="checkbox" id="seeCheck">
-      <label for="seeCheck"><strong>Did you see yourself?</strong> Yes, I could see myself clearly</label>
+  </section>
+
+  <!-- Pricing Section -->
+  <section class="pricing-section reveal-section" id="pricing">
+    <div class="pricing-container">
+      <h2 class="section-title">Choose Your Path</h2>
+      <div class="pricing-grid">
+        <div class="pricing-card reveal-stagger">
+          <h3 class="pricing-name">Monthly</h3>
+          <div class="pricing-price">$29</div>
+          <div class="pricing-period">per month</div>
+          <ul class="pricing-features">
+            <li>Daily masterwork & practice</li>
+            <li>Artist insights & context</li>
+            <li>Cancel anytime</li>
+          </ul>
+          <button class="pricing-button">Start Now</button>
+        </div>
+
+        <div class="pricing-card featured reveal-stagger">
+          <div class="pricing-badge">Most Popular</div>
+          <h3 class="pricing-name">Annual</h3>
+          <div class="pricing-price">$249</div>
+          <div class="pricing-period">per year (save $99)</div>
+          <ul class="pricing-features">
+            <li>Everything in Monthly</li>
+            <li>Exclusive bonus content</li>
+            <li>Priority support</li>
+            <li>2 months free</li>
+          </ul>
+          <button class="pricing-button">Best Value</button>
+          <div class="pricing-popularity">⭐ Chosen by 78% of members</div>
+        </div>
+
+        <div class="pricing-card reveal-stagger">
+          <h3 class="pricing-name">Lifetime</h3>
+          <div class="pricing-price">$499</div>
+          <div class="pricing-period">one-time payment</div>
+          <ul class="pricing-features">
+            <li>Everything in Annual</li>
+            <li>Lifetime access</li>
+            <li>Future updates included</li>
+            <li>VIP community access</li>
+          </ul>
+          <button class="pricing-button">Claim Forever</button>
+        </div>
+      </div>
     </div>
-    <div class="calibration-check">
-      <input type="checkbox" id="hearCheck">
-      <label for="hearCheck"><strong>Could you hear yourself?</strong> Yes, I could hear my voice clearly</label>
-    </div>
-    <button id="retryCalibrationBtn" class="btn-secondary">Retry Test</button>
-    <p style="text-align: center; margin-top: 15px; color: #6c757d; font-size: 0.9em;">
-      Can't see or hear yourself? Check your volume and try again.<br>
-      Still having issues? Contact: <strong>s.dehesh@campus.unimib.it</strong>
-    </p>
-  </div>
-  <div class="error-message" id="calibrationError">
-    If you cannot see or hear yourself properly, please check your browser permissions and try again. 
-    For assistance, contact: <strong>s.dehesh@campus.unimib.it</strong>
-  </div>
-  <button id="calibrationContinueBtn" class="btn-primary" disabled>Continue to Instructions</button>
-</div>
+  </section>
 
-<!-- INSTRUCTIONS PAGE -->
-<div id="instructionsPage" class="container hidden">
-  <h1>Interview Instructions</h1>
-  <div class="info-box">
-    <h3>What to Expect</h3>
-    <p>You'll complete <strong>3 different interview formats</strong>, each with <strong>2 questions</strong>:</p>
-    <ul style="margin-left: 20px; margin-top: 10px;">
-      <li>Format 1: You'll see yourself on screen (like a video call)</li>
-      <li>Format 2: You'll see an animated avatar that asks the questions</li>
-      <li>Format 3: You'll see only the question text</li>
-    </ul>
-  </div>
-  <h3>For Each Question:</h3>
-  <ol style="margin-left: 20px; line-height: 1.8;">
-    <li>Read/watch the question carefully</li>
-    <li>Click "Start Recording" when ready</li>
-    <li>You have <strong>30 seconds</strong> to answer</li>
-    <li>You can "Redo" if you want to try again</li>
-    <li>Review your recording and click "Next"</li>
-  </ol>
-  <p style="text-align: center; margin-top: 20px; color: #6c757d;">
-    <strong>Need help?</strong> Contact: s.dehesh@campus.unimib.it
-  </p>
-  <button id="startExperimentBtn" class="btn-primary">Begin Interview</button>
-</div>
+  <!-- Footer -->
+  <footer class="site-footer">
+    <img src="wmremove-transformed.jpg" alt="Daily Sublime" class="footer-logo">
+    <p class="footer-text">© 2026 Daily Sublime. All rights reserved.</p>
+    <p class="footer-tagline">Reclaim your attention. Embrace the sublime.</p>
+  </footer>
 
-<!-- INTERVIEW PAGE -->
-<div id="interviewPage" class="container hidden">
-  <div class="block-label" id="conditionLabel">Condition 1 of 3</div>
-  <div class="question-text" id="questionText"></div>
-  <div id="viewContainer" class="video-container"></div>
-  <p id="recordInstruction" style="text-align: center; color: #6c757d; margin: 15px 0;">
-    Click <strong>Start Recording</strong> when you're ready. You'll have 30 seconds.
-  </p>
-  <button id="startRecordingBtn" class="btn-record">Start Recording</button>
-  <div class="status-bar" id="statusBar" style="display: none;">
-    <div class="redo-counter" id="redoCount">Attempts: 1</div>
-    <div class="recording-indicator">
-      <div class="record-dot" id="recordIndicator" style="display: none;"></div>
-      <span style="color: #d32f2f;">Recording</span>
-    </div>
-    <div class="timer" id="timerDisplay">0:30</div>
-  </div>
-  <div class="button-row" id="recordingControls" style="display: none;">
-    <button id="redoBtn" class="btn-secondary">Redo</button>
-    <button id="stopBtn" class="btn-primary">Stop Recording</button>
-  </div>
-</div>
+  <!-- JavaScript -->
+  <script>
+    // Header scroll effect
+    const header = document.querySelector('.site-header');
+    let lastScroll = 0;
 
-<!-- PREVIEW PAGE -->
-<div id="previewPage" class="container hidden">
-  <h2>Review Your Response</h2>
-  <p style="text-align: center; color: #6c757d;">Watch your recording. If you're satisfied, click Next. Otherwise, click Redo.</p>
-  <div class="video-container">
-    <video id="previewVideo" controls></video>
-  </div>
-  <div class="button-row">
-    <button id="previewRedoBtn" class="btn-secondary">Redo This Question</button>
-    <button id="previewNextBtn" class="btn-primary">Next</button>
-  </div>
-</div>
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.pageYOffset;
 
-<!-- SURVEY PAGE -->
-<div id="surveyPage" class="container hidden">
-  <h2 id="surveyTitle">Post-Interview Questions</h2>
-  <div class="block-label" id="surveyConditionLabel">After Condition 1</div>
-  <div class="progress-bar"><div class="progress-fill" id="surveyProgress"></div></div>
-  <div class="survey-question" id="surveyQuestion"></div>
-  <div class="likert-scale" id="likertOptions"></div>
-  <button id="surveySubmitBtn" class="btn-primary" disabled>Next Question</button>
-  <p style="text-align: center; color: #6c757d; margin-top: 20px;">Question <span id="surveyQuestionNumber">1</span> of 3</p>
-</div>
+      if (currentScroll > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
 
-<!-- DEBRIEF PAGE -->
-<div id="debriefPage" class="container hidden">
-  <h1>Study Complete!</h1>
-  <div class="info-box">
-    <h3>Thank you for participating!</h3>
-    <p>Your contribution helps us understand how visual feedback affects interview experiences.</p>
-  </div>
-  <h3>Study Purpose</h3>
-  <p>This research examines whether seeing yourself during video interviews (self-referential information) affects anxiety levels and self-expression compared to alternative formats like avatars or text-only interfaces.</p>
-  <h3>What We Measured</h3>
-  <p>We collected your ratings of anxiety, expressiveness, and perceived judgment across the three different interview formats. This will help us identify which formats create the best interview experience.</p>
-  <h3>Your Privacy</h3>
-  <p><strong>Reminder:</strong> No video or audio recordings were saved. Only your survey responses were collected, and these are completely anonymous.</p>
-  <h3>Questions?</h3>
-  <p>If you have any questions about this research or encountered any technical difficulties, please contact:</p>
-  <p style="text-align: center; font-size: 1.1em;"><strong>s.dehesh@campus.unimib.it</strong></p>
-  <p style="text-align: center;">Department of Psychology, University of Milano-Bicocca</p>
-  <div style="text-align: center; margin-top: 30px;">
-    <p style="font-size: 1.2em; color: #667eea; font-weight: 600;">We wish you the best of luck in your future endeavors!</p>
-  </div>
-</div>
+      lastScroll = currentScroll;
+    }, { passive: true });
 
-<script>
-// Configuration
-const CONFIG = {
-  questions: [
-    "Tell me about yourself.",
-    "What are your strengths?",
-    "How do you prioritize your work?",
-    "How do you stay organized?",
-    "Describe a time you overcame a challenge.",
-    "Where do you see yourself in five years?"
-  ],
-  conditions: [1, 1, 2, 2, 3, 3],
-  avatarVideos: ["0729-1.mp4", "0729-2.mp4"],
-  avatarImage: "input.jpg",
-  surveyQuestions: [
-    { id: "anxiety", text: "While answering these two questions <strong>I felt anxious</strong> during this interview.", scale: ["Not at all","Slightly","Moderately","Very","Extremely"] },
-    { id: "expression", text: "While answering these two questions <strong>I was able to express myself clearly</strong>.", scale: ["Not at all","Slightly","Moderately","Very","Extremely"] },
-    { id: "judgment", text: "While answering these two questions <strong>I felt I would be judged more negatively</strong>.", scale: ["Not at all","Slightly","Moderately","Very","Extremely"] }
-  ],
-  orders: {
-    A: [0,1,2,3,4,5],
-    B: [0,1,4,5,2,3],
-    C: [2,3,0,1,4,5],
-    D: [2,3,4,5,0,1],
-    E: [4,5,0,1,2,3],
-    F: [4,5,2,3,0,1]
-  }
-};
-
-// UI labels vs Sheet keys
-const CONDITION_LABELS = { 1: 'SRI', 2: 'Avatar', 3: 'TextOnly' }; // what participants see
-const CONDITION_KEYS   = { 1: 'SRI', 2: 'Avatar', 3: 'Text' };     // what your sheet expects
-
-// State
-let state = {
-  participantId: null,
-  orderGroup: null,
-  questionOrder: [],
-  currentQuestionIndex: 0,
-  currentCondition: 0,
-  redoCounts: Array(6).fill(0),
-  responses: {},
-  stream: null,
-  mediaRecorder: null,
-  recordedChunks: [],
-  countdownInterval: null,
-  currentSurveyQuestion: 0,
-  completedConditions: 0
-};
-
-// Pages
-const pages = {
-  consent: document.getElementById('consentPage'),
-  calibration: document.getElementById('calibrationPage'),
-  instructions: document.getElementById('instructionsPage'),
-  interview: document.getElementById('interviewPage'),
-  preview: document.getElementById('previewPage'),
-  survey: document.getElementById('surveyPage'),
-  debrief: document.getElementById('debriefPage')
-};
-
-// Utils
-function showPage(pageName) {
-  Object.values(pages).forEach(page => page.classList.add('hidden'));
-  pages[pageName].classList.remove('hidden');
-}
-function generateParticipantId() {
-  return 'P' + Date.now() + Math.random().toString(36).substr(2, 5);
-}
-function assignOrderGroup() {
-  const groups = ['A', 'B', 'C', 'D', 'E', 'F'];
-  return groups[Math.floor(Math.random() * groups.length)];
-}
-
-// Media
-async function initializeMedia() {
-  try {
-    state.stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-    const calibrationVideo = document.getElementById('calibrationVideo');
-    calibrationVideo.srcObject = state.stream;
-  } catch (error) {
-    document.getElementById('calibrationError').style.display = 'block';
-    document.getElementById('calibrationError').innerHTML =
-      '<strong>Camera/microphone access denied.</strong><br>' +
-      'Please allow access in your browser settings and reload the page.<br>' +
-      'If you continue to have problems, contact: <strong>s.dehesh@campus.unimib.it</strong>';
-    document.getElementById('startCalibrationBtn').disabled = true;
-  }
-}
-
-// DOM Ready
-document.addEventListener('DOMContentLoaded', function() {
-  // Consent
-  const consentCheck = document.getElementById('consentCheck');
-  const consentBtn = document.getElementById('consentBtn');
-  if (consentCheck && consentBtn) {
-    consentCheck.addEventListener('change', (e) => { consentBtn.disabled = !e.target.checked; });
-    consentBtn.addEventListener('click', async () => {
-      state.participantId = generateParticipantId();
-      state.orderGroup = assignOrderGroup();
-      state.questionOrder = CONFIG.orders[state.orderGroup];
-      showPage('calibration');
-      await initializeMedia();
-    });
-  }
-
-  // Calibration
-  let calibrationRecorder = null;
-  let calibrationChunks = [];
-  let calibrationCountdown = null;
-  document.getElementById('startCalibrationBtn').addEventListener('click', startCalibrationRecording);
-
-  function startCalibrationRecording() {
-    if (!state.stream) { alert('Camera not initialized. Please allow camera access and reload.'); return; }
-    calibrationChunks = [];
-    calibrationRecorder = new MediaRecorder(state.stream);
-    calibrationRecorder.ondataavailable = (event) => { if (event.data && event.data.size > 0) calibrationChunks.push(event.data); };
-    calibrationRecorder.onstop = () => {
-      const blob = new Blob(calibrationChunks, { type: 'video/webm' });
-      const url = URL.createObjectURL(blob);
-      const playbackVideo = document.getElementById('calibrationPlayback');
-      playbackVideo.src = url; playbackVideo.muted = false;
-      document.getElementById('calibrationStep1').classList.add('hidden');
-      document.getElementById('calibrationStep2').classList.remove('hidden');
+    // Intersection Observer for reveal animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
     };
-    document.getElementById('startCalibrationBtn').style.display = 'none';
-    document.getElementById('calibrationStatus').style.display = 'flex';
-    calibrationRecorder.start();
-    let timeLeft = 3;
-    const timerDisplay = document.getElementById('calibrationTimer');
-    calibrationCountdown = setInterval(() => {
-      timerDisplay.textContent = `0:0${timeLeft}`; timeLeft--;
-      if (timeLeft < 0) {
-        clearInterval(calibrationCountdown);
-        calibrationRecorder.stop();
-        document.getElementById('calibrationStatus').style.display = 'none';
-      }
-    }, 1000);
-  }
 
-  document.getElementById('retryCalibrationBtn').addEventListener('click', () => {
-    document.getElementById('calibrationStep1').classList.remove('hidden');
-    document.getElementById('calibrationStep2').classList.add('hidden');
-    document.getElementById('startCalibrationBtn').style.display = 'block';
-    document.getElementById('seeCheck').checked = false;
-    document.getElementById('hearCheck').checked = false;
-    document.getElementById('calibrationContinueBtn').disabled = true;
-    const video = document.getElementById('calibrationPlayback'); video.pause(); video.currentTime = 0;
-  });
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
 
-  document.getElementById('seeCheck').addEventListener('change', checkCalibrationComplete);
-  document.getElementById('hearCheck').addEventListener('change', checkCalibrationComplete);
-  function checkCalibrationComplete() {
-    const canSee = document.getElementById('seeCheck').checked;
-    const canHear = document.getElementById('hearCheck').checked;
-    if (canSee && canHear) {
-      document.getElementById('calibrationContinueBtn').disabled = false;
-      document.getElementById('calibrationError').style.display = 'none';
-    } else {
-      document.getElementById('calibrationContinueBtn').disabled = true;
-      if (!document.getElementById('calibrationStep2').classList.contains('hidden')) {
-        if (!canSee || !canHear) document.getElementById('calibrationError').style.display = 'block';
-      }
-    }
-  }
-
-  document.getElementById('calibrationContinueBtn').addEventListener('click', () => { showPage('instructions'); });
-
-  // Instructions
-  document.getElementById('startExperimentBtn').addEventListener('click', () => {
-    showPage('interview');
-    showQuestion();
-  });
-
-  // Interview events
-  document.getElementById('startRecordingBtn').addEventListener('click', startRecording);
-  document.getElementById('stopBtn').addEventListener('click', stopRecording);
-  document.getElementById('redoBtn').addEventListener('click', redoRecording);
-  document.getElementById('previewRedoBtn').addEventListener('click', redoRecording);
-  document.getElementById('previewNextBtn').addEventListener('click', previewNext);
-  document.getElementById('surveySubmitBtn').addEventListener('click', surveySubmit);
-});
-
-// Interview
-function showQuestion() {
-  const questionIdx = state.questionOrder[state.currentQuestionIndex];
-  const conditionCode = CONFIG.conditions[questionIdx]; // 1|2|3
-  const conditionNameUI = CONDITION_LABELS[conditionCode]; // SRI|Avatar|TextOnly
-  const conditionNum = Math.floor(state.currentQuestionIndex / 2) + 1;
-
-  document.getElementById('conditionLabel').textContent =
-    `Condition ${conditionNum} of 3 — ${conditionNameUI}`;
-
-  document.getElementById('recordInstruction').style.display = 'block';
-  document.getElementById('startRecordingBtn').style.display = 'block';
-  document.getElementById('statusBar').style.display = 'none';
-  document.getElementById('recordingControls').style.display = 'none';
-  document.getElementById('redoCount').textContent =
-    `Attempts: ${state.redoCounts[questionIdx] + 1}`;
-
-  const viewContainer = document.getElementById('viewContainer');
-  const questionText = document.getElementById('questionText');
-  viewContainer.innerHTML = ''; viewContainer.style.display = 'block';
-  questionText.textContent = '';
-
-  if (conditionCode === 1) { // SRI
-    questionText.textContent = CONFIG.questions[questionIdx];
-    if (state.stream) {
-      const video = document.createElement('video');
-      video.srcObject = state.stream; video.autoplay = true; video.muted = true; video.playsinline = true;
-      viewContainer.appendChild(video);
-    }
-  } else if (conditionCode === 2) { // Avatar
-    const avatarIdx = questionIdx - 2;
-    const video = document.createElement('video');
-    video.src = CONFIG.avatarVideos[avatarIdx];
-    video.controls = true; video.autoplay = true; video.playsinline = true;
-    viewContainer.appendChild(video);
-    questionText.textContent = CONFIG.questions[questionIdx];
-  } else { // TextOnly
-    questionText.textContent = CONFIG.questions[questionIdx];
-    viewContainer.style.display = 'none';
-  }
-}
-
-function startRecording() {
-  if (!state.stream) { alert('Camera not initialized. Please reload the page.'); return; }
-  const questionIdx = state.questionOrder[state.currentQuestionIndex];
-  const condition = CONFIG.conditions[questionIdx];
-
-  document.getElementById('recordInstruction').style.display = 'none';
-  document.getElementById('startRecordingBtn').style.display = 'none';
-  document.getElementById('statusBar').style.display = 'flex';
-  document.getElementById('recordingControls').style.display = 'flex';
-  document.getElementById('recordIndicator').style.display = 'block';
-
-  if (condition === 2) {
-    const viewContainer = document.getElementById('viewContainer');
-    viewContainer.style.display = 'block';
-    viewContainer.innerHTML = '';
-    const img = document.createElement('img');
-    img.src = CONFIG.avatarImage; img.alt = 'Avatar';
-    viewContainer.appendChild(img);
-  }
-
-  state.recordedChunks = [];
-  state.mediaRecorder = new MediaRecorder(state.stream);
-  state.mediaRecorder.ondataavailable = (event) => { if (event.data && event.data.size > 0) state.recordedChunks.push(event.data); };
-  state.mediaRecorder.onstop = () => {
-    const blob = new Blob(state.recordedChunks, { type: 'video/webm' });
-    const url = URL.createObjectURL(blob);
-    const previewVideo = document.getElementById('previewVideo');
-    previewVideo.src = url; previewVideo.muted = false;
-    showPage('preview');
-  };
-  state.mediaRecorder.start();
-  startTimer();
-}
-
-function startTimer() {
-  let timeLeft = 30;
-  const timerDisplay = document.getElementById('timerDisplay');
-  clearInterval(state.countdownInterval);
-  state.countdownInterval = setInterval(() => {
-    const minutes = Math.floor(timeLeft / 60);
-    const seconds = timeLeft % 60;
-    timerDisplay.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-    timeLeft--;
-    if (timeLeft < 0) { clearInterval(state.countdownInterval); stopRecording(); }
-  }, 1000);
-}
-
-function stopRecording() {
-  clearInterval(state.countdownInterval);
-  if (state.mediaRecorder && state.mediaRecorder.state === 'recording') state.mediaRecorder.stop();
-}
-
-function redoRecording() {
-  const questionIdx = state.questionOrder[state.currentQuestionIndex];
-  state.redoCounts[questionIdx]++;
-  clearInterval(state.countdownInterval);
-  if (state.mediaRecorder && state.mediaRecorder.state === 'recording') state.mediaRecorder.stop();
-  showPage('interview'); showQuestion();
-}
-
-function previewNext() {
-  const video = document.getElementById('previewVideo');
-  video.pause(); video.currentTime = 0;
-  state.currentQuestionIndex++;
-  if (state.currentQuestionIndex % 2 === 0) {
-    showSurvey();
-  } else if (state.currentQuestionIndex < 6) {
-    showPage('interview'); showQuestion();
-  } else {
-    showPage('debrief'); submitData();
-  }
-}
-
-// Survey
-function showSurvey() {
-  state.completedConditions++;
-  state.currentSurveyQuestion = 0;
-
-  const conditionNum = state.completedConditions; // 1..3
-  const qIdxInOrder = state.questionOrder[(conditionNum - 1) * 2];
-  const conditionLabelUI = CONDITION_LABELS[CONFIG.conditions[qIdxInOrder]];
-
-  document.getElementById('surveyTitle').textContent = 'Post-Interview Questions';
-  document.getElementById('surveyConditionLabel').textContent =
-    `After Condition ${conditionNum} — ${conditionLabelUI}`;
-
-  showPage('survey');
-  displaySurveyQuestion();
-}
-
-function displaySurveyQuestion() {
-  const question = CONFIG.surveyQuestions[state.currentSurveyQuestion];
-  document.getElementById('surveyQuestion').innerHTML = question.text;
-  document.getElementById('surveyQuestionNumber').textContent = state.currentSurveyQuestion + 1;
-
-  const progress = ((state.currentSurveyQuestion + 1) / CONFIG.surveyQuestions.length) * 100;
-  document.getElementById('surveyProgress').style.width = `${progress}%`;
-
-  const optionsContainer = document.getElementById('likertOptions');
-  optionsContainer.innerHTML = '';
-  question.scale.forEach((option, index) => {
-    const div = document.createElement('div'); div.className = 'likert-option';
-    const input = document.createElement('input'); input.type = 'radio'; input.name = 'likert'; input.value = index + 1; input.id = `option${index}`;
-    const label = document.createElement('label'); label.htmlFor = `option${index}`; label.textContent = option; label.style.flex = '1'; label.style.cursor = 'pointer';
-    div.appendChild(input); div.appendChild(label);
-    div.addEventListener('click', () => {
-      document.querySelectorAll('.likert-option').forEach(opt => opt.classList.remove('selected'));
-      div.classList.add('selected'); input.checked = true;
-      document.getElementById('surveySubmitBtn').disabled = false;
+    // Observe all reveal elements
+    document.querySelectorAll('.reveal-section, .reveal-stagger').forEach(el => {
+      observer.observe(el);
     });
-    optionsContainer.appendChild(div);
-  });
 
-  document.getElementById('surveySubmitBtn').disabled = true;
-  document.getElementById('surveySubmitBtn').textContent =
-    state.currentSurveyQuestion < CONFIG.surveyQuestions.length - 1 ? 'Next Question' : 'Continue';
-}
+    // Smooth scroll for internal links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
 
-function surveySubmit() {
-  const selectedOption = document.querySelector('input[name="likert"]:checked');
-  if (!selectedOption) { alert('Please select an option.'); return; }
+    // Parallax effect for hero image (subtle)
+    const heroImage = document.querySelector('.hero-image');
+    let ticking = false;
 
-  const conditionNum = state.completedConditions; // 1..3
-  const surveyMeta = CONFIG.surveyQuestions[state.currentSurveyQuestion];
-  const questionId = surveyMeta.id;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrolled = window.pageYOffset;
+          const heroHeight = window.innerHeight;
 
-  // Block → actual condition code
-  const blockStartIdx = (conditionNum - 1) * 2;
-  const qIdxInOrder = state.questionOrder[blockStartIdx];
-  const conditionCode = CONFIG.conditions[qIdxInOrder];
+          if (scrolled < heroHeight && heroImage) {
+            heroImage.style.transform = `scale(1) translateY(${scrolled * 0.3}px)`;
+          }
 
-  // Keys: numeric block and sheet key
-  const conditionKey = CONDITION_KEYS[conditionCode]; // 'SRI' | 'Avatar' | 'Text'
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
 
-  state.responses[`condition${conditionNum}_${questionId}`] = selectedOption.value;
-  state.responses[`${conditionKey}_${questionId}`] = selectedOption.value;
-
-  state.currentSurveyQuestion++;
-  if (state.currentSurveyQuestion < CONFIG.surveyQuestions.length) {
-    displaySurveyQuestion();
-  } else if (state.currentQuestionIndex < 6) {
-    showPage('interview'); showQuestion();
-  } else {
-    showPage('debrief'); submitData();
-  }
-}
-
-// Submit
-function submitData() {
-  const conditionPerQuestion = state.questionOrder.map(qi => CONDITION_LABELS[CONFIG.conditions[qi]]);
-  const conditionBlocks = [];
-  for (let i = 0; i < state.questionOrder.length; i += 2) {
-    const qi = state.questionOrder[i];
-    conditionBlocks.push(CONDITION_LABELS[CONFIG.conditions[qi]]);
-  }
-  const questionsInOrder = state.questionOrder.map(i => CONFIG.questions[i]);
-
-  const data = {
-    participantId: state.participantId,
-    orderGroup: state.orderGroup,
-    timestamp: new Date().toISOString(),
-    questionOrder: state.questionOrder.join(','),
-    conditionPerQuestion: conditionPerQuestion.join(','),
-    conditionBlocks: conditionBlocks.join(','),
-    questionsInOrder: questionsInOrder.join(' | '),
-    ...state.responses,
-    redoCounts: state.redoCounts.join(',')
-  };
-
-  console.log('Study Complete. Submitting data:', data);
-
-  const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzl1xkzvneC3tHrkCuQP7-YzuekrxhirqPfrCWnwhz1mrreeK6A4DvUGlWNY4PFVcDi/exec';
-
-  // No custom headers → no CORS preflight
-  fetch(GOOGLE_SCRIPT_URL, {
-    method: 'POST',
-    body: JSON.stringify(data)
-  })
-  .then(res => res.text())
-  .then(t => {
-    try { console.log('Apps Script response:', JSON.parse(t)); }
-    catch { console.log('Apps Script raw response:', t); }
-  })
-  .catch(error => {
-    console.error('Network error while submitting data:', error);
-  });
-}
-
-window.addEventListener('beforeunload', () => {
-  if (state.stream) state.stream.getTracks().forEach(track => track.stop());
-  if (state.countdownInterval) clearInterval(state.countdownInterval);
-});
-</script>
-
+    // Touch device detection
+    if ('ontouchstart' in window) {
+      document.body.classList.add('touch-device');
+    }
+  </script>
 </body>
+
 </html>
+</CodeContent>
+<parameter name="EmptyFile">false
